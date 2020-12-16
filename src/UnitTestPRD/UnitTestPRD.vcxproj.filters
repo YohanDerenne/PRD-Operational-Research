@@ -13,30 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Fichiers sources\Control">
-      <UniqueIdentifier>{9865c812-e8b0-409a-9ee9-d6af0a3e887f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Model">
-      <UniqueIdentifier>{8dd86f2c-420b-4e7f-b3e0-ccf1d0435ef9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Model">
-      <UniqueIdentifier>{6d2eb4a5-8654-4729-9d4b-d07611920ecc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers d%27en-tête\Control">
-      <UniqueIdentifier>{69dcf5ea-d60c-4d75-af6a-a0f76c6cdd60}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PRD.cpp">
-      <Filter>Fichiers sources\Control</Filter>
+    <ClCompile Include="UnitTestPRD.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Instance.cpp">
-      <Filter>Fichiers sources\Model</Filter>
+    <ClCompile Include="pch.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Instance.h">
-      <Filter>Fichiers d%27en-tête\Model</Filter>
+    <ClInclude Include="pch.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

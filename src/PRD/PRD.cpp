@@ -2,10 +2,14 @@
 //
 
 #include <iostream>
+#include "Instance.h"
 
 int main()
 {
     std::cout << "Hello World!\n";
+    Instance* i = new Instance();
+    i->Parse("ne");
+    delete i;
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
