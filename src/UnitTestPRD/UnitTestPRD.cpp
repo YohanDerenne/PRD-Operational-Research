@@ -31,6 +31,14 @@ namespace UnitTestPRD
 				Assert::AreEqual(4000, instance->c_V);
 				Assert::AreEqual(2, instance->id);			
 
+				vector<int[2]> coord;
+
+				// Coordonnées producteur
+				coord.push_back({ 122,281 });
+
+				// Coordonnées livreur
+				coord.push_back({ 119,88 });
+
 				// Commande 0
 				int numCmd = 0;
 				Assert::AreEqual(51, instance->p[numCmd][0]);
@@ -45,8 +53,7 @@ namespace UnitTestPRD
 				Assert::AreEqual(9, instance->h_FIN[numCmd]);
 				Assert::AreEqual(71, instance->d[numCmd]);
 				Assert::AreEqual(9, instance->p_M[numCmd]);
-				Assert::AreEqual(149, instance->t[numCmd][0]);
-				Assert::AreEqual(154, instance->t[numCmd][1]);
+				coord.push_back({ 149,154 });
 
 				// Commande 1
 				numCmd = 1;
@@ -62,8 +69,7 @@ namespace UnitTestPRD
 				Assert::AreEqual(6, instance->h_FIN[numCmd]);
 				Assert::AreEqual(91, instance->d[numCmd]);
 				Assert::AreEqual(9, instance->p_M[numCmd]);
-				Assert::AreEqual(128, instance->t[numCmd][0]);
-				Assert::AreEqual(129, instance->t[numCmd][1]);
+				coord.push_back({ 128,129 });
 
 				// Commande 2
 				numCmd = 2;
@@ -79,8 +85,7 @@ namespace UnitTestPRD
 				Assert::AreEqual(7, instance->h_FIN[numCmd]);
 				Assert::AreEqual(123, instance->d[numCmd]);
 				Assert::AreEqual(10, instance->p_M[numCmd]);
-				Assert::AreEqual(153, instance->t[numCmd][0]);
-				Assert::AreEqual(283, instance->t[numCmd][1]);
+				coord.push_back({ 153,283 });
 
 				// Commande 3
 				numCmd = 3;
@@ -96,8 +101,7 @@ namespace UnitTestPRD
 				Assert::AreEqual(6, instance->h_FIN[numCmd]);
 				Assert::AreEqual(441, instance->d[numCmd]);
 				Assert::AreEqual(9, instance->p_M[numCmd]);
-				Assert::AreEqual(103, instance->t[numCmd][0]);
-				Assert::AreEqual(234, instance->t[numCmd][1]);
+				coord.push_back({ 103,234 });
 
 				// Commande 4
 				numCmd = 4;
@@ -113,8 +117,7 @@ namespace UnitTestPRD
 				Assert::AreEqual(8, instance->h_FIN[numCmd]);
 				Assert::AreEqual(449, instance->d[numCmd]);
 				Assert::AreEqual(7, instance->p_M[numCmd]);
-				Assert::AreEqual(239, instance->t[numCmd][0]);
-				Assert::AreEqual(138, instance->t[numCmd][1]);
+				coord.push_back({ 239,138 });
 
 				// Commande 5
 				numCmd = 5;
@@ -130,8 +133,23 @@ namespace UnitTestPRD
 				Assert::AreEqual(7, instance->h_FIN[numCmd]);
 				Assert::AreEqual(536, instance->d[numCmd]);
 				Assert::AreEqual(5, instance->p_M[numCmd]);
-				Assert::AreEqual(215, instance->t[numCmd][0]);
-				Assert::AreEqual(228, instance->t[numCmd][1]);
+				coord.push_back({ 215,228 });
+
+				// Distances
+				vector<vector<int>> t;
+				for (int i = 0; i < coord.size() ; i++) {
+					vector<int> row;
+					for (int j = 0; j < coord.size(); j++) {
+						row.push_back(sqrt(pow(coord[i][0] - coord[j][0], 2) + pow(coord[i][1] - coord[j][1], 2)));
+					}
+					t.push_back(row);					
+				}
+				// Check
+				for (int i = 0; i < instance->n + 1; i++) {
+					for (int j = 0; j < instance->n + 1; j++) {
+						Assert::AreEqual(t[i][j], instance->t[i][j]);
+					}
+				}				
 			}
 			catch (const std::exception& exc)
 			{
