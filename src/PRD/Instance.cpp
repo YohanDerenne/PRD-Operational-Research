@@ -1,5 +1,6 @@
 #include "Instance.h"
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ bool Instance::Parse(string path)
 	ifstream file;
 	file.open(path);
 	if (!file) {
-		printf("ERREUR : Impossible d'ouvrir le fichier en lecture\n");
+		throw invalid_argument("Impossible d'ouvrir le fichier en lecture");
 		return false;
 	}
 	file >> n >> m >> c_V >> id;
