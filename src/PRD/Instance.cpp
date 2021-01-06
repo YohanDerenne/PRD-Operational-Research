@@ -5,6 +5,20 @@
 using namespace std;
 
 
+Instance::Instance()
+{
+	id = -1;
+	n = 0;
+	m = 0;
+	p = vector<vector<int>>();
+	d = vector<int>();
+	t = vector<vector<int>>();
+	h_WIP = vector<vector<int>>();
+	h_FIN = vector<int>();
+	p_M = vector<int>();
+	c_V = 0;
+}
+
 Instance::Instance(string path)
 {
     Parse(path);

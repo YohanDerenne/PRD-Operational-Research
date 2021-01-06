@@ -6,7 +6,7 @@ public :
 
 	// ============================= DATA ====================================
 
-	Instance inst;
+	Instance * inst;
 	double cout_total;
 	double cout_WIP;
 	double cout_FIN;
@@ -14,6 +14,6 @@ public :
 
 	// ============================== METHODES ===================================
 
-	Result() {};
+	Result(Instance * instance);
 };
 

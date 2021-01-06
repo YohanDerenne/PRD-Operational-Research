@@ -142,10 +142,14 @@
     <ClCompile Include="Instance.cpp" />
     <ClCompile Include="PRD.cpp" />
     <ClCompile Include="Result.cpp" />
+    <ClCompile Include="Solver.cpp" />
+    <ClCompile Include="SolverControler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Instance.h" />
     <ClInclude Include="Result.h" />
+    <ClInclude Include="Solver.h" />
+    <ClInclude Include="SolverControler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

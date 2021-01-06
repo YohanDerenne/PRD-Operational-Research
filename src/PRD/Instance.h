@@ -69,7 +69,7 @@ public :
 	/// <summary>
 	/// Constructeur de la classe Instance
 	/// </summary>
-	Instance() {};
+	Instance();
 
 	/// <summary>
 	/// Constructeur de la classe Instance qui parse un fichier txt contenant une instance
