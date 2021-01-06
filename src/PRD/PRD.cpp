@@ -8,8 +8,14 @@ int main()
 {
     std::cout << "Hello World!\n";
     Instance* i = new Instance();
-    i->Parse("ne");
+    try {        
+        i->Parse("ne");        
+    }
+    catch (exception e) {
+        std::cout << e.what();
+    }
     delete i;
+    
 }
 
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage

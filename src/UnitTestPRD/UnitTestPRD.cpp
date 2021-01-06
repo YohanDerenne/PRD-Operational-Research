@@ -31,7 +31,7 @@ namespace UnitTestPRD
 				Assert::AreEqual(4000, instance->c_V);
 				Assert::AreEqual(2, instance->id);			
 
-				vector<int[2]> coord;
+				vector<pair<int, int>> coord;
 
 				// Coordonnées producteur
 				coord.push_back({ 122,281 });
@@ -46,10 +46,11 @@ namespace UnitTestPRD
 				Assert::AreEqual(85, instance->p[numCmd][2]);
 				Assert::AreEqual(45, instance->p[numCmd][3]);
 				Assert::AreEqual(17, instance->p[numCmd][4]);
-				Assert::AreEqual(2, instance->h_WIP[numCmd][0]);
-				Assert::AreEqual(4, instance->h_WIP[numCmd][1]);
-				Assert::AreEqual(6, instance->h_WIP[numCmd][2]);
-				Assert::AreEqual(7, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
+				Assert::AreEqual(2, instance->h_WIP[numCmd][1]);
+				Assert::AreEqual(4, instance->h_WIP[numCmd][2]);
+				Assert::AreEqual(6, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(7, instance->h_WIP[numCmd][4]);
 				Assert::AreEqual(9, instance->h_FIN[numCmd]);
 				Assert::AreEqual(71, instance->d[numCmd]);
 				Assert::AreEqual(9, instance->p_M[numCmd]);
@@ -62,10 +63,11 @@ namespace UnitTestPRD
 				Assert::AreEqual(35, instance->p[numCmd][2]);
 				Assert::AreEqual(64, instance->p[numCmd][3]);
 				Assert::AreEqual(7, instance->p[numCmd][4]);
-				Assert::AreEqual(1, instance->h_WIP[numCmd][0]);
-				Assert::AreEqual(2, instance->h_WIP[numCmd][1]);
-				Assert::AreEqual(4, instance->h_WIP[numCmd][2]);
-				Assert::AreEqual(5, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
+				Assert::AreEqual(1, instance->h_WIP[numCmd][1]);
+				Assert::AreEqual(2, instance->h_WIP[numCmd][2]);
+				Assert::AreEqual(4, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(5, instance->h_WIP[numCmd][4]);
 				Assert::AreEqual(6, instance->h_FIN[numCmd]);
 				Assert::AreEqual(91, instance->d[numCmd]);
 				Assert::AreEqual(9, instance->p_M[numCmd]);
@@ -78,10 +80,11 @@ namespace UnitTestPRD
 				Assert::AreEqual(8, instance->p[numCmd][2]);
 				Assert::AreEqual(79, instance->p[numCmd][3]);
 				Assert::AreEqual(78, instance->p[numCmd][4]);
-				Assert::AreEqual(1, instance->h_WIP[numCmd][0]);
-				Assert::AreEqual(3, instance->h_WIP[numCmd][1]);
-				Assert::AreEqual(4, instance->h_WIP[numCmd][2]);
-				Assert::AreEqual(6, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
+				Assert::AreEqual(1, instance->h_WIP[numCmd][1]);
+				Assert::AreEqual(3, instance->h_WIP[numCmd][2]);
+				Assert::AreEqual(4, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(6, instance->h_WIP[numCmd][4]);
 				Assert::AreEqual(7, instance->h_FIN[numCmd]);
 				Assert::AreEqual(123, instance->d[numCmd]);
 				Assert::AreEqual(10, instance->p_M[numCmd]);
@@ -94,10 +97,11 @@ namespace UnitTestPRD
 				Assert::AreEqual(84, instance->p[numCmd][2]);
 				Assert::AreEqual(76, instance->p[numCmd][3]);
 				Assert::AreEqual(52, instance->p[numCmd][4]);
-				Assert::AreEqual(1, instance->h_WIP[numCmd][0]);
-				Assert::AreEqual(2, instance->h_WIP[numCmd][1]);
-				Assert::AreEqual(3, instance->h_WIP[numCmd][2]);
-				Assert::AreEqual(5, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
+				Assert::AreEqual(1, instance->h_WIP[numCmd][1]);
+				Assert::AreEqual(2, instance->h_WIP[numCmd][2]);
+				Assert::AreEqual(3, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(5, instance->h_WIP[numCmd][4]);
 				Assert::AreEqual(6, instance->h_FIN[numCmd]);
 				Assert::AreEqual(441, instance->d[numCmd]);
 				Assert::AreEqual(9, instance->p_M[numCmd]);
@@ -110,10 +114,11 @@ namespace UnitTestPRD
 				Assert::AreEqual(67, instance->p[numCmd][2]);
 				Assert::AreEqual(21, instance->p[numCmd][3]);
 				Assert::AreEqual(27, instance->p[numCmd][4]);
-				Assert::AreEqual(2, instance->h_WIP[numCmd][0]);
-				Assert::AreEqual(3, instance->h_WIP[numCmd][1]);
-				Assert::AreEqual(5, instance->h_WIP[numCmd][2]);
-				Assert::AreEqual(6, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
+				Assert::AreEqual(2, instance->h_WIP[numCmd][1]);
+				Assert::AreEqual(3, instance->h_WIP[numCmd][2]);
+				Assert::AreEqual(5, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(6, instance->h_WIP[numCmd][4]);
 				Assert::AreEqual(8, instance->h_FIN[numCmd]);
 				Assert::AreEqual(449, instance->d[numCmd]);
 				Assert::AreEqual(7, instance->p_M[numCmd]);
@@ -126,10 +131,11 @@ namespace UnitTestPRD
 				Assert::AreEqual(4, instance->p[numCmd][2]);
 				Assert::AreEqual(66, instance->p[numCmd][3]);
 				Assert::AreEqual(20, instance->p[numCmd][4]);
-				Assert::AreEqual(1, instance->h_WIP[numCmd][0]);
-				Assert::AreEqual(3, instance->h_WIP[numCmd][1]);
-				Assert::AreEqual(5, instance->h_WIP[numCmd][2]);
-				Assert::AreEqual(6, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
+				Assert::AreEqual(1, instance->h_WIP[numCmd][1]);
+				Assert::AreEqual(3, instance->h_WIP[numCmd][2]);
+				Assert::AreEqual(5, instance->h_WIP[numCmd][3]);
+				Assert::AreEqual(6, instance->h_WIP[numCmd][4]);
 				Assert::AreEqual(7, instance->h_FIN[numCmd]);
 				Assert::AreEqual(536, instance->d[numCmd]);
 				Assert::AreEqual(5, instance->p_M[numCmd]);
@@ -140,7 +146,7 @@ namespace UnitTestPRD
 				for (int i = 0; i < coord.size() ; i++) {
 					vector<int> row;
 					for (int j = 0; j < coord.size(); j++) {
-						row.push_back(sqrt(pow(coord[i][0] - coord[j][0], 2) + pow(coord[i][1] - coord[j][1], 2)));
+						row.push_back(sqrt(pow(coord[i].first - coord[j].first, 2) + pow(coord[i].second - coord[j].second, 2)));
 					}
 					t.push_back(row);					
 				}

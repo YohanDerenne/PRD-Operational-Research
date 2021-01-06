@@ -16,6 +16,7 @@ bool Instance::Parse(string path)
 	file.open(path);
 	if (!file) {
 		throw invalid_argument("Impossible d'ouvrir le fichier en lecture");
+		return false;
 	}
 
 	// Nb cmd - Nb machines - cout vehicule - index
@@ -35,13 +36,13 @@ bool Instance::Parse(string path)
 		}
 
 		// Durées
-		vector<int> t_row;
+		vector<int> p_row;
 		for (int j = 0; j < m; j++) {
 			int duree;
 			file >> duree;
-			t_row.push_back(duree);
+			p_row.push_back(duree);
 		}
-		t.push_back(t_row);
+		p.push_back(p_row);
 
 		// Cout d'inventaire WIP
 		vector<int> h_WIP_row;
@@ -92,9 +93,9 @@ bool Instance::Parse(string path)
 	coord.insert(coord.begin(), { x_prod ,y_prod });
 
 	// Calcul Distances 
-	for (int i = 0; i < coord.size(); i++) {
+	for (unsigned int i = 0; i < coord.size(); i++) {
 		vector<int> row;
-		for (int j = 0; j < coord.size(); j++) {
+		for (unsigned int j = 0; j < coord.size(); j++) {
 			row.push_back(sqrt(pow(coord[i].first - coord[j].first, 2) + pow(coord[i].second - coord[j].second, 2)));
 		}
 		t.push_back(row);
