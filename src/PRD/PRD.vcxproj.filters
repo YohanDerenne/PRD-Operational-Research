@@ -33,9 +33,15 @@
     <ClCompile Include="Instance.cpp">
       <Filter>Fichiers sources\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Result.cpp">
+      <Filter>Fichiers sources\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Instance.h">
+      <Filter>Fichiers d%27en-tête\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
       <Filter>Fichiers d%27en-tête\Model</Filter>
     </ClInclude>
   </ItemGroup>
