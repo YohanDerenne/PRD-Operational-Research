@@ -14,12 +14,12 @@ private:
 	/// <summary>
 	/// Instances à étudier
 	/// </summary>
-	list<Instance> instances;
+	list<Instance*> instances;
 
 	/// <summary>
 	/// Resultats des algos
 	/// </summary>
-	list<Result> results;
+	list<Result*> results;
 
 public:
 	/// <summary>
@@ -47,6 +47,11 @@ public:
 	/// <param name="path">Chemin du dossier de sauvegarde des résultats</param>
 	/// <returns>Status</returns>
 	bool ExportResults(string path);
-	
+
+	// ================================== Get / Set =================================
+
+	const list<Instance*> getInstances() { return instances; }
+	const list<Result*> getResults() { return results; }
+	void AddResult(Result* res) { results.push_back(new Result(*res)); }
 };
 

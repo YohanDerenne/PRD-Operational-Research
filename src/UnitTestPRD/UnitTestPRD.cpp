@@ -1,9 +1,14 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "../PRD/Instance.h"
 #include "../PRD/Instance.cpp"
 #include <string>
+#include "../PRD/Result.h"
 #include "../PRD/Result.cpp"
-
+#include "../PRD/SolverControler.h"
+#include "../PRD/SolverControler.cpp"
+#include "../PRD/Solver.h"
+#include "../PRD/Solver.cpp"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTestPRD
@@ -144,9 +149,9 @@ namespace UnitTestPRD
 
 				// Distances
 				vector<vector<int>> t;
-				for (int i = 0; i < coord.size() ; i++) {
+				for (size_t i = 0; i < coord.size() ; i++) {
 					vector<int> row;
-					for (int j = 0; j < coord.size(); j++) {
+					for (size_t j = 0; j < coord.size(); j++) {
 						row.push_back(sqrt(pow(coord[i].first - coord[j].first, 2) + pow(coord[i].second - coord[j].second, 2)));
 					}
 					t.push_back(row);					
@@ -202,7 +207,7 @@ namespace UnitTestPRD
 				delete inst2;
 			}
 			catch (exception exc) {
-				cerr << exc.what();
+				//cerr << exc.what();
 			}
 		}
 	};
@@ -231,37 +236,32 @@ namespace UnitTestPRD
 				delete res2;
 			}
 			catch (exception exc) {
-				cerr << exc.what();
+				//cerr << exc.what();
 			}
 		}
 	};
 
 	/// <summary>
-	/// Test les elements de la classe Result
+	/// Test les elements de la classe SolverControler
 	/// </summary>
 	TEST_CLASS(UnitTestSolverControler)
 	{
 	public:
-		/// <summary>
-		/// Test le constructeur de copie de la classe Result
-		/// </summary>
-		TEST_METHOD(TestCopyResult)
+		TEST_METHOD(TestImportDirectory)
 		{
-			Instance* instance = new Instance();
-			try
-			{
-				bool result = instance->Parse("../UnitTestPRD/instanceTest/I_n6_id2.txt");
-				Result* res1 = new Result(instance);
-				Result* res2 = new Result(*res1);
-				//Assert::AreNotEqual(res1, res2);
-				Assert::AreEqual(51, res2->inst->p[0][0]);
-				delete res1;
-				Assert::AreEqual(24, res2->inst->p[0][1]);
-				delete res2;
-			}
-			catch (exception exc) {
-				cerr << exc.what();
-			}
+			SolverControler * control = new SolverControler();
+			control->ImportInstances("../UnitTestPRD/instanceTest");
+			list<Instance*> list = control->getInstances();
+			auto it = list.begin();
+			std::advance(it, 0);
+			Instance* inst = *it;
+			size_t expected_size = 2;
+			Assert::AreEqual(expected_size, control->getInstances().size());
+			Assert::AreEqual(51, inst->p[0][0]);
+			std::advance(it, 1);
+			inst = *it;
+			Assert::AreEqual(47, inst->p[0][0]);
+			delete control;
 		}
 	};
 }
