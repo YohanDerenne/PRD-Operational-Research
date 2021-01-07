@@ -78,6 +78,12 @@ public :
 	Instance(string path);
 
 	/// <summary>
+	/// Constructeur de copie de la classe Instance
+	/// </summary>
+	/// <param name="inst2"></param>
+	Instance(Instance& inst2);
+
+	/// <summary>
 	/// Parse un fichier txt qui contient une instance
 	/// </summary>
 	/// <param name="path">Emplacement du fichier txt</param>

@@ -3,11 +3,13 @@
 SolverControler::SolverControler()
 {
     solver = NULL;
-    data = map<Instance, Result>();
+    results = list<Result>();
+    instances = list<Instance>();
 }
 
 void SolverControler::LaunchComputation()
 {
+    
 }
 
 bool SolverControler::ImportInstances(string dir)

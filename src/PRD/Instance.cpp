@@ -24,6 +24,20 @@ Instance::Instance(string path)
     Parse(path);
 }
 
+Instance::Instance(Instance& inst2)
+{
+	id = inst2.id;
+	n = inst2.n;
+	m = inst2.m;
+	p = inst2.p;
+	d = inst2.d;
+	t = inst2.t;
+	h_WIP = inst2.h_WIP;
+	h_FIN = inst2.h_FIN;
+	p_M = inst2.p_M;
+	c_V = inst2.c_V;
+}
+
 bool Instance::Parse(string path)
 {
 	ifstream file;
