@@ -27,6 +27,8 @@ public:
 	/// </summary>
 	SolverControler();
 
+	~SolverControler();
+
 	/// <summary>
 	/// Boucle principal permettant la résolution du probleme sur chaque instances importés
 	/// </summary>

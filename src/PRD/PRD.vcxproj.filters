@@ -42,6 +42,9 @@
     <ClCompile Include="SolverControler.cpp">
       <Filter>Fichiers sources\Control</Filter>
     </ClCompile>
+    <ClCompile Include="TabouSearch.cpp">
+      <Filter>Fichiers sources\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Instance.h">
@@ -54,6 +57,9 @@
       <Filter>Fichiers d%27en-tête\Control</Filter>
     </ClInclude>
     <ClInclude Include="Solver.h">
+      <Filter>Fichiers d%27en-tête\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="TabouSearch.h">
       <Filter>Fichiers d%27en-tête\Model</Filter>
     </ClInclude>
   </ItemGroup>

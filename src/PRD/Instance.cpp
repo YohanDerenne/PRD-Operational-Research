@@ -24,7 +24,7 @@ Instance::Instance(string path)
     Parse(path);
 }
 
-Instance::Instance(Instance& inst2)
+Instance::Instance(const Instance& inst2)
 {
 	id = inst2.id;
 	n = inst2.n;

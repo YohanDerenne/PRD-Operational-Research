@@ -43,6 +43,8 @@ public :
 	/// Constructeur de copie de la classe Resultat
 	/// </summary>
 	/// <param name="res2"></param>
-	Result(Result& res2);
+	Result(const Result& res2);
+
+	~Result();
 };
 

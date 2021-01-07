@@ -7,6 +7,12 @@ SolverControler::SolverControler()
     instances = list<Instance>();
 }
 
+SolverControler::~SolverControler()
+{
+    if (solver != NULL)
+        delete solver;
+}
+
 void SolverControler::LaunchComputation()
 {
     

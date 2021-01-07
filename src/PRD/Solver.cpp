@@ -29,6 +29,14 @@ Solver::Solver(Instance * instance)
 	setNewInstance(instance);
 }
 
+Solver::~Solver()
+{
+	if (res != NULL)
+		delete res;
+	if (inst != NULL)
+		delete inst;
+}
+
 void Solver::setNewInstance(Instance* instance)
 {
 	res = new Result(instance);

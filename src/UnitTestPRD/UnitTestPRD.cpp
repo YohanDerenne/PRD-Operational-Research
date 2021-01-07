@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "../PRD/Instance.cpp"
 #include <string>
+#include "../PRD/Result.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -183,6 +184,84 @@ namespace UnitTestPRD
 				Assert::Fail(L"Une exception d'argument invalide est attendu");
 			}
 			delete instance;
+		}
+
+		/// <summary>
+		/// Test le constructeur de copie de la classe Instance
+		/// </summary>
+		TEST_METHOD(TestCopyInstance)
+		{
+			Instance* inst1 = new Instance();
+			try
+			{
+				bool result = inst1->Parse("../UnitTestPRD/instanceTest/I_n6_id2.txt");
+				Instance* inst2 = new Instance(*inst1);
+				Assert::AreEqual(51, inst2->p[0][0]);
+				delete inst1;
+				Assert::AreEqual(24, inst2->p[0][1]);
+				delete inst2;
+			}
+			catch (exception exc) {
+				cerr << exc.what();
+			}
+		}
+	};
+
+	/// <summary>
+	/// Test les elements de la classe Result
+	/// </summary>
+	TEST_CLASS(UnitTestResult)
+	{
+	public:
+		/// <summary>
+		/// Test le constructeur de copie de la classe Result
+		/// </summary>
+		TEST_METHOD(TestCopyResult)
+		{
+			Instance* instance = new Instance();
+			try
+			{
+				bool result = instance->Parse("../UnitTestPRD/instanceTest/I_n6_id2.txt");
+				Result* res1 = new Result(instance);
+				Result* res2 = new Result(*res1);
+				//Assert::AreNotEqual(res1, res2);
+				Assert::AreEqual(51, res2->inst->p[0][0]);
+				delete res1;
+				Assert::AreEqual(24, res2->inst->p[0][1]);
+				delete res2;
+			}
+			catch (exception exc) {
+				cerr << exc.what();
+			}
+		}
+	};
+
+	/// <summary>
+	/// Test les elements de la classe Result
+	/// </summary>
+	TEST_CLASS(UnitTestSolverControler)
+	{
+	public:
+		/// <summary>
+		/// Test le constructeur de copie de la classe Result
+		/// </summary>
+		TEST_METHOD(TestCopyResult)
+		{
+			Instance* instance = new Instance();
+			try
+			{
+				bool result = instance->Parse("../UnitTestPRD/instanceTest/I_n6_id2.txt");
+				Result* res1 = new Result(instance);
+				Result* res2 = new Result(*res1);
+				//Assert::AreNotEqual(res1, res2);
+				Assert::AreEqual(51, res2->inst->p[0][0]);
+				delete res1;
+				Assert::AreEqual(24, res2->inst->p[0][1]);
+				delete res2;
+			}
+			catch (exception exc) {
+				cerr << exc.what();
+			}
 		}
 	};
 }

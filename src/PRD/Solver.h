@@ -7,7 +7,7 @@ using namespace std;
 
 class Solver
 {
-private:
+protected:
 	/// <summary>
 	/// Données contenant les résultats après la résolution
 	/// </summary>
@@ -116,6 +116,8 @@ public:
 	/// </summary>
 	Solver(Instance * instance);
 
+	~Solver();
+
 	/// <summary>
 	/// Reset les attributs en insérant une nouvelle instance
 	/// </summary>
@@ -126,6 +128,6 @@ public:
 	/// Abstract method to solve the problem
 	/// </summary>
 	/// <returns></returns>
-	virtual Result Solve() = 0;
+	virtual Result * Solve() = 0;
 };
 
