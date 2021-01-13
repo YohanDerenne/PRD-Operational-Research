@@ -263,5 +263,84 @@ namespace UnitTestPRD
 			Assert::AreEqual(47, inst->p[0][0]);
 			delete control;
 		}
+
+		TEST_METHOD(TestExportResults)
+		{
+			remove("../UnitTestPRD/resultTest/resultat.txt");
+			// Init
+			SolverControler* control = new SolverControler();
+			control->ImportInstances("../UnitTestPRD/instanceTest");
+
+			list<Instance*> list = control->getInstances();
+			auto it = list.begin();
+			std::advance(it, 0);
+			Instance* inst = *it;
+			Result* res1 = new Result(inst);
+			std::advance(it, 1);
+			inst = *it;
+			Result* res2 = new Result(inst);
+
+			res1->cout_FIN = 123;
+			res1->cout_retard = 456;
+			res1->cout_total = 626	;
+			res1->cout_WIP = 47;
+
+			res2->cout_FIN = 78;
+			res2->cout_retard = 98;
+			res2->cout_total = 231;
+			res2->cout_WIP = 55;
+
+			control->AddResult(res1);
+			control->AddResult(res2);
+
+			// Export
+			control->ExportResults("../UnitTestPRD/resultTest/resultat.txt");
+
+			// Check
+			ifstream file;
+			file.open("../UnitTestPRD/resultTest/resultat.txt");
+			if (!file) {
+				Assert::Fail(L"Ne retrouve le fichier résultat");
+			}
+
+			int id;
+			int n;
+			double ct;
+			double cwip;
+			double cfin;
+			double cr;
+
+			file >> id;
+			file >> n;
+			file >> ct;
+			file >> cwip;
+			file >> cfin;
+			file >> cr;
+			Assert::AreEqual(2,id);
+			Assert::AreEqual(6, n);
+			Assert::AreEqual(626.0, ct);
+			Assert::AreEqual(47.0, cwip);
+			Assert::AreEqual(123.0, cfin);
+			Assert::AreEqual(456.0, cr);
+
+			file >> id;
+			file >> n;
+			file >> ct;
+			file >> cwip;
+			file >> cfin;
+			file >> cr;
+			Assert::AreEqual(4, id);
+			Assert::AreEqual(8, n);
+			Assert::AreEqual(231.0, ct);
+			Assert::AreEqual(55.0, cwip);
+			Assert::AreEqual(78.0, cfin);
+			Assert::AreEqual(98.0, cr);
+
+			file.close();
+			
+			delete res1;
+			delete res2;
+			delete control;
+		}
 	};
 }

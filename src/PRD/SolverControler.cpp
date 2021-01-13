@@ -73,12 +73,13 @@ bool SolverControler::ImportInstances(string dir)
                 }
                 catch (exception exc) {
                     cout << "Error : " << exc.what();
+                    return false;
                 }
             }
         } while (FindNextFile(hFind, &data) != 0);
         FindClose(hFind);
     }
-    return false;
+    return true;
 }
 
 
@@ -105,9 +106,10 @@ bool SolverControler::ExportResults(string path)
 
     // Saving
     try {
+        string sep = " ";
         ofstream output(path);
         for (Result* res : results) {
-            output << res->inst->id << res->inst->n << res->cout_total << res->cout_WIP << res->cout_FIN << res->cout_retard;
+            output << res->inst->id << sep << res->inst->n << sep << res->cout_total << sep << res->cout_WIP << sep << res->cout_FIN << sep << res->cout_retard << endl;
         }
         output.close();
         return true;
