@@ -55,7 +55,13 @@ SolverControler::~SolverControler()
 
 void SolverControler::LaunchComputation()
 {
-    
+    if (solver != NULL && instances.size() != 0) {
+        for (Instance* inst : instances) {
+            solver->setNewInstance(inst);
+            Result* res = solver->Solve();
+            results.push_back(res);
+        }
+    }   
 }
 
 bool SolverControler::ImportInstances(string dir)
@@ -81,8 +87,6 @@ bool SolverControler::ImportInstances(string dir)
     }
     return true;
 }
-
-
 
 bool SolverControler::ExportResults(string path)
 {
@@ -118,5 +122,23 @@ bool SolverControler::ExportResults(string path)
         cout << e.what();
         return false;
     }
+}
+
+void SolverControler::Reset()
+{
+    if (solver != NULL)
+        delete solver;
+
+    for (Result* res : results) {
+        if (res != NULL)
+            delete res;
+    }
+    results.clear();
+
+    for (Instance* inst : instances) {
+        if (inst != NULL)
+            delete inst;
+    }
+    instances.clear();
 }
 

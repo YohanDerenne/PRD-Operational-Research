@@ -40,7 +40,7 @@ Solver::~Solver()
 void Solver::setNewInstance(Instance* instance)
 {
 	res = new Result(instance);
-	inst = instance;
+	inst = new Instance(*instance);
 
 	y = vector<vector<bool>>();
 	Z = vector<bool>();

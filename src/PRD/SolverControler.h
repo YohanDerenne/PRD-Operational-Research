@@ -48,6 +48,11 @@ public:
 	/// <returns>Status</returns>
 	bool ExportResults(string path);
 
+	/// <summary>
+	/// Reset les attributs de la classe
+	/// </summary>
+	void Reset();
+
 	// ================================== Get / Set =================================
 
 	const list<Instance*> getInstances() { return instances; }
