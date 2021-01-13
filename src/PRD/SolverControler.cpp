@@ -72,7 +72,7 @@ bool SolverControler::ImportInstances(string dir)
                     instances.push_back(inst);
                 }
                 catch (exception exc) {
-                    cout << "Error : " << exc.what();
+                    // cout << "Error : " << exc.what();
                     return false;
                 }
             }

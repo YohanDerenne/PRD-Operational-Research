@@ -59,7 +59,8 @@ bool Instance::Parse(string path)
 		file >> idCmd;
 		if (idCmd != i) {
 			file.close();
-			throw exception("Format du fichier invalide");
+			string msg = "ERREUR : Format du fichier invalide dans le fichier " + path + (". Il se peut que le problème soit avant le traitement de la commande #" + i);
+			throw exception(msg.c_str());
 			return false;
 		}
 

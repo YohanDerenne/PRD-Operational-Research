@@ -192,6 +192,41 @@ namespace UnitTestPRD
 		}
 
 		/// <summary>
+		/// Test si le parseur releve bien une exception sur des fichiers ou le format n'est pas bon
+		/// </summary>
+		TEST_METHOD(TestBadInstanceParse)
+		{
+			Instance* instance = new Instance();
+			try
+			{
+				bool result = instance->Parse("../UnitTestPRD/badInstanceTest/I_n6_id2.txt");
+				Assert::Fail(L"Une exception est attendu");
+			}
+			catch (const std::invalid_argument& ia) {
+				Assert::Fail(L"Une autre exception est attendu");
+			}
+			catch (const std::exception& exc)
+			{
+				cerr << exc.what();
+			}
+
+			try
+			{
+				bool result = instance->Parse("../UnitTestPRD/badInstanceTest/I_n8_id4.txt");
+				Assert::Fail(L"Une exception est attendu");
+			}
+			catch (const std::invalid_argument& ia) {
+				Assert::Fail(L"Une autre exception est attendu");
+			}
+			catch (const std::exception& exc)
+			{
+				cerr << exc.what();
+			}
+
+			delete instance;
+		}
+
+		/// <summary>
 		/// Test le constructeur de copie de la classe Instance
 		/// </summary>
 		TEST_METHOD(TestCopyInstance)
@@ -238,6 +273,7 @@ namespace UnitTestPRD
 			catch (exception exc) {
 				//cerr << exc.what();
 			}
+			delete instance;
 		}
 	};
 
@@ -250,7 +286,7 @@ namespace UnitTestPRD
 		TEST_METHOD(TestImportDirectory)
 		{
 			SolverControler * control = new SolverControler();
-			control->ImportInstances("../UnitTestPRD/instanceTest");
+			Assert::AreEqual(true,control->ImportInstances("../UnitTestPRD/instanceTest"));
 			list<Instance*> list = control->getInstances();
 			auto it = list.begin();
 			std::advance(it, 0);
@@ -294,7 +330,7 @@ namespace UnitTestPRD
 			control->AddResult(res2);
 
 			// Export
-			control->ExportResults("../UnitTestPRD/resultTest/resultat.txt");
+			Assert::AreEqual(true,control->ExportResults("../UnitTestPRD/resultTest/resultat.txt"));
 
 			// Check
 			ifstream file;
@@ -341,6 +377,30 @@ namespace UnitTestPRD
 			delete res1;
 			delete res2;
 			delete control;
+		}
+
+		TEST_METHOD(TestExportResultsBadPath)
+		{
+			SolverControler* control = new SolverControler();
+			Instance* inst = new Instance();
+			Result* res1 = new Result(inst);
+			control->AddResult(res1);
+			Assert::AreEqual(false, control->ExportResults("../UnitTestPRD/resultTest/resultat.data"));
+			Assert::AreEqual(false, control->ExportResults("../UnitTestPRD/resultTest/resultat"));
+			Assert::AreEqual(false, control->ExportResults("../UnitTestPRD/resultTest/"));
+			Assert::AreEqual(true, control->ExportResults("../UnitTestPRD/resultTest/resTmp.txt"));
+			Assert::AreEqual(false, control->ExportResults("../UnitTestPRD/resultTest/resTmp.txt"));
+			remove("../UnitTestPRD/resultTest/resTmp.txt");
+
+			delete control;
+			delete inst;
+			delete res1;
+		}
+
+		TEST_METHOD(TestImportDirWithBadFormat)
+		{
+			SolverControler* control = new SolverControler();
+			Assert::AreEqual(false, control->ImportInstances("../UnitTestPRD/BadInstanceTest"));
 		}
 	};
 }
