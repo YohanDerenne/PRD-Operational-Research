@@ -266,6 +266,7 @@ namespace UnitTestPRD
 				Result* res2 = new Result(*res1);
 				//Assert::AreNotEqual(res1, res2);
 				Assert::AreEqual(51, res2->inst->p[0][0]);
+				Assert::AreEqual(res1->IC_WIP, res2->IC_WIP);
 				delete res1;
 				Assert::AreEqual(24, res2->inst->p[0][1]);
 				delete res2;
@@ -316,15 +317,15 @@ namespace UnitTestPRD
 			inst = *it;
 			Result* res2 = new Result(inst);
 
-			res1->cout_FIN = 123;
-			res1->cout_retard = 456;
+			res1->IC_FIN = 123;
+			res1->PPC_M = 456;
 			res1->cout_total = 626	;
-			res1->cout_WIP = 47;
+			res1->IC_WIP = 47;
 
-			res2->cout_FIN = 78;
-			res2->cout_retard = 98;
+			res2->IC_FIN = 78;
+			res2->PPC_M = 98;
 			res2->cout_total = 231;
-			res2->cout_WIP = 55;
+			res2->IC_WIP = 55;
 
 			control->AddResult(res1);
 			control->AddResult(res2);

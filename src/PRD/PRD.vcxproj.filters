@@ -45,6 +45,9 @@
     <ClCompile Include="TabouSearch.cpp">
       <Filter>Fichiers sources\Model</Filter>
     </ClCompile>
+    <ClCompile Include="Solution.cpp">
+      <Filter>Fichiers sources\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Instance.h">
@@ -60,6 +63,9 @@
       <Filter>Fichiers d%27en-tête\Model</Filter>
     </ClInclude>
     <ClInclude Include="TabouSearch.h">
+      <Filter>Fichiers d%27en-tête\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Solution.h">
       <Filter>Fichiers d%27en-tête\Model</Filter>
     </ClInclude>
   </ItemGroup>

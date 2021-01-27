@@ -113,7 +113,7 @@ bool SolverControler::ExportResults(string path)
         string sep = " ";
         ofstream output(path);
         for (Result* res : results) {
-            output << res->inst->id << sep << res->inst->n << sep << res->cout_total << sep << res->cout_WIP << sep << res->cout_FIN << sep << res->cout_retard << endl;
+            output << res->inst->id << sep << res->inst->n << sep << res->cout_total << sep << res->IC_WIP << sep << res->IC_FIN << sep << res->PPC_M << endl;
         }
         output.close();
         return true;
