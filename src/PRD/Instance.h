@@ -27,7 +27,7 @@ public :
 	/// <summary>
 	/// Temps de production d'une tache i sur une machine j
 	/// </summary>
-	vector<vector<int>> p;
+	vector<vector<double>> p;
 
 	/// <summary>
 	/// Date de livraison d'une commande i

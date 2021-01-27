@@ -32,6 +32,20 @@ Result* Solution::Decode(Instance* inst)
     idle = sv3;
 
     // Dates de fin des jobs
+    vector<vector<double>> a(inst->m, std::vector<double>(inst->n, 0));
+    res->C[0][ordre[0]] = idle[0][ordre[0]] + inst->p[0][ordre[0]];
+    for (int k = 1; k < inst->m; k++) {
+        res->C[k][ordre[0]] = res->C[k-1][ordre[0]] + idle[k][ordre[0]] + inst->p[k][ordre[0]];
+    }
+    for (int i = 1; i < inst->m; i++) {
+        res->C[0][ordre[i]] = res->C[0][ordre[i-1]] + idle[0][ordre[i]] + inst->p[0][ordre[i]];
+    }
+    for (int i = 1; i < inst->m; i++) {
+        for (int k = 1; k < inst->n; k++) {
+            res->C[k][ordre[i]] = max(res->C[k - 1][ordre[i]] + idle[k][ordre[i]] + inst->p[k][ordre[i]],
+                res->C[k][ordre[i-1]] + idle[k][ordre[i]] + inst->p[k][ordre[i]]);
+        }
+    }
 
-    return nullptr;
+    return res;
 }

@@ -39,7 +39,7 @@ public :
 	/// <summary>
 	/// Date de fin de production de la tache j sur une machine m
 	/// </summary>
-	vector<vector<int>> C;
+	vector<vector<double>> C;
 
 	/// <summary>
 	/// Date de départ du véhicule k
