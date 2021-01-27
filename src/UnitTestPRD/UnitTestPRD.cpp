@@ -9,6 +9,8 @@
 #include "../PRD/SolverControler.cpp"
 #include "../PRD/Solver.h"
 #include "../PRD/Solver.cpp"
+#include "../PRD/Solution.h"
+#include "../PRD/Solution.cpp"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTestPRD
@@ -403,5 +405,48 @@ namespace UnitTestPRD
 			SolverControler* control = new SolverControler();
 			Assert::AreEqual(false, control->ImportInstances("../UnitTestPRD/BadInstanceTest"));
 		}
+	};
+
+	TEST_CLASS(UnitTestSolution)
+	{
+	public:
+		TEST_METHOD(TestDecode)
+		{
+			Instance* inst = new Instance();
+			inst->n = 5;
+			Solution sol;
+
+			sol.sv1.push_back(-0.8);
+			sol.sv1.push_back(3.7);
+			sol.sv1.push_back(-1.5);
+			sol.sv1.push_back(2.3);
+			sol.sv1.push_back(1.1);
+
+			sol.sv2.push_back(0.2);
+			sol.sv2.push_back(1.8);
+			sol.sv2.push_back(2.7);
+			sol.sv2.push_back(0.6);
+			sol.sv2.push_back(1.2);
+
+
+			Result* res = sol.Decode(inst);
+
+			Assert::AreEqual(1, sol.ordre[0]);
+			Assert::AreEqual(4, sol.ordre[1]);
+			Assert::AreEqual(0, sol.ordre[2]);
+			Assert::AreEqual(3, sol.ordre[3]);
+			Assert::AreEqual(2, sol.ordre[4]);
+
+			Assert::AreEqual(0, sol.affectV[0]);
+			Assert::AreEqual(2, sol.affectV[1]);
+			Assert::AreEqual(3, sol.affectV[2]);
+			Assert::AreEqual(1, sol.affectV[3]);
+			Assert::AreEqual(1, sol.affectV[4]);
+
+
+			delete res;
+			delete inst;
+		}
+
 	};
 }
