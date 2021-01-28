@@ -10,7 +10,7 @@ Instance::Instance()
 	id = -1;
 	n = 0;
 	m = 0;
-	p = vector<vector<int>>();
+	p = vector<vector<double>>();
 	d = vector<int>();
 	t = vector<vector<int>>();
 	h_WIP = vector<vector<int>>();
@@ -65,9 +65,9 @@ bool Instance::Parse(string path)
 		}
 
 		// Durées
-		vector<int> p_row;
+		vector<double> p_row;
 		for (int j = 0; j < m; j++) {
-			int duree;
+			double duree;
 			file >> duree;
 			p_row.push_back(duree);
 		}

@@ -49,11 +49,11 @@ namespace UnitTestPRD
 
 				// Commande 0
 				int numCmd = 0;
-				Assert::AreEqual(51, instance->p[numCmd][0]);
-				Assert::AreEqual(24, instance->p[numCmd][1]);
-				Assert::AreEqual(85, instance->p[numCmd][2]);
-				Assert::AreEqual(45, instance->p[numCmd][3]);
-				Assert::AreEqual(17, instance->p[numCmd][4]);
+				Assert::AreEqual(51.0, instance->p[numCmd][0]);
+				Assert::AreEqual(24.0, instance->p[numCmd][1]);
+				Assert::AreEqual(85.0, instance->p[numCmd][2]);
+				Assert::AreEqual(45.0, instance->p[numCmd][3]);
+				Assert::AreEqual(17.0, instance->p[numCmd][4]);
 				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
 				Assert::AreEqual(2, instance->h_WIP[numCmd][1]);
 				Assert::AreEqual(4, instance->h_WIP[numCmd][2]);
@@ -66,11 +66,11 @@ namespace UnitTestPRD
 
 				// Commande 1
 				numCmd = 1;
-				Assert::AreEqual(1, instance->p[numCmd][0]);
-				Assert::AreEqual(99, instance->p[numCmd][1]);
-				Assert::AreEqual(35, instance->p[numCmd][2]);
-				Assert::AreEqual(64, instance->p[numCmd][3]);
-				Assert::AreEqual(7, instance->p[numCmd][4]);
+				Assert::AreEqual(1.0, instance->p[numCmd][0]);
+				Assert::AreEqual(99.0, instance->p[numCmd][1]);
+				Assert::AreEqual(35.0, instance->p[numCmd][2]);
+				Assert::AreEqual(64.0, instance->p[numCmd][3]);
+				Assert::AreEqual(7.0, instance->p[numCmd][4]);
 				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
 				Assert::AreEqual(1, instance->h_WIP[numCmd][1]);
 				Assert::AreEqual(2, instance->h_WIP[numCmd][2]);
@@ -83,11 +83,11 @@ namespace UnitTestPRD
 
 				// Commande 2
 				numCmd = 2;
-				Assert::AreEqual(53, instance->p[numCmd][0]);
-				Assert::AreEqual(94, instance->p[numCmd][1]);
-				Assert::AreEqual(8, instance->p[numCmd][2]);
-				Assert::AreEqual(79, instance->p[numCmd][3]);
-				Assert::AreEqual(78, instance->p[numCmd][4]);
+				Assert::AreEqual(53.0, instance->p[numCmd][0]);
+				Assert::AreEqual(94.0, instance->p[numCmd][1]);
+				Assert::AreEqual(8.0, instance->p[numCmd][2]);
+				Assert::AreEqual(79.0, instance->p[numCmd][3]);
+				Assert::AreEqual(78.0, instance->p[numCmd][4]);
 				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
 				Assert::AreEqual(1, instance->h_WIP[numCmd][1]);
 				Assert::AreEqual(3, instance->h_WIP[numCmd][2]);
@@ -100,11 +100,11 @@ namespace UnitTestPRD
 
 				// Commande 3
 				numCmd = 3;
-				Assert::AreEqual(13, instance->p[numCmd][0]);
-				Assert::AreEqual(8, instance->p[numCmd][1]);
-				Assert::AreEqual(84, instance->p[numCmd][2]);
-				Assert::AreEqual(76, instance->p[numCmd][3]);
-				Assert::AreEqual(52, instance->p[numCmd][4]);
+				Assert::AreEqual(13.0, instance->p[numCmd][0]);
+				Assert::AreEqual(8.0, instance->p[numCmd][1]);
+				Assert::AreEqual(84.0, instance->p[numCmd][2]);
+				Assert::AreEqual(76.0, instance->p[numCmd][3]);
+				Assert::AreEqual(52.0, instance->p[numCmd][4]);
 				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
 				Assert::AreEqual(1, instance->h_WIP[numCmd][1]);
 				Assert::AreEqual(2, instance->h_WIP[numCmd][2]);
@@ -117,11 +117,11 @@ namespace UnitTestPRD
 
 				// Commande 4
 				numCmd = 4;
-				Assert::AreEqual(86, instance->p[numCmd][0]);
-				Assert::AreEqual(54, instance->p[numCmd][1]);
-				Assert::AreEqual(67, instance->p[numCmd][2]);
-				Assert::AreEqual(21, instance->p[numCmd][3]);
-				Assert::AreEqual(27, instance->p[numCmd][4]);
+				Assert::AreEqual(86.0, instance->p[numCmd][0]);
+				Assert::AreEqual(54.0, instance->p[numCmd][1]);
+				Assert::AreEqual(67.0, instance->p[numCmd][2]);
+				Assert::AreEqual(21.0, instance->p[numCmd][3]);
+				Assert::AreEqual(27.0, instance->p[numCmd][4]);
 				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
 				Assert::AreEqual(2, instance->h_WIP[numCmd][1]);
 				Assert::AreEqual(3, instance->h_WIP[numCmd][2]);
@@ -134,11 +134,11 @@ namespace UnitTestPRD
 
 				// Commande 5
 				numCmd = 5;
-				Assert::AreEqual(47, instance->p[numCmd][0]);
-				Assert::AreEqual(25, instance->p[numCmd][1]);
-				Assert::AreEqual(4, instance->p[numCmd][2]);
-				Assert::AreEqual(66, instance->p[numCmd][3]);
-				Assert::AreEqual(20, instance->p[numCmd][4]);
+				Assert::AreEqual(47.0, instance->p[numCmd][0]);
+				Assert::AreEqual(25.0, instance->p[numCmd][1]);
+				Assert::AreEqual(4.0, instance->p[numCmd][2]);
+				Assert::AreEqual(66.0, instance->p[numCmd][3]);
+				Assert::AreEqual(20.0, instance->p[numCmd][4]);
 				Assert::AreEqual(0, instance->h_WIP[numCmd][0]);
 				Assert::AreEqual(1, instance->h_WIP[numCmd][1]);
 				Assert::AreEqual(3, instance->h_WIP[numCmd][2]);
@@ -238,9 +238,9 @@ namespace UnitTestPRD
 			{
 				bool result = inst1->Parse("../UnitTestPRD/instanceTest/I_n6_id2.txt");
 				Instance* inst2 = new Instance(*inst1);
-				Assert::AreEqual(51, inst2->p[0][0]);
+				Assert::AreEqual(51.0, inst2->p[0][0]);
 				delete inst1;
-				Assert::AreEqual(24, inst2->p[0][1]);
+				Assert::AreEqual(24.0, inst2->p[0][1]);
 				delete inst2;
 			}
 			catch (exception exc) {
@@ -267,10 +267,10 @@ namespace UnitTestPRD
 				Result* res1 = new Result(instance);
 				Result* res2 = new Result(*res1);
 				//Assert::AreNotEqual(res1, res2);
-				Assert::AreEqual(51, res2->inst->p[0][0]);
+				Assert::AreEqual(51.0, res2->inst->p[0][0]);
 				Assert::AreEqual(res1->IC_WIP, res2->IC_WIP);
 				delete res1;
-				Assert::AreEqual(24, res2->inst->p[0][1]);
+				Assert::AreEqual(24.0, res2->inst->p[0][1]);
 				delete res2;
 			}
 			catch (exception exc) {
@@ -296,10 +296,10 @@ namespace UnitTestPRD
 			Instance* inst = *it;
 			size_t expected_size = 2;
 			Assert::AreEqual(expected_size, control->getInstances().size());
-			Assert::AreEqual(51, inst->p[0][0]);
+			Assert::AreEqual(51.0, inst->p[0][0]);
 			std::advance(it, 1);
 			inst = *it;
-			Assert::AreEqual(47, inst->p[0][0]);
+			Assert::AreEqual(47.0, inst->p[0][0]);
 			delete control;
 		}
 
@@ -413,7 +413,9 @@ namespace UnitTestPRD
 		TEST_METHOD(TestDecode)
 		{
 			Instance* inst = new Instance();
-			inst->n = 5;
+			inst->m = 3;
+			inst->n = 5;			
+			inst->p = vector<vector<double>>(inst->n, vector<double>(inst->m, 0.0));
 			Solution sol;
 
 			sol.sv1.push_back(-0.8);

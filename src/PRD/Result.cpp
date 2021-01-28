@@ -9,7 +9,7 @@ Result::Result(Instance* instance)
 	z = vector<vector<bool>>();
 	x = vector<vector<vector<bool>>>();
 	D_M = vector<int>();
-	C = vector<vector<int>>();
+	C = vector<vector<double>>();
 	F = vector<int>();
 	f = vector<int>();
 	PT_M = vector<unsigned int>();
