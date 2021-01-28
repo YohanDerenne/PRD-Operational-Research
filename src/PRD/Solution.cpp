@@ -1,4 +1,5 @@
 #include "Solution.h"
+#include <algorithm>
 
 Result* Solution::Decode(Instance* inst)
 {
@@ -29,7 +30,7 @@ Result* Solution::Decode(Instance* inst)
         affectV.push_back(round(sv2[i]));
     }
   
-    // No decode
+    // sv3 no predecode
     idle = sv3;
     idle = vector<vector<double>>(inst->n, vector<double>(inst->m, 0.0));
 
@@ -47,6 +48,19 @@ Result* Solution::Decode(Instance* inst)
             res->C[ordre[k]][i] = max(res->C[ordre[k-1]][i] + idle[ordre[k]][i] + inst->p[ordre[k]][i],
                 res->C[ordre[k]][i-1] + idle[ordre[k]][i] + inst->p[ordre[k]][i]);
         }
+    }
+
+    // Dates de départ des véhicules
+    res->V = *std::max_element(affectV.begin(),affectV.end());
+    res->F = vector<int>(res->V, -1);
+    for (int k = 0; k < res->V ; k++) {
+        vector<double> jobAffected;
+        for (int i = 0; i < inst->n; i++) {
+            if (affectV[i] == k) {
+                jobAffected.push_back(res->C[i][inst->m -1]);
+            }
+        }
+        res->F[k] = *max_element(jobAffected.begin(), jobAffected.end());
     }
 
     return res;
