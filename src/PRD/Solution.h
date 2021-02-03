@@ -10,7 +10,7 @@ public :
 	vector<vector<double>> sv3;
 
 	/// <summary>
-	/// Position de la tache j dans l'ordonnancement
+	/// Index de la tache qui se trouve à la position x de l'ordonnancement
 	/// </summary>
 	vector<int> ordre;
 	/// <summary>

@@ -93,7 +93,7 @@ Result* Solution::Decode(Instance* inst)
     res->IC = res->IC_WIP + res->IC_FIN;
 
     //Dates de livraison    
-    vector<int> lieuxDesservis;
+    vector<int> lieuDesservi;
     res->D_M = vector<double>(inst->n, -1);
     for (int k = 0; k < res->V; k++) {
         int lieu = 0; // depot
@@ -107,7 +107,7 @@ Result* Solution::Decode(Instance* inst)
                 if (res->z[i][k] == false) { // transporté par k
                     continue;
                 }
-                if (distMini > inst->t[lieu][l] && count(lieuxDesservis.begin(), lieuxDesservis.end(), l) == 0) { // Dist mini && non desservie
+                if (distMini > inst->t[lieu][l] && count(lieuDesservi.begin(), lieuDesservi.end(), l) == 0) { // Dist mini && non desservie
                     lieuPlusProche = l;
                     distMini = inst->t[lieu][l];
                 }
@@ -115,7 +115,7 @@ Result* Solution::Decode(Instance* inst)
             if (lieuPlusProche == -1)
                 continue;
 
-            lieuxDesservis.push_back(lieuPlusProche);
+            lieuDesservi.push_back(lieuPlusProche);
             res->D_M[lieuPlusProche] = dateCourante + inst->t[lieu][lieuPlusProche]; //TODO D manu ou 3pl?
             dateCourante += inst->t[lieu][lieuPlusProche];
             lieu = lieuPlusProche; // maj lieu   

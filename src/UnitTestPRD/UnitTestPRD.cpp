@@ -438,7 +438,7 @@ namespace UnitTestPRD
 			sol.sv2.push_back(0.6);
 			sol.sv2.push_back(1.2);
 
-			sol.sv3 = vector<vector<double>>(inst->m, vector<double>(inst->n, 0));
+			sol.sv3 = vector<vector<double>>(inst->m, vector<double>(inst->n, 1));
 
 			// === RESULT
 
@@ -455,6 +455,11 @@ namespace UnitTestPRD
 			Assert::AreEqual(3, sol.affectV[2]);
 			Assert::AreEqual(1, sol.affectV[3]);
 			Assert::AreEqual(1, sol.affectV[4]);
+
+			Assert::AreEqual(2.0, res->C[0][1]);
+			Assert::AreEqual(6.0, res->C[2][1]);
+			Assert::AreEqual(10.0, res->IC_WIP);
+			Assert::AreEqual(8.0, res->IC_FIN);
 
 			delete res;
 			delete inst;
