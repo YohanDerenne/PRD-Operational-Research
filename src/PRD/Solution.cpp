@@ -62,7 +62,8 @@ Result* Solution::Decode(Instance* inst)
     }
 
     // Dates de départ des véhicules    
-    res->F = vector<double>(res->V, -1);
+    res->F = vector<double>(inst->n, -1);
+    res->Z = vector<bool>(inst->n, false);
     for (int k = 0; k < res->V ; k++) {
         vector<double> jobAffected;
         for (int j = 0; j < inst->n; j++) {
@@ -71,6 +72,7 @@ Result* Solution::Decode(Instance* inst)
             }
         }
         res->F[k] = *max_element(jobAffected.begin(), jobAffected.end());
+        res->Z[k] = true; // vehicule utilisé
     }
 
     // Dates de départ des taches
@@ -91,6 +93,7 @@ Result* Solution::Decode(Instance* inst)
         res->IC_FIN = (res->f[j] - res->C[inst->m-1][j]) * inst->h_FIN[j];
     }
     res->IC = res->IC_WIP + res->IC_FIN;
+    res->VC = inst->c_V * res->V;
 
     //Dates de livraison    
     vector<int> lieuDesservi;
@@ -121,6 +124,41 @@ Result* Solution::Decode(Instance* inst)
             lieu = lieuPlusProche; // maj lieu   
         }            
     }
+
+    // y et x pour l'ordonnancement 
+    res->y = vector<vector<bool>>(inst->n, vector<bool>(inst->n, false));
+    res->x = vector<vector<vector<bool>>>(inst->n,vector<vector<bool>>(inst->n, vector<bool>(inst->n, false)));
+    for (int i = 0; i < inst->n; i++) {
+        for (int j = 0; j < inst->n; j++) {
+            int id1;
+            int id2;
+            for (int k = 0; k < inst->n; k++) {
+                if (ordre[k] == i)
+                    id1 = k;
+                if (ordre[k] == j)
+                    id2 = k;
+            }
+            if (id1 < id2) 
+                res->y[i][j] = true;
+            else
+                res->y[i][j] = false;
+
+            if (affectV[i] == affectV[j] && res->D_M[i] < res->D_M[j]) // TODO D_M ou D_3PL
+                res->x[i][j][affectV[i]] = true;            
+        }
+    }
+
+    // retard
+    res->PT_M = vector<double>(inst->n, 0);
+    res->PPC_M = 0;
+    for (int j = 0; j < inst->n; j++) {
+        res->PT_M[j] = max(0.0, res->D_M[j] - inst->d[j]); // TODO D_M D_3PL
+        res->PPC_M += inst->p_M[j] * res->PT_M[j];
+    }
+
+
+    // Cout total
+    res->cout_total = res->PPC_M + res->IC + res->VC;
 
     return res;
 }

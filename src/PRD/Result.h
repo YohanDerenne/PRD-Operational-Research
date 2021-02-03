@@ -93,7 +93,7 @@ public :
 	/// <summary>
 	/// Cout final des véhicules
 	/// </summary>
-	double VC;
+	int VC;
 
 	double cout_total;
 

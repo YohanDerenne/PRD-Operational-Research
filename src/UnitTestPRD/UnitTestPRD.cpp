@@ -418,9 +418,12 @@ namespace UnitTestPRD
 			inst->m = 3;
 			inst->n = 5;			
 			inst->p = vector<vector<double>>(inst->m, vector<double>(inst->n, 1));
+			inst->d = vector<int>(inst->n, 13);
 			inst->h_WIP = vector<vector<int>>(inst->m, vector<int>(inst->n, 1));
 			inst->t = vector<vector<int>>(inst->m, vector<int>(inst->n, 1));
+			inst->p_M = vector<int>(inst->n, 1);
 			inst->h_FIN = vector<int>(inst->n, 2);
+			inst->c_V = 5;
 
 			// === SOLUTION
 
@@ -460,6 +463,16 @@ namespace UnitTestPRD
 			Assert::AreEqual(6.0, res->C[2][1]);
 			Assert::AreEqual(10.0, res->IC_WIP);
 			Assert::AreEqual(8.0, res->IC_FIN);
+
+			Assert::AreEqual(10.0, res->F[0]);
+			Assert::AreEqual(12.0, res->F[1]);
+			Assert::AreEqual(6.0, res->F[2]);
+			Assert::AreEqual(14.0, res->F[3]);
+
+			Assert::AreEqual(18.0, res->IC);
+			Assert::AreEqual(3.0, res->PPC_M);
+			Assert::AreEqual(20, res->VC);
+			Assert::AreEqual(41.0, res->cout_total); 
 
 			delete res;
 			delete inst;
