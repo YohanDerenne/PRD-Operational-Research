@@ -412,10 +412,18 @@ namespace UnitTestPRD
 	public:
 		TEST_METHOD(TestDecode)
 		{
+			// === INSTANCE
+
 			Instance* inst = new Instance();
 			inst->m = 3;
 			inst->n = 5;			
-			inst->p = vector<vector<double>>(inst->n, vector<double>(inst->m, 0.0));
+			inst->p = vector<vector<double>>(inst->m, vector<double>(inst->n, 1));
+			inst->h_WIP = vector<vector<int>>(inst->m, vector<int>(inst->n, 1));
+			inst->t = vector<vector<int>>(inst->m, vector<int>(inst->n, 1));
+			inst->h_FIN = vector<int>(inst->n, 2);
+
+			// === SOLUTION
+
 			Solution sol;
 
 			sol.sv1.push_back(-0.8);
@@ -430,6 +438,9 @@ namespace UnitTestPRD
 			sol.sv2.push_back(0.6);
 			sol.sv2.push_back(1.2);
 
+			sol.sv3 = vector<vector<double>>(inst->m, vector<double>(inst->n, 0));
+
+			// === RESULT
 
 			Result* res = sol.Decode(inst);
 
@@ -444,7 +455,6 @@ namespace UnitTestPRD
 			Assert::AreEqual(3, sol.affectV[2]);
 			Assert::AreEqual(1, sol.affectV[3]);
 			Assert::AreEqual(1, sol.affectV[4]);
-
 
 			delete res;
 			delete inst;

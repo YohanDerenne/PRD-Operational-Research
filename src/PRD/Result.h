@@ -34,7 +34,7 @@ public :
 	/// <summary>
 	/// Estimation de la date de livraison de la tâche j
 	/// </summary>
-	vector<int> D_M;
+	vector<double> D_M;
 
 	/// <summary>
 	/// Date de fin de production de la tache j sur une machine m
@@ -44,17 +44,17 @@ public :
 	/// <summary>
 	/// Date de départ du véhicule k
 	/// </summary>
-	vector<int> F;
+	vector<double> F;
 
 	/// <summary>
 	/// Date de départ de la tache j
 	/// </summary>
-	vector<int> f;
+	vector<double> f;
 
 	/// <summary>
 	/// Estimation du retard pour la tache j pour le producteur
 	/// </summary>
-	vector<unsigned int> PT_M;
+	vector<double> PT_M;
 
 	/// <summary>
 	/// Cout d'inventaire total en cours de production
@@ -84,11 +84,11 @@ public :
 	/// <summary>
 	/// Date de livraison de la tache j
 	/// </summary>
-	vector<int> D_3PL;
+	vector<double> D_3PL;
 	/// <summary>
 	/// Retard de la tache J
 	/// </summary>
-	vector<int> T_M;
+	vector<double> T_M;
 
 	/// <summary>
 	/// Cout final des véhicules
