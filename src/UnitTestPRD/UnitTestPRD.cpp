@@ -420,8 +420,8 @@ namespace UnitTestPRD
 			inst->p = vector<vector<double>>(inst->m, vector<double>(inst->n, 1));
 			inst->d = vector<int>(inst->n, 13);
 			inst->h_WIP = vector<vector<int>>(inst->m, vector<int>(inst->n, 1));
-			inst->t = vector<vector<int>>(inst->m, vector<int>(inst->n, 1));
-			inst->p_M = vector<int>(inst->n, 1);
+			inst->t = vector<vector<int>>(inst->n+2, vector<int>(inst->n+2, 1));
+			inst->p_M = vector<int>(inst->n, 3);
 			inst->h_FIN = vector<int>(inst->n, 2);
 			inst->c_V = 5;
 
@@ -447,11 +447,11 @@ namespace UnitTestPRD
 
 			Result* res = sol.Decode(inst);
 
-			Assert::AreEqual(1, sol.ordre[0]);
-			Assert::AreEqual(4, sol.ordre[1]);
-			Assert::AreEqual(0, sol.ordre[2]);
+			Assert::AreEqual(2, sol.ordre[0]);
+			Assert::AreEqual(0, sol.ordre[1]);
+			Assert::AreEqual(4, sol.ordre[2]);
 			Assert::AreEqual(3, sol.ordre[3]);
-			Assert::AreEqual(2, sol.ordre[4]);
+			Assert::AreEqual(1, sol.ordre[4]);
 
 			Assert::AreEqual(0, sol.affectV[0]);
 			Assert::AreEqual(2, sol.affectV[1]);
@@ -459,20 +459,97 @@ namespace UnitTestPRD
 			Assert::AreEqual(1, sol.affectV[3]);
 			Assert::AreEqual(1, sol.affectV[4]);
 
-			Assert::AreEqual(2.0, res->C[0][1]);
-			Assert::AreEqual(6.0, res->C[2][1]);
+			Assert::AreEqual(10.0, res->C[0][1]);
+			Assert::AreEqual(14.0, res->C[2][1]);
 			Assert::AreEqual(10.0, res->IC_WIP);
-			Assert::AreEqual(8.0, res->IC_FIN);
+			Assert::AreEqual(4.0, res->IC_FIN);
+
+			Assert::AreEqual(8.0, res->F[0]);
+			Assert::AreEqual(12.0, res->F[1]);
+			Assert::AreEqual(14.0, res->F[2]);
+			Assert::AreEqual(6.0, res->F[3]);
+
+			Assert::AreEqual(14.0, res->IC);
+			Assert::AreEqual(9.0, res->PPC_M);
+			Assert::AreEqual(20, res->VC);
+			Assert::AreEqual(43.0, res->cout_total); 
+
+			delete res;
+			delete inst;
+		}
+
+		TEST_METHOD(TestDecode2)
+		{
+			// === INSTANCE
+
+			Instance* inst = new Instance();
+			inst->m = 3;
+			inst->n = 5;
+			inst->p = vector<vector<double>>(inst->m, vector<double>(inst->n, 1));
+			inst->d = vector<int>(inst->n, 13);
+			inst->h_WIP = vector<vector<int>>(inst->m, vector<int>(inst->n, 1));
+			inst->t = vector<vector<int>>(inst->n+2, vector<int>(inst->n+2, 1));
+			inst->p_M = vector<int>(inst->n, 1);
+			inst->h_FIN = vector<int>(inst->n, 2);
+			inst->c_V = 5;
+
+			// === SOLUTION
+
+			Solution sol;
+
+			sol.sv1.push_back(-0.8);
+			sol.sv1.push_back(3.7);
+			sol.sv1.push_back(-1.5);
+			sol.sv1.push_back(2.3);
+			sol.sv1.push_back(1.1);
+
+			sol.sv2.push_back(0.2);
+			sol.sv2.push_back(1.8);
+			sol.sv2.push_back(2.7);
+			sol.sv2.push_back(0.6);
+			sol.sv2.push_back(1.2);
+
+			sol.sv3 = vector<vector<double>>(inst->m, vector<double>(inst->n, 0));
+
+			// Modif
+			sol.sv3[0][2] = 1;
+			sol.sv3[1][2] = 2;
+			sol.sv3[2][2] = 1;
+			sol.sv3[1][0] = 1;
+			inst->h_WIP[1][0] = 2;
+			inst->p[1][2] = 3;
+			inst->d[0] = 7;
+			inst->t[3+2][4+2] = 3;
+			inst->t[4+2][3+2] = 3;
+			inst->t[0][0+2] = 2;
+			inst->t[0+2][0] = 2;
+			inst->p_M[1] = 4;
+			inst->h_FIN[4] = 1;
+
+			// === RESULT
+
+			Result* res = sol.Decode(inst);
+
+			Assert::AreEqual(2, sol.ordre[0]);
+			Assert::AreEqual(0, sol.ordre[1]);
+			Assert::AreEqual(4, sol.ordre[2]);
+			Assert::AreEqual(3, sol.ordre[3]);
+			Assert::AreEqual(1, sol.ordre[4]);
 
 			Assert::AreEqual(10.0, res->F[0]);
 			Assert::AreEqual(12.0, res->F[1]);
-			Assert::AreEqual(6.0, res->F[2]);
-			Assert::AreEqual(14.0, res->F[3]);
+			Assert::AreEqual(13.0, res->F[2]);
+			Assert::AreEqual(9.0, res->F[3]);
+			Assert::AreEqual(-1.0, res->F[4]);
 
-			Assert::AreEqual(18.0, res->IC);
-			Assert::AreEqual(3.0, res->PPC_M);
+			Assert::AreEqual(28.0, res->IC_WIP);
+			Assert::AreEqual(1.0, res->IC_FIN);
+			Assert::AreEqual(29.0, res->IC);
+
+			Assert::AreEqual(12.0, res->PPC_M);
+			
 			Assert::AreEqual(20, res->VC);
-			Assert::AreEqual(41.0, res->cout_total); 
+			Assert::AreEqual(29.0+12.0+20.0, res->cout_total);
 
 			delete res;
 			delete inst;

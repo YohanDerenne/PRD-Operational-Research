@@ -21,7 +21,7 @@ Result* Solution::Decode(Instance* inst)
                 index = i;
             }
         }
-        ordre[index] = pos;
+        ordre[pos] = index;
         tmpSv1[index] = HV;
     }
 
@@ -86,7 +86,7 @@ Result* Solution::Decode(Instance* inst)
     res->IC_FIN = 0;
     for (int j = 0; j < inst->n; j++) {
         for (int i = 0; i < inst->m - 1; i++) {
-            res->IC_WIP += (res->C[i + 1][j] - inst->p[i + 1][j] - res->C[i][j]) * inst->h_WIP[i][j];
+            res->IC_WIP += (res->C[i + 1][j] - inst->p[i + 1][j] - res->C[i][j]) * inst->h_WIP[i+1][j];
         }
     }
     for (int j = 0; j < inst->n; j++) {
@@ -99,17 +99,23 @@ Result* Solution::Decode(Instance* inst)
     vector<int> lieuDesservi;
     res->D_M = vector<double>(inst->n, -1);
     for (int k = 0; k < res->V; k++) {
-        int lieu = 0; // depot
+        int lieu = 0; // 0 = depot prod , 1 = depot distrib, autres = lieu de livraison des cmd
         double dateCourante = res->F[k];
 
         for (int i = 0; i < inst->n; i++) {
+            if (res->z[i][k] == false) { // pas transporté par k
+                continue;
+            }
+
             //PPV
             int lieuPlusProche = -1;
             int distMini = HV;
-            for (int l = 0; l < inst->n; l++) {
-                if (res->z[i][k] == false) { // transporté par k
+
+            for (int l = 2; l < inst->n + 2; l++) { // à partir de 2 car avant on a les depot prod et distri
+                if (res->z[l-2][k] == false) { // pas transporté par k
                     continue;
                 }
+                
                 if (distMini > inst->t[lieu][l] && count(lieuDesservi.begin(), lieuDesservi.end(), l) == 0) { // Dist mini && non desservie
                     lieuPlusProche = l;
                     distMini = inst->t[lieu][l];
@@ -119,7 +125,7 @@ Result* Solution::Decode(Instance* inst)
                 continue;
 
             lieuDesservi.push_back(lieuPlusProche);
-            res->D_M[lieuPlusProche] = dateCourante + inst->t[lieu][lieuPlusProche]; //TODO D manu ou 3pl?
+            res->D_M[lieuPlusProche-2] = dateCourante + inst->t[lieu][lieuPlusProche]; //TODO D manu ou 3pl?
             dateCourante += inst->t[lieu][lieuPlusProche];
             lieu = lieuPlusProche; // maj lieu   
         }            
