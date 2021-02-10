@@ -6,9 +6,10 @@ Solver::Solver()
 	inst = NULL;	
 }
 
-Solver::Solver(Instance * instance)
+Solver::Solver(Instance * instance, double nbSec)
 {
 	setNewInstance(instance);
+	dureeMax = nbSec;
 }
 
 Solver::~Solver()
@@ -21,8 +22,10 @@ Solver::~Solver()
 
 void Solver::setNewInstance(Instance* instance)
 {
-	delete best;
-	delete inst;
-	best = new Result(instance);
+	if (best != NULL)
+		delete best;
+	if (inst != NULL)
+		delete inst;
+	best = NULL;
 	inst = new Instance(*instance);
 }

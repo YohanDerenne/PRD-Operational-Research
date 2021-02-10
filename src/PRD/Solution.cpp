@@ -166,5 +166,10 @@ Result* Solution::Decode(Instance* inst)
     // Cout total
     res->cout_total = res->PPC_M + res->IC + res->VC;
 
+    // Save
+    if (resultatDecode != NULL)
+        delete resultatDecode;
+    resultatDecode = new Result(*res);
+
     return res;
 }

@@ -141,16 +141,20 @@
   <ItemGroup>
     <ClCompile Include="Instance.cpp" />
     <ClCompile Include="PRD.cpp" />
+    <ClCompile Include="PSO.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="Solution.cpp" />
+    <ClCompile Include="SolutionPSO.cpp" />
     <ClCompile Include="Solver.cpp" />
     <ClCompile Include="SolverControler.cpp" />
     <ClCompile Include="TabouSearch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Instance.h" />
+    <ClInclude Include="PSO.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Solution.h" />
+    <ClInclude Include="SolutionPSO.h" />
     <ClInclude Include="Solver.h" />
     <ClInclude Include="SolverControler.h" />
     <ClInclude Include="TabouSearch.h" />

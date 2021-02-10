@@ -5,8 +5,17 @@
 class Solution
 {
 public :
+	/// <summary>
+	/// Vecteur qui contient l'ordonnacement
+	/// </summary>
 	vector<double> sv1;
+	/// <summary>
+	/// Vecteur qui contient l'affectation des véhicules
+	/// </summary>
 	vector<double> sv2;
+	/// <summary>
+	/// Vecteur qui contient les temps morts
+	/// </summary>
 	vector<vector<double>> sv3;
 
 	/// <summary>
@@ -21,6 +30,8 @@ public :
 	/// Durée d'attente d'une tache j sur une machine i
 	/// </summary>
 	vector<vector<double>> idle;
+
+	Result* resultatDecode;
 
 	/// <summary>
 	/// Decode les vecteurs de la solutions et renvoie les résultats

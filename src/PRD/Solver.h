@@ -18,6 +18,12 @@ protected:
 	/// </summary>
 	Instance * inst;
 
+
+	/// <summary>
+	/// Condiation d'arrêt de la PSO. Durée maximum de traitement en secondes
+	/// </summary>
+	double dureeMax;
+
 public:
 
 
@@ -31,7 +37,7 @@ public:
 	/// <summary>
 	/// Constructeur de la classe Solver
 	/// </summary>
-	Solver(Instance * instance);
+	Solver(Instance * instance, double nbSec);
 
 	~Solver();
 
