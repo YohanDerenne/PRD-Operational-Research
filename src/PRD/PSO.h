@@ -40,5 +40,7 @@ public:
     void CalculCrowdingDistance();
 
     SolutionPSO ChercherMeilleurVoisin(SolutionPSO sol);
+
+    SolutionPSO GetRandomParticuleWithCD();
 };
 

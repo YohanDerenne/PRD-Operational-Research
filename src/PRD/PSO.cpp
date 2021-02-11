@@ -1,4 +1,6 @@
 #include "PSO.h"
+#include <random>
+#include <cassert>
 
 
 double generateDouble(double inf, double sup) {
@@ -31,6 +33,8 @@ Result PSO::Solve()
 		// Pour chaque particule
 		for (SolutionPSO particule : particules) {
 			// Selectionner deux particules aléatoirement avec le poids CD
+			SolutionPSO randParticuleA = GetRandomParticuleWithCD();
+			SolutionPSO randParticuleB = GetRandomParticuleWithCD();
 
 			// Mise à jour de la velocitésV ppuis de la positionXpde la particule 
 
@@ -130,6 +134,21 @@ void PSO::CalculCrowdingDistance()
 SolutionPSO PSO::ChercherMeilleurVoisin(SolutionPSO sol)
 {
 	return sol;
+}
+
+SolutionPSO PSO::GetRandomParticuleWithCD()
+{
+	double poidsTotal = 0;
+	for (int i = 0; i < nbPart; i++) {
+		poidsTotal += particules[i].CDcoef;
+	}
+	double rnd = generateDouble(0, poidsTotal);
+	for (int i = 0; i < nbPart; i++) {
+		if (rnd < particules[i].CDcoef)
+			return  particules[i];
+		rnd -= particules[i].CDcoef;
+	}
+	assert(!"should never get here");
 }
 
 
