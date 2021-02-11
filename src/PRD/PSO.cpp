@@ -31,6 +31,7 @@ Result PSO::Solve()
 		CalculCrowdingDistance();
 
 		// Pour chaque particule
+		int idParticule = 0;
 		for (SolutionPSO particule : particules) {
 			// Selectionner deux particules aléatoirement avec le poids CD
 			SolutionPSO randParticuleA = GetRandomParticuleWithCD();
@@ -72,11 +73,18 @@ Result PSO::Solve()
 			}
 
 			// Decoder la solution complete de la particule
+			particule.Decode();
 
 			// Améliorer la qualité de la particule basé sur des propriétés dérivés voisines
+			particule = ChercherMeilleurVoisin(particule);
+			particules[idParticule] = particule; // save in particule vector
 
 			//Garder la solution trouvée si celle-ci est la meilleure jamais trouvée
+			if (particule.resultatDecode.cout_total < bestParticule.resultatDecode.cout_total) {
+				bestParticule = particule;
+			}
 
+			idParticule++;
 		}
 
 		// Mise à jour du temps écoulé
