@@ -36,7 +36,40 @@ Result PSO::Solve()
 			SolutionPSO randParticuleA = GetRandomParticuleWithCD();
 			SolutionPSO randParticuleB = GetRandomParticuleWithCD();
 
-			// Mise à jour de la velocitésV ppuis de la positionXpde la particule 
+			// Mise à jour de la velocitésV 
+			double lambda1 = generateDouble(0, 1);
+			double lambda2 = generateDouble(0, 1);
+			double lambda3 = generateDouble(0, 1);
+			for (int d = 0; d < particule.velSv1.size(); d++) {
+				particule.velSv1[d] = lambda1 * particule.velSv1[d] + 
+					lambda2 * (randParticuleA.sv1[d] - particule.sv1[d]) + 
+					lambda3 * (randParticuleB.sv1[d] - particule.sv1[d]);
+			}
+			for (int d = 0; d < particule.velSv2.size(); d++) {
+				particule.velSv2[d] = lambda1 * particule.velSv2[d] +
+					lambda2 * (randParticuleA.sv2[d] - particule.sv2[d]) +
+					lambda3 * (randParticuleB.sv2[d] - particule.sv2[d]);
+			}
+			for (int i = 0; i < particule.velSv3.size(); i++) {
+				for (int j = 0; j < particule.velSv3[i].size(); j++) {
+					particule.velSv3[i][j] = lambda1 * particule.velSv3[i][j] +
+						lambda2 * (randParticuleA.sv3[i][j] - particule.sv3[i][j]) +
+						lambda3 * (randParticuleB.sv3[i][j] - particule.sv3[i][j]);
+				}
+			}			
+
+			// Mise à jour de la position des particules
+			for (int d = 0; d < particule.sv1.size(); d++) {
+				particule.sv1[d] = particule.sv1[d] + particule.velSv1[d];
+			}
+			for (int d = 0; d < particule.sv2.size(); d++) {
+				particule.sv2[d] = particule.sv2[d] + particule.velSv2[d];
+			}
+			for (int i = 0; i < particule.sv3.size(); i++) {
+				for (int j = 0; j < particule.sv3[i].size(); j++) {
+					particule.sv3[i][j] = particule.sv3[i][j] + particule.velSv3[i][j];
+				}
+			}
 
 			// Decoder la solution complete de la particule
 
