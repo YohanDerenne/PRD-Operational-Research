@@ -415,7 +415,7 @@ namespace UnitTestPRD
 
 			// === SOLUTION
 
-			Solution sol = Solution();
+			Solution sol = Solution(inst);
 
 			sol.sv1.push_back(-0.8);
 			sol.sv1.push_back(3.7);
@@ -433,7 +433,7 @@ namespace UnitTestPRD
 
 			// === RESULT
 
-			Result res = sol.Decode(inst);
+			Result res = sol.Decode();
 
 			Assert::AreEqual(2, sol.ordre[0]);
 			Assert::AreEqual(0, sol.ordre[1]);
@@ -479,9 +479,20 @@ namespace UnitTestPRD
 			inst.h_FIN = vector<int>(inst.n, 2);
 			inst.c_V = 5;
 
+			// modif
+			inst.h_WIP[1][0] = 2;
+			inst.p[1][2] = 3;
+			inst.d[0] = 7;
+			inst.t[3 + 2][4 + 2] = 3;
+			inst.t[4 + 2][3 + 2] = 3;
+			inst.t[0][0 + 2] = 2;
+			inst.t[0 + 2][0] = 2;
+			inst.p_M[1] = 4;
+			inst.h_FIN[4] = 1;
+
 			// === SOLUTION
 
-			Solution sol;
+			Solution sol = Solution(inst);
 
 			sol.sv1.push_back(-0.8);
 			sol.sv1.push_back(3.7);
@@ -502,19 +513,11 @@ namespace UnitTestPRD
 			sol.sv3[1][2] = 2;
 			sol.sv3[2][2] = 1;
 			sol.sv3[1][0] = 1;
-			inst.h_WIP[1][0] = 2;
-			inst.p[1][2] = 3;
-			inst.d[0] = 7;
-			inst.t[3+2][4+2] = 3;
-			inst.t[4+2][3+2] = 3;
-			inst.t[0][0+2] = 2;
-			inst.t[0+2][0] = 2;
-			inst.p_M[1] = 4;
-			inst.h_FIN[4] = 1;
+			
 
 			// === RESULT
 
-			Result res = sol.Decode(inst);
+			Result res = sol.Decode();
 
 			Assert::AreEqual(2, sol.ordre[0]);
 			Assert::AreEqual(0, sol.ordre[1]);

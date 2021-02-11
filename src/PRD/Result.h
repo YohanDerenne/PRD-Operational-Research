@@ -104,9 +104,6 @@ public :
 	/// </summary>
 	/// <param name="instance"></param>
 	Result(Instance instance);
-
-	Result();
-
 	~Result();
 };
 

@@ -38,8 +38,10 @@ public :
 	/// </summary>
 	/// <param name="inst"></param>
 	/// <returns></returns>
-	Result Decode(Instance inst);
+	Result Decode();
 
-	Solution();
+	Instance inst;
+
+	Solution(Instance instance);
 };
 

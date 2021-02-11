@@ -8,7 +8,7 @@ private:
     /// <summary>
     /// Meilleur solution trouvée
     /// </summary>
-    SolutionPSO bestSol;
+    SolutionPSO bestParticule;
 
     /// <summary>
     /// Nombre de particules
@@ -18,7 +18,7 @@ private:
     /// <summary>
     /// Particules du système [0;nbPart-1]
     /// </summary>
-    vector<SolutionPSO> paticules;
+    vector<SolutionPSO> particules;
 
 public:
     /// <summary>
@@ -36,6 +36,6 @@ public:
 
     void CalculCrowdingDistance();
 
-    SolutionPSO ChercherMeilleurVoisin();
+    SolutionPSO ChercherMeilleurVoisin(SolutionPSO sol);
 };
 

@@ -1,15 +1,13 @@
 #include "Solver.h"
 
-Solver::Solver()
+Solver::Solver() : best(Instance())
 {
-	best = Result(Instance());
 	inst = Instance();
 	dureeMax = 0;
 }
 
-Solver::Solver(Instance instance, double nbSec)
+Solver::Solver(Instance instance, double nbSec) : best(instance)
 {
-	best = Result(instance);
 	inst = instance;
 	dureeMax = nbSec;
 }

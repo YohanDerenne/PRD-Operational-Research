@@ -1,12 +1,13 @@
 #include "Solution.h"
 #include <algorithm>
 
-Solution::Solution()
+Solution::Solution(Instance instance) : resultatDecode(instance)
 {
-    resultatDecode = Result(Instance());
+    inst = instance;
 }
 
-Result Solution::Decode(Instance inst)
+
+Result Solution::Decode()
 {
     resultatDecode = Result(inst);
     int HV = 999999999;
@@ -173,3 +174,4 @@ Result Solution::Decode(Instance inst)
 
     return resultatDecode;
 }
+

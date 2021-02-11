@@ -23,5 +23,7 @@ public :
     /// Coefficient de la Crowding Distance
     /// </summary>
     double CDcoef;
+
+    SolutionPSO(Instance inst);
 };
 

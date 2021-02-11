@@ -23,6 +23,7 @@ Result::Result(Instance instance)
 	VC = 0;
 }
 
+/*
 Result::Result()
 {
 	inst = Instance();
@@ -45,6 +46,7 @@ Result::Result()
 	T_M = vector<double>();
 	VC = 0;
 }
+*/
 
 /*
 Result::Result(const Result& res2)
