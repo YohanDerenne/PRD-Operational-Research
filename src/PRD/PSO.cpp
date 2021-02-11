@@ -1,5 +1,5 @@
 #include "PSO.h"
-#include <time.h>
+
 
 double generateDouble(double inf, double sup) {
 	double f = (double)rand() / RAND_MAX;
@@ -102,8 +102,29 @@ void PSO::Init()
 
 }
 
+bool comparator(SolutionPSO i, SolutionPSO j) { return (i.resultatDecode.cout_total < j.resultatDecode.cout_total); }
+
 void PSO::CalculCrowdingDistance()
 {
+	// Decoder chaque particule et mettre les CD à 0
+	for (SolutionPSO particule : particules) {
+		particule.Decode();
+		particule.CDcoef = 0;
+	}
+
+	// Trier les particules par ordre croissant
+	sort(particules.begin(), particules.end(), comparator);
+
+	double fmin = particules[0].resultatDecode.cout_total;
+	double fmax = particules[nbPart - 1].resultatDecode.cout_total;
+
+	particules[0].CDcoef += 1;
+	particules[nbPart - 1].CDcoef += 1;
+
+	for (int i = 1; i < nbPart - 2; i++) {
+		particules[i].CDcoef = particules[i].CDcoef + 
+			(particules[i + 1].resultatDecode.cout_total - particules[i - 1].resultatDecode.cout_total) / (fmax - fmin);
+	}
 }
 
 SolutionPSO PSO::ChercherMeilleurVoisin(SolutionPSO sol)

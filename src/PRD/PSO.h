@@ -1,6 +1,9 @@
 #pragma once
 #include "Solver.h"
 #include "SolutionPSO.h"
+#include <time.h>
+#include <algorithm>
+
 class PSO :
     public Solver
 {
