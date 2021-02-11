@@ -13,6 +13,6 @@ public:
     /// Lance la résolution
     /// </summary>
     /// <returns></returns>
-    Result * Solve();
+    Result Solve();
 };
 

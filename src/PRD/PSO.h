@@ -24,13 +24,13 @@ public:
     /// <summary>
     /// Constructeur de la classe PSO
     /// </summary>
-    PSO(Instance * inst, double nbSec, int newNbPart);
+    PSO(Instance inst, double nbSec, int newNbPart);
 
     /// <summary>
     /// Lance la résolution PSO
     /// </summary>
     /// <returns></returns>
-    Result* Solve();
+    Result Solve();
 
     void Init();
 

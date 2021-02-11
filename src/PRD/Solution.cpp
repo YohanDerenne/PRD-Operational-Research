@@ -1,9 +1,14 @@
 #include "Solution.h"
 #include <algorithm>
 
-Result* Solution::Decode(Instance* inst)
+Solution::Solution()
 {
-    Result* res = new Result(inst);
+    resultatDecode = Result(Instance());
+}
+
+Result Solution::Decode(Instance inst)
+{
+    resultatDecode = Result(inst);
     int HV = 999999999;
 
     // SPV Rule
@@ -12,7 +17,7 @@ Result* Solution::Decode(Instance* inst)
     for (int k = 0; k < sv1.size(); k++) {
         ordre.push_back(0);
     }
-    for (int pos = 0 ; pos < inst->n; pos++) {
+    for (int pos = 0 ; pos < inst.n; pos++) {
         double mini = HV;
         int index = -1;
         for (int i = 0; i < sv1.size(); i++) {
@@ -29,15 +34,15 @@ Result* Solution::Decode(Instance* inst)
     for (int i = 0; i < sv2.size(); i++) {
         affectV.push_back(round(sv2[i])); //TODO - arrondi ok?
     }
-    res->V = *std::max_element(affectV.begin(), affectV.end()) + 1; // nb V
-    res->z = vector<vector<bool>>(inst->n, vector<bool>(inst->n, false));
-    for (int j = 0; j < inst->n; j++) {
-        for (int k = 0; k < res->V; k++) {
+    resultatDecode.V = *std::max_element(affectV.begin(), affectV.end()) + 1; // nb V
+    resultatDecode.z = vector<vector<bool>>(inst.n, vector<bool>(inst.n, false));
+    for (int j = 0; j < inst.n; j++) {
+        for (int k = 0; k < resultatDecode.V; k++) {
             if (affectV[j] == k) {
-                res->z[j][k] = true;
+                resultatDecode.z[j][k] = true;
             }
             else {
-                res->z[j][k] = false;
+                resultatDecode.z[j][k] = false;
             }
         }
     }
@@ -46,64 +51,64 @@ Result* Solution::Decode(Instance* inst)
     idle = sv3;
 
     // Dates de fin des jobs
-    res->C = vector<vector<double>>(inst->m, vector<double>(inst->n, -1));    //TODO [I][J] = [machine][Job] ou [Job][Machine]?
-    res->C[0][ordre[0]] = idle[0][ordre[0]] + inst->p[0][ordre[0]];
-    for (int k = 1; k < inst->n; k++) {
-        res->C[0][ordre[k]] = res->C[0][ordre[k - 1]] + idle[0][ordre[k]] + inst->p[0][ordre[k]];
+    resultatDecode.C = vector<vector<double>>(inst.m, vector<double>(inst.n, -1));    //TODO [I][J] = [machine][Job] ou [Job][Machine]?
+    resultatDecode.C[0][ordre[0]] = idle[0][ordre[0]] + inst.p[0][ordre[0]];
+    for (int k = 1; k < inst.n; k++) {
+        resultatDecode.C[0][ordre[k]] = resultatDecode.C[0][ordre[k - 1]] + idle[0][ordre[k]] + inst.p[0][ordre[k]];
     }
-    for (int i = 1; i < inst->m; i++) {
-        res->C[i][ordre[0]] = res->C[i-1][ordre[0]] + idle[i][ordre[0]] + inst->p[i][ordre[0]];
+    for (int i = 1; i < inst.m; i++) {
+        resultatDecode.C[i][ordre[0]] = resultatDecode.C[i-1][ordre[0]] + idle[i][ordre[0]] + inst.p[i][ordre[0]];
     }
-    for (int i = 1; i < inst->m; i++) {
-        for (int k = 1; k < inst->n; k++) {
-            res->C[i][ordre[k]] = max(res->C[i][ordre[k - 1]] + idle[i][ordre[k]] + inst->p[i][ordre[k]],
-                res->C[i-1][ordre[k]] + idle[i][ordre[k]] + inst->p[i][ordre[k]]);
+    for (int i = 1; i < inst.m; i++) {
+        for (int k = 1; k < inst.n; k++) {
+            resultatDecode.C[i][ordre[k]] = max(resultatDecode.C[i][ordre[k - 1]] + idle[i][ordre[k]] + inst.p[i][ordre[k]],
+                resultatDecode.C[i-1][ordre[k]] + idle[i][ordre[k]] + inst.p[i][ordre[k]]);
         }
     }
 
     // Dates de départ des véhicules    
-    res->F = vector<double>(inst->n, -1);
-    res->Z = vector<bool>(inst->n, false);
-    for (int k = 0; k < res->V ; k++) {
+    resultatDecode.F = vector<double>(inst.n, -1);
+    resultatDecode.Z = vector<bool>(inst.n, false);
+    for (int k = 0; k < resultatDecode.V ; k++) {
         vector<double> jobAffected;
-        for (int j = 0; j < inst->n; j++) {
+        for (int j = 0; j < inst.n; j++) {
             if (affectV[j] == k) {
-                jobAffected.push_back(res->C[inst->m - 1][j]);
+                jobAffected.push_back(resultatDecode.C[inst.m - 1][j]);
             }
         }
-        res->F[k] = *max_element(jobAffected.begin(), jobAffected.end());
-        res->Z[k] = true; // vehicule utilisé
+        resultatDecode.F[k] = *max_element(jobAffected.begin(), jobAffected.end());
+        resultatDecode.Z[k] = true; // vehicule utilisé
     }
 
     // Dates de départ des taches
-    res->f = vector<double>(inst->n, -1);
-    for (int i = 0; i < inst->n; i++) {
-        res->f[i] = res->F[affectV[i]];
+    resultatDecode.f = vector<double>(inst.n, -1);
+    for (int i = 0; i < inst.n; i++) {
+        resultatDecode.f[i] = resultatDecode.F[affectV[i]];
     }
 
     // Calcul couts
-    res->IC_WIP = 0;
-    res->IC_FIN = 0;
-    for (int j = 0; j < inst->n; j++) {
-        for (int i = 0; i < inst->m - 1; i++) {
-            res->IC_WIP += (res->C[i + 1][j] - inst->p[i + 1][j] - res->C[i][j]) * inst->h_WIP[i+1][j];
+    resultatDecode.IC_WIP = 0;
+    resultatDecode.IC_FIN = 0;
+    for (int j = 0; j < inst.n; j++) {
+        for (int i = 0; i < inst.m - 1; i++) {
+            resultatDecode.IC_WIP += (resultatDecode.C[i + 1][j] - inst.p[i + 1][j] - resultatDecode.C[i][j]) * inst.h_WIP[i+1][j];
         }
     }
-    for (int j = 0; j < inst->n; j++) {
-        res->IC_FIN = (res->f[j] - res->C[inst->m-1][j]) * inst->h_FIN[j];
+    for (int j = 0; j < inst.n; j++) {
+        resultatDecode.IC_FIN = (resultatDecode.f[j] - resultatDecode.C[inst.m-1][j]) * inst.h_FIN[j];
     }
-    res->IC = res->IC_WIP + res->IC_FIN;
-    res->VC = inst->c_V * res->V;
+    resultatDecode.IC = resultatDecode.IC_WIP + resultatDecode.IC_FIN;
+    resultatDecode.VC = inst.c_V * resultatDecode.V;
 
     //Dates de livraison    
     vector<int> lieuDesservi;
-    res->D_M = vector<double>(inst->n, -1);
-    for (int k = 0; k < res->V; k++) {
-        int lieu = 0; // 0 = depot prod , 1 = depot distrib, autres = lieu de livraison des cmd
-        double dateCourante = res->F[k];
+    resultatDecode.D_M = vector<double>(inst.n, -1);
+    for (int k = 0; k < resultatDecode.V; k++) {
+        int lieu = 0; // 0 = depot prod , 1 = depot distrib, autresultatDecode = lieu de livraison des cmd
+        double dateCourante = resultatDecode.F[k];
 
-        for (int i = 0; i < inst->n; i++) {
-            if (res->z[i][k] == false) { // pas transporté par k
+        for (int i = 0; i < inst.n; i++) {
+            if (resultatDecode.z[i][k] == false) { // pas transporté par k
                 continue;
             }
 
@@ -111,65 +116,60 @@ Result* Solution::Decode(Instance* inst)
             int lieuPlusProche = -1;
             int distMini = HV;
 
-            for (int l = 2; l < inst->n + 2; l++) { // à partir de 2 car avant on a les depot prod et distri
-                if (res->z[l-2][k] == false) { // pas transporté par k
+            for (int l = 2; l < inst.n + 2; l++) { // à partir de 2 car avant on a les depot prod et distri
+                if (resultatDecode.z[l-2][k] == false) { // pas transporté par k
                     continue;
                 }
                 
-                if (distMini > inst->t[lieu][l] && count(lieuDesservi.begin(), lieuDesservi.end(), l) == 0) { // Dist mini && non desservie
+                if (distMini > inst.t[lieu][l] && count(lieuDesservi.begin(), lieuDesservi.end(), l) == 0) { // Dist mini && non desservie
                     lieuPlusProche = l;
-                    distMini = inst->t[lieu][l];
+                    distMini = inst.t[lieu][l];
                 }
             }
             if (lieuPlusProche == -1)
                 continue;
 
             lieuDesservi.push_back(lieuPlusProche);
-            res->D_M[lieuPlusProche-2] = dateCourante + inst->t[lieu][lieuPlusProche]; //TODO D manu ou 3pl?
-            dateCourante += inst->t[lieu][lieuPlusProche];
+            resultatDecode.D_M[lieuPlusProche-2] = dateCourante + inst.t[lieu][lieuPlusProche]; //TODO D manu ou 3pl?
+            dateCourante += inst.t[lieu][lieuPlusProche];
             lieu = lieuPlusProche; // maj lieu   
         }            
     }
 
     // y et x pour l'ordonnancement 
-    res->y = vector<vector<bool>>(inst->n, vector<bool>(inst->n, false));
-    res->x = vector<vector<vector<bool>>>(inst->n,vector<vector<bool>>(inst->n, vector<bool>(inst->n, false)));
-    for (int i = 0; i < inst->n; i++) {
-        for (int j = 0; j < inst->n; j++) {
+    resultatDecode.y = vector<vector<bool>>(inst.n, vector<bool>(inst.n, false));
+    resultatDecode.x = vector<vector<vector<bool>>>(inst.n,vector<vector<bool>>(inst.n, vector<bool>(inst.n, false)));
+    for (int i = 0; i < inst.n; i++) {
+        for (int j = 0; j < inst.n; j++) {
             int id1;
             int id2;
-            for (int k = 0; k < inst->n; k++) {
+            for (int k = 0; k < inst.n; k++) {
                 if (ordre[k] == i)
                     id1 = k;
                 if (ordre[k] == j)
                     id2 = k;
             }
             if (id1 < id2) 
-                res->y[i][j] = true;
+                resultatDecode.y[i][j] = true;
             else
-                res->y[i][j] = false;
+                resultatDecode.y[i][j] = false;
 
-            if (affectV[i] == affectV[j] && res->D_M[i] < res->D_M[j]) // TODO D_M ou D_3PL
-                res->x[i][j][affectV[i]] = true;            
+            if (affectV[i] == affectV[j] && resultatDecode.D_M[i] < resultatDecode.D_M[j]) // TODO D_M ou D_3PL
+                resultatDecode.x[i][j][affectV[i]] = true;            
         }
     }
 
     // retard
-    res->PT_M = vector<double>(inst->n, 0);
-    res->PPC_M = 0;
-    for (int j = 0; j < inst->n; j++) {
-        res->PT_M[j] = max(0.0, res->D_M[j] - inst->d[j]); // TODO D_M D_3PL
-        res->PPC_M += inst->p_M[j] * res->PT_M[j];
+    resultatDecode.PT_M = vector<double>(inst.n, 0);
+    resultatDecode.PPC_M = 0;
+    for (int j = 0; j < inst.n; j++) {
+        resultatDecode.PT_M[j] = max(0.0, resultatDecode.D_M[j] - inst.d[j]); // TODO D_M D_3PL
+        resultatDecode.PPC_M += inst.p_M[j] * resultatDecode.PT_M[j];
     }
 
 
     // Cout total
-    res->cout_total = res->PPC_M + res->IC + res->VC;
+    resultatDecode.cout_total = resultatDecode.PPC_M + resultatDecode.IC + resultatDecode.VC;
 
-    // Save
-    if (resultatDecode != NULL)
-        delete resultatDecode;
-    resultatDecode = new Result(*res);
-
-    return res;
+    return resultatDecode;
 }

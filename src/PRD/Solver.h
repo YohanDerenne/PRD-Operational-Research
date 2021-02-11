@@ -11,12 +11,12 @@ protected:
 	/// <summary>
 	/// Données contenant les résultats après la résolution
 	/// </summary>
-	Result * best;
+	Result best;
 
 	/// <summary>
 	/// Données contenant les paramètres du problème à résoudre
 	/// </summary>
-	Instance * inst;
+	Instance inst;
 
 
 	/// <summary>
@@ -37,7 +37,7 @@ public:
 	/// <summary>
 	/// Constructeur de la classe Solver
 	/// </summary>
-	Solver(Instance * instance, double nbSec);
+	Solver(Instance instance, double nbSec);
 
 	~Solver();
 
@@ -45,12 +45,12 @@ public:
 	/// Reset les attributs en insérant une nouvelle instance
 	/// </summary>
 	/// <param name="instance"></param>
-	void setNewInstance(Instance* instance);
+	void setNewInstance(Instance instance);
 
 	/// <summary>
 	/// Abstract method to solve the problem
 	/// </summary>
 	/// <returns></returns>
-	virtual Result * Solve() = 0;
+	virtual Result Solve() = 0;
 };
 

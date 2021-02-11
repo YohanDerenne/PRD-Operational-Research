@@ -2,30 +2,24 @@
 
 Solver::Solver()
 {
-	best = NULL;
-	inst = NULL;	
+	best = Result(Instance());
+	inst = Instance();
+	dureeMax = 0;
 }
 
-Solver::Solver(Instance * instance, double nbSec)
+Solver::Solver(Instance instance, double nbSec)
 {
-	setNewInstance(instance);
+	best = Result(instance);
+	inst = instance;
 	dureeMax = nbSec;
 }
 
 Solver::~Solver()
 {
-	if (best != NULL)
-		delete best;
-	if (inst != NULL)
-		delete inst;
 }
 
-void Solver::setNewInstance(Instance* instance)
+void Solver::setNewInstance(Instance instance)
 {
-	if (best != NULL)
-		delete best;
-	if (inst != NULL)
-		delete inst;
-	best = NULL;
-	inst = new Instance(*instance);
+	best = Result(instance);
+	inst = instance;
 }

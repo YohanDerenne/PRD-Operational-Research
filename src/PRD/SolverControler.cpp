@@ -30,35 +30,23 @@ string LPCWSTRtoString(wchar_t* txt) {
 
 SolverControler::SolverControler()
 {
-    solver = NULL;
-    results = list<Result*>();
-    instances = list<Instance*>();
+    solver = nullptr;
+    results = list<Result>();
+    instances = list<Instance>();
 }
 
 SolverControler::~SolverControler()
 {
-    if (solver != NULL)
+    if (solver != nullptr)
         delete solver;
-
-    for (Result* res : results) {
-        if (res != NULL)
-            delete res;
-    }
-    results.clear();
-
-    for (Instance* inst : instances) {
-        if (inst != NULL)
-            delete inst;
-    }
-    instances.clear();
 }
 
 void SolverControler::LaunchComputation()
 {
-    if (solver != NULL && instances.size() != 0) {
-        for (Instance* inst : instances) {
+    if (solver != nullptr && instances.size() != 0) {
+        for (Instance inst : instances) {
             solver->setNewInstance(inst);
-            Result* res = solver->Solve();
+            Result res = solver->Solve();
             results.push_back(res);
         }
     }   
@@ -74,7 +62,7 @@ bool SolverControler::ImportInstances(string dir)
         do {
             if (has_suffix(LPCWSTRtoString(data.cFileName), ".txt")) {
                 try {
-                    Instance* inst = new Instance(dir + "\\" + LPCWSTRtoString(data.cFileName));
+                    Instance inst = Instance(dir + "\\" + LPCWSTRtoString(data.cFileName));
                     instances.push_back(inst);
                 }
                 catch (exception exc) {
@@ -112,8 +100,8 @@ bool SolverControler::ExportResults(string path)
     try {
         string sep = " ";
         ofstream output(path);
-        for (Result* res : results) {
-            output << res->inst->id << sep << res->inst->n << sep << res->cout_total << sep << res->IC_WIP << sep << res->IC_FIN << sep << res->PPC_M << endl;
+        for (Result res : results) {
+            output << res.inst.id << sep << res.inst.n << sep << res.cout_total << sep << res.IC_WIP << sep << res.IC_FIN << sep << res.PPC_M << endl;
         }
         output.close();
         return true;
@@ -124,21 +112,12 @@ bool SolverControler::ExportResults(string path)
     }
 }
 
-void SolverControler::Reset()
+void SolverControler::Reset(Solver* newSolver)
 {
-    if (solver != NULL)
+    if (solver != nullptr)
         delete solver;
-
-    for (Result* res : results) {
-        if (res != NULL)
-            delete res;
-    }
+    solver = newSolver;
     results.clear();
-
-    for (Instance* inst : instances) {
-        if (inst != NULL)
-            delete inst;
-    }
     instances.clear();
 }
 

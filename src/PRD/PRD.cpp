@@ -7,14 +7,13 @@
 int main()
 {
     std::cout << "Hello World!\n";
-    Instance* i = new Instance();
+    Instance i = Instance();
     try {        
-        i->Parse("ne");        
+        i.Parse("ne");        
     }
     catch (exception e) {
         std::cout << e.what();
     }
-    delete i;
     
 }
 

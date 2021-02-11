@@ -9,7 +9,7 @@ public :
 	/// <summary>
 	/// Instance sur laquelle s'appuie les résultats
 	/// </summary>
-	Instance * inst;
+	Instance inst;
 
 	/// <summary>
 	/// 1 si j1 est ordonnancée avant j2, 0 sinon
@@ -103,13 +103,9 @@ public :
 	/// Constructeur de la classe Resultat
 	/// </summary>
 	/// <param name="instance"></param>
-	Result(Instance * instance);
+	Result(Instance instance);
 
-	/// <summary>
-	/// Constructeur de copie de la classe Resultat
-	/// </summary>
-	/// <param name="res2"></param>
-	Result(const Result& res2);
+	Result();
 
 	~Result();
 };

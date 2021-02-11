@@ -14,12 +14,12 @@ private:
 	/// <summary>
 	/// Instances à étudier
 	/// </summary>
-	list<Instance*> instances;
+	list<Instance> instances;
 
 	/// <summary>
 	/// Resultats des algos
 	/// </summary>
-	list<Result*> results;
+	list<Result> results;
 
 public:
 	/// <summary>
@@ -51,12 +51,12 @@ public:
 	/// <summary>
 	/// Reset les attributs de la classe
 	/// </summary>
-	void Reset();
+	void Reset(Solver * newSolver);
 
 	// ================================== Get / Set =================================
 
-	const list<Instance*> getInstances() { return instances; }
-	const list<Result*> getResults() { return results; }
-	void AddResult(Result* res) { results.push_back(new Result(*res)); }
+	const list<Instance> getInstances() { return instances; }
+	const list<Result> getResults() { return results; }
+	void AddResult(Result res) { results.push_back(Result(res)); }
 };
 

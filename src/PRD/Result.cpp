@@ -1,8 +1,8 @@
 #include "Result.h"
 
-Result::Result(Instance* instance)
+Result::Result(Instance instance)
 {
-	inst = new Instance(*instance);
+	inst = instance;
 
 	y = vector<vector<bool>>();
 	Z = vector<bool>();
@@ -23,6 +23,30 @@ Result::Result(Instance* instance)
 	VC = 0;
 }
 
+Result::Result()
+{
+	inst = Instance();
+
+	y = vector<vector<bool>>();
+	Z = vector<bool>();
+	z = vector<vector<bool>>();
+	x = vector<vector<vector<bool>>>();
+	D_M = vector<double>();
+	C = vector<vector<double>>();
+	F = vector<double>();
+	f = vector<double>();
+	PT_M = vector<double>();
+	IC_WIP = 0;
+	IC_FIN = 0;
+	IC = 0;
+	PPC_M = 0;
+
+	D_3PL = vector<double>();
+	T_M = vector<double>();
+	VC = 0;
+}
+
+/*
 Result::Result(const Result& res2)
 {
 	inst = new Instance(*res2.inst);
@@ -47,10 +71,8 @@ Result::Result(const Result& res2)
 
 	cout_total = res2.cout_total;
 }
+*/
 
 Result::~Result()
 {
-	if (inst != NULL) {
-		delete inst;
-	}
 }

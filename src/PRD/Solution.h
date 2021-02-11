@@ -31,13 +31,15 @@ public :
 	/// </summary>
 	vector<vector<double>> idle;
 
-	Result* resultatDecode;
+	Result resultatDecode;
 
 	/// <summary>
 	/// Decode les vecteurs de la solutions et renvoie les résultats
 	/// </summary>
 	/// <param name="inst"></param>
 	/// <returns></returns>
-	Result* Decode(Instance * inst);
+	Result Decode(Instance inst);
+
+	Solution();
 };
 

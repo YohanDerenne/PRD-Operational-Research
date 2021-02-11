@@ -4,7 +4,7 @@ TabouSearch::TabouSearch()
 {
 }
 
-Result * TabouSearch::Solve()
+Result TabouSearch::Solve()
 {
-	return NULL;
+	return Result(Instance());
 }

@@ -1,12 +1,12 @@
 #include "PSO.h"
 #include <time.h>
 
-PSO::PSO(Instance * newInst, double nbSec, int newNbPart) : Solver(newInst, nbSec)
+PSO::PSO(Instance newInst, double nbSec, int newNbPart) : Solver(newInst, nbSec)
 {
 	nbPart = newNbPart;
 }
 
-Result* PSO::Solve()
+Result PSO::Solve()
 {
 	// Déclenchement du chrono
 	double tempsEcoule = 0;
@@ -30,7 +30,7 @@ Result* PSO::Solve()
 		tempsEcoule = difftime(time(0), debut);
 	}
 
-	return nullptr;
+	return Result(inst);
 }
 
 void PSO::Init()
@@ -43,4 +43,7 @@ void PSO::CalculCrowdingDistance()
 
 SolutionPSO PSO::ChercherMeilleurVoisin()
 {
+	return SolutionPSO();
 }
+
+
