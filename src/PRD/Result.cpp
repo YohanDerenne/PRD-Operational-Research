@@ -21,6 +21,8 @@ Result::Result(Instance instance)
 	D_3PL = vector<double>();
 	T_M = vector<double>();
 	VC = 0;
+
+	dureeSec = 0.0;
 }
 
 /*

@@ -25,7 +25,7 @@ public :
 	int m;
 
 	/// <summary>
-	/// Temps de production d'une tache i sur une machine j
+	/// Temps de production d'une tache j sur une machine i
 	/// </summary>
 	vector<vector<double>> p;
 
@@ -45,7 +45,7 @@ public :
 	int HV = 999999999;
 
 	/// <summary>
-	/// Cout d'inventaire d'une tâche i sur une machine j
+	/// Cout d'inventaire d'une tâche j sur une machine i
 	/// </summary>
 	vector<vector<int>> h_WIP;
 

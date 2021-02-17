@@ -147,7 +147,6 @@
     <ClCompile Include="SolutionPSO.cpp" />
     <ClCompile Include="Solver.cpp" />
     <ClCompile Include="SolverControler.cpp" />
-    <ClCompile Include="TabouSearch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Instance.h" />
@@ -157,7 +156,6 @@
     <ClInclude Include="SolutionPSO.h" />
     <ClInclude Include="Solver.h" />
     <ClInclude Include="SolverControler.h" />
-    <ClInclude Include="TabouSearch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

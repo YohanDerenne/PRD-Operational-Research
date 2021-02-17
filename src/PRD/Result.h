@@ -97,6 +97,8 @@ public :
 
 	double cout_total;
 
+	double dureeSec;
+
 	// ============================== METHODES ===================================
 
 	/// <summary>

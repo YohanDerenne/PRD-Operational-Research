@@ -53,35 +53,40 @@ bool Instance::Parse(string path)
 	// Coordonnées
 	vector<pair<int, int>> coord;
 
+
+	p = vector<vector<double>>(m, vector<double>(n, 0));
+	h_WIP = vector<vector<int>>(m, vector<int>(n, 0));
+
 	// Commandes
-	for (int i = 0; i < n; i++) {
+	for (int j = 0; j < n; j++) {
 		int idCmd;
 		file >> idCmd;
-		if (idCmd != i) {
+		if (idCmd != j) {
 			file.close();
-			string msg = "ERREUR : Format du fichier invalide dans le fichier " + path + (". Il se peut que le problème soit avant le traitement de la commande #" + i);
+			string msg = "ERREUR : Format du fichier invalide dans le fichier " + path + (". Il se peut que le problème soit avant le traitement de la commande #" + j);
 			throw exception(msg.c_str());
 			return false;
 		}
 
 		// Durées
-		vector<double> p_row;
-		for (int j = 0; j < m; j++) {
+		//vector<double> p_row;
+		for (int i = 0; i < m; i++) {
 			double duree;
 			file >> duree;
-			p_row.push_back(duree);
+			p[i][j] = duree;
 		}
-		p.push_back(p_row);
+		//p.push_back(p_row);
 
 		// Cout d'inventaire WIP
-		vector<int> h_WIP_row;
-		h_WIP_row.push_back(0);
-		for (int j = 0; j < m - 1; j++) {
+		//vector<int> h_WIP_row;
+		h_WIP[0][j] = 0;
+		for (int i = 1; i < m; i++) {
 			int cout;
 			file >> cout;
-			h_WIP_row.push_back(cout);
+			h_WIP[i][j] = cout;
+			//h_WIP_row.push_back(cout);
 		}
-		h_WIP.push_back(h_WIP_row);
+		//h_WIP.push_back(h_WIP_row);
 
 		// Cout d'inventaire FIN
 		int cout_FIN;

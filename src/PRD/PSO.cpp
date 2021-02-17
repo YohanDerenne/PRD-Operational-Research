@@ -91,7 +91,8 @@ Result PSO::Solve()
 		tempsEcoule = difftime(time(0), debut);
 	}
 
-	return Result(inst);
+	bestParticule.resultatDecode.dureeSec = dureeMax;
+	return bestParticule.resultatDecode;
 }
 
 void PSO::Init()
@@ -143,8 +144,17 @@ void PSO::Init()
 	}
 
 	// Améliorer la qualité des particules en se basant sur des propriétés dérivés voisines
-	// Garder la solution si elle est mieux
-
+	int i = 0;
+	for (SolutionPSO particule : particules) {
+		SolutionPSO voisin = ChercherMeilleurVoisin(particule);
+		if (voisin.resultatDecode.cout_total < particule.resultatDecode.cout_total)
+			particules[i] = voisin;
+		if (voisin.resultatDecode.cout_total < bestCost) {
+			bestCost = voisin.resultatDecode.cout_total;
+			bestParticule = voisin;
+		}
+		i++;
+	}
 }
 
 bool comparator(SolutionPSO i, SolutionPSO j) { return (i.resultatDecode.cout_total < j.resultatDecode.cout_total); }
@@ -189,7 +199,7 @@ SolutionPSO PSO::GetRandomParticuleWithCD()
 			return  particules[i];
 		rnd -= particules[i].CDcoef;
 	}
-	assert(!"should never get here");
+	assert(!"Ne dois pas arriver ici");
 }
 
 
