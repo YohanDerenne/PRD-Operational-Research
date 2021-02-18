@@ -32,8 +32,14 @@ Result Solution::Decode()
     }
 
     // NDVR - affectation vehicule
+    affectV.clear();
     for (int i = 0; i < sv2.size(); i++) {
-        affectV.push_back(round(sv2[i])); //TODO - arrondi ok?
+        double rand = round(sv2[i]);
+        if (rand < 0)
+            rand = 0;
+        if (rand > inst.n - 1)
+            rand = inst.n - 1;
+        affectV.push_back(rand); //TODO - arrondi ok?
     }
     resultatDecode.V = *std::max_element(affectV.begin(), affectV.end()) + 1; // nb V
     resultatDecode.z = vector<vector<bool>>(inst.n, vector<bool>(inst.n, false));
@@ -77,8 +83,10 @@ Result Solution::Decode()
                 jobAffected.push_back(resultatDecode.C[inst.m - 1][j]);
             }
         }
-        resultatDecode.F[k] = *max_element(jobAffected.begin(), jobAffected.end());
-        resultatDecode.Z[k] = true; // vehicule utilisé
+        if (jobAffected.size() > 0) {
+            resultatDecode.F[k] = *max_element(jobAffected.begin(), jobAffected.end());
+            resultatDecode.Z[k] = true; // vehicule utilisé
+        }        
     }
 
     // Dates de départ des taches

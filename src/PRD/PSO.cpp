@@ -31,8 +31,7 @@ Result PSO::Solve()
 		CalculCrowdingDistance();
 
 		// Pour chaque particule
-		int idParticule = 0;
-		for (SolutionPSO particule : particules) {
+		for (int p = 0; p < nbPart; p++) {
 			// Selectionner deux particules aléatoirement avec le poids CD
 			SolutionPSO randParticuleA = GetRandomParticuleWithCD();
 			SolutionPSO randParticuleB = GetRandomParticuleWithCD();
@@ -41,50 +40,47 @@ Result PSO::Solve()
 			double lambda1 = generateDouble(0, 1);
 			double lambda2 = generateDouble(0, 1);
 			double lambda3 = generateDouble(0, 1);
-			for (int d = 0; d < particule.velSv1.size(); d++) {
-				particule.velSv1[d] = lambda1 * particule.velSv1[d] + 
-					lambda2 * (randParticuleA.sv1[d] - particule.sv1[d]) + 
-					lambda3 * (randParticuleB.sv1[d] - particule.sv1[d]);
+			for (int d = 0; d < particules[p].velSv1.size(); d++) {
+				particules[p].velSv1[d] = lambda1 * particules[p].velSv1[d] +
+					lambda2 * (randParticuleA.sv1[d] - particules[p].sv1[d]) +
+					lambda3 * (randParticuleB.sv1[d] - particules[p].sv1[d]);
 			}
-			for (int d = 0; d < particule.velSv2.size(); d++) {
-				particule.velSv2[d] = lambda1 * particule.velSv2[d] +
-					lambda2 * (randParticuleA.sv2[d] - particule.sv2[d]) +
-					lambda3 * (randParticuleB.sv2[d] - particule.sv2[d]);
+			for (int d = 0; d < particules[p].velSv2.size(); d++) {
+				particules[p].velSv2[d] = lambda1 * particules[p].velSv2[d] +
+					lambda2 * (randParticuleA.sv2[d] - particules[p].sv2[d]) +
+					lambda3 * (randParticuleB.sv2[d] - particules[p].sv2[d]);
 			}
-			for (int i = 0; i < particule.velSv3.size(); i++) {
-				for (int j = 0; j < particule.velSv3[i].size(); j++) {
-					particule.velSv3[i][j] = lambda1 * particule.velSv3[i][j] +
-						lambda2 * (randParticuleA.sv3[i][j] - particule.sv3[i][j]) +
-						lambda3 * (randParticuleB.sv3[i][j] - particule.sv3[i][j]);
+			for (int i = 0; i < particules[p].velSv3.size(); i++) {
+				for (int j = 0; j < particules[p].velSv3[i].size(); j++) {
+					particules[p].velSv3[i][j] = lambda1 * particules[p].velSv3[i][j] +
+						lambda2 * (randParticuleA.sv3[i][j] - particules[p].sv3[i][j]) +
+						lambda3 * (randParticuleB.sv3[i][j] - particules[p].sv3[i][j]);
 				}
 			}			
 
 			// Mise à jour de la position des particules
-			for (int d = 0; d < particule.sv1.size(); d++) {
-				particule.sv1[d] = particule.sv1[d] + particule.velSv1[d];
+			for (int d = 0; d < particules[p].sv1.size(); d++) {
+				particules[p].sv1[d] = particules[p].sv1[d] + particules[p].velSv1[d];
 			}
-			for (int d = 0; d < particule.sv2.size(); d++) {
-				particule.sv2[d] = particule.sv2[d] + particule.velSv2[d];
+			for (int d = 0; d < particules[p].sv2.size(); d++) {
+				particules[p].sv2[d] = particules[p].sv2[d] + particules[p].velSv2[d];
 			}
-			for (int i = 0; i < particule.sv3.size(); i++) {
-				for (int j = 0; j < particule.sv3[i].size(); j++) {
-					particule.sv3[i][j] = particule.sv3[i][j] + particule.velSv3[i][j];
+			for (int i = 0; i < particules[p].sv3.size(); i++) {
+				for (int j = 0; j < particules[p].sv3[i].size(); j++) {
+					particules[p].sv3[i][j] = particules[p].sv3[i][j] + particules[p].velSv3[i][j];
 				}
 			}
 
 			// Decoder la solution complete de la particule
-			particule.Decode();
+			particules[p].Decode();
 
 			// Améliorer la qualité de la particule basé sur des propriétés dérivés voisines
-			particule = ChercherMeilleurVoisin(particule);
-			particules[idParticule] = particule; // save in particule vector
+			particules[p] = ChercherMeilleurVoisin(particules[p]);
 
 			//Garder la solution trouvée si celle-ci est la meilleure jamais trouvée
-			if (particule.resultatDecode.cout_total < bestParticule.resultatDecode.cout_total) {
-				bestParticule = particule;
+			if (particules[p].resultatDecode.cout_total < bestParticule.resultatDecode.cout_total) {
+				bestParticule = particules[p];
 			}
-
-			idParticule++;
 		}
 
 		// Mise à jour du temps écoulé
@@ -126,28 +122,29 @@ void PSO::Init()
 		part.velSv2 = vector<double>(inst.n, 0.0);
 		part.velSv3 = vector<vector<double>>(inst.m , vector<double>(inst.n, 0.0));
 
+		part.CDcoef = 0;
+
 		particules.push_back(part);
 	}
 
 	// Décoder toutes les solutions de chaque particule initialisée
-	for (SolutionPSO particule : particules) {
-		particule.Decode();
+	for (int i = 0; i < nbPart; i++) {
+		particules[i].Decode();
 	}
 
 	// Garder la meilleure solution
 	double bestCost = 9999999999999;
-	for (SolutionPSO particule : particules) {
-		if (particule.resultatDecode.cout_total < bestCost) {
-			bestCost = particule.resultatDecode.cout_total;
-			bestParticule = particule;
+	for (int i = 0; i < nbPart; i++) {
+		if (particules[i].resultatDecode.cout_total < bestCost) {
+			bestCost = particules[i].resultatDecode.cout_total;
+			bestParticule = particules[i];
 		}
 	}
 
 	// Améliorer la qualité des particules en se basant sur des propriétés dérivés voisines
-	int i = 0;
-	for (SolutionPSO particule : particules) {
-		SolutionPSO voisin = ChercherMeilleurVoisin(particule);
-		if (voisin.resultatDecode.cout_total < particule.resultatDecode.cout_total)
+	for (int i = 0; i < nbPart; i++) {
+		SolutionPSO voisin = ChercherMeilleurVoisin(particules[i]);
+		if (voisin.resultatDecode.cout_total < particules[i].resultatDecode.cout_total)
 			particules[i] = voisin;
 		if (voisin.resultatDecode.cout_total < bestCost) {
 			bestCost = voisin.resultatDecode.cout_total;
@@ -162,9 +159,9 @@ bool comparator(SolutionPSO i, SolutionPSO j) { return (i.resultatDecode.cout_to
 void PSO::CalculCrowdingDistance()
 {
 	// Decoder chaque particule et mettre les CD à 0
-	for (SolutionPSO particule : particules) {
-		particule.Decode();
-		particule.CDcoef = 0;
+	for (int i = 0; i < nbPart; i++) {
+		particules[i].Decode();
+		particules[i].CDcoef = 0;
 	}
 
 	// Trier les particules par ordre croissant
