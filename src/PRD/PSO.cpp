@@ -160,7 +160,7 @@ void PSO::CalculCrowdingDistance()
 {
 	// Decoder chaque particule et mettre les CD à 0
 	for (int i = 0; i < nbPart; i++) {
-		particules[i].Decode();
+		//particules[i].Decode();
 		particules[i].CDcoef = 0;
 	}
 

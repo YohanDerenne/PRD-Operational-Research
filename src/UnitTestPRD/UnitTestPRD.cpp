@@ -550,8 +550,8 @@ namespace UnitTestPRD
 	TEST_CLASS(UnitTestPSO) {
 	public:
 		TEST_METHOD(TestPSO) {
-			Instance inst = Instance("../UnitTestPRD/instanceTest/I_n6_id2.txt");
-			PSO solver = PSO(inst, 10, 20);
+			Instance inst = Instance("../UnitTestPRD/I_n5_id0.txt");
+			PSO solver = PSO(inst,2, 50);
 			Result res = solver.Solve();
 			Assert::AreEqual(7.0, res.cout_total);
 		}

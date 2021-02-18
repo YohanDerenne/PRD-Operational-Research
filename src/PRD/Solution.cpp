@@ -1,5 +1,6 @@
 #include "Solution.h"
 #include <algorithm>
+#include <cassert>
 
 Solution::Solution(Instance instance) : resultatDecode(instance)
 {
@@ -10,7 +11,7 @@ Solution::Solution(Instance instance) : resultatDecode(instance)
 Result Solution::Decode()
 {
     resultatDecode = Result(inst);
-    int HV = 999999999;
+    double HV = DBL_MAX;
 
     // SPV Rule
     vector<double> tmpSv1 = sv1;
@@ -27,6 +28,8 @@ Result Solution::Decode()
                 index = i;
             }
         }
+        if (index == -1)
+            assert(!"Impossible");
         ordre[pos] = index;
         tmpSv1[index] = HV;
     }
@@ -37,14 +40,14 @@ Result Solution::Decode()
         double rand = round(sv2[i]);
         if (rand < 0)
             rand = 0;
-        if (rand > inst.n - 1)
-            rand = inst.n - 1;
+        if (rand > (inst.n - 1.0))
+            rand = inst.n - 1.0;
         affectV.push_back(rand); //TODO - arrondi ok?
     }
-    resultatDecode.V = *std::max_element(affectV.begin(), affectV.end()) + 1; // nb V
+   
     resultatDecode.z = vector<vector<bool>>(inst.n, vector<bool>(inst.n, false));
     for (int j = 0; j < inst.n; j++) {
-        for (int k = 0; k < resultatDecode.V; k++) {
+        for (int k = 0; k < inst.n ; k++) {
             if (affectV[j] == k) {
                 resultatDecode.z[j][k] = true;
             }
@@ -53,6 +56,7 @@ Result Solution::Decode()
             }
         }
     }
+    
   
     // sv3 no predecode
     idle = sv3;
@@ -76,7 +80,7 @@ Result Solution::Decode()
     // Dates de départ des véhicules    
     resultatDecode.F = vector<double>(inst.n, -1);
     resultatDecode.Z = vector<bool>(inst.n, false);
-    for (int k = 0; k < resultatDecode.V ; k++) {
+    for (int k = 0; k < resultatDecode.inst.n ; k++) {
         vector<double> jobAffected;
         for (int j = 0; j < inst.n; j++) {
             if (affectV[j] == k) {
@@ -88,6 +92,7 @@ Result Solution::Decode()
             resultatDecode.Z[k] = true; // vehicule utilisé
         }        
     }
+    resultatDecode.V = std::count(resultatDecode.Z.begin(), resultatDecode.Z.end(), true); // nb V
 
     // Dates de départ des taches
     resultatDecode.f = vector<double>(inst.n, -1);
@@ -112,7 +117,7 @@ Result Solution::Decode()
     //Dates de livraison    
     vector<int> lieuDesservi;
     resultatDecode.D_M = vector<double>(inst.n, -1);
-    for (int k = 0; k < resultatDecode.V; k++) {
+    for (int k = 0; k < resultatDecode.inst.n; k++) {
         int lieu = 0; // 0 = depot prod , 1 = depot distrib, autresultatDecode = lieu de livraison des cmd
         double dateCourante = resultatDecode.F[k];
 
@@ -123,7 +128,7 @@ Result Solution::Decode()
 
             //PPV
             int lieuPlusProche = -1;
-            int distMini = HV;
+            int distMini = INT_MAX;
 
             for (int l = 2; l < inst.n + 2; l++) { // à partir de 2 car avant on a les depot prod et distri
                 if (resultatDecode.z[l-2][k] == false) { // pas transporté par k
