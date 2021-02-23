@@ -171,11 +171,17 @@ void PSO::CalculCrowdingDistance()
 	double fmax = particules[nbPart - 1].resultatDecode.cout_total;
 
 	particules[0].CDcoef += 1;
-	particules[nbPart - 1].CDcoef += 1;
+	//particules[nbPart - 1].CDcoef += 1;
 
 	for (int i = 1; i < nbPart - 2; i++) {
+		if (isnan(particules[i].CDcoef)) {
+			break;
+		}
 		particules[i].CDcoef = particules[i].CDcoef + 
 			(particules[i + 1].resultatDecode.cout_total - particules[i - 1].resultatDecode.cout_total) / (fmax - fmin);
+		if (isnan(particules[i].CDcoef)) {
+			particules[i].CDcoef = 0.000000000000000000000001;
+		}
 	}
 }
 

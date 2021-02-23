@@ -59,7 +59,14 @@ Result Solution::Decode()
     
   
     // sv3 no predecode
+    for (int i = 0; i < sv3.size(); i++) {
+        for (int j = 0; j < sv3[i].size(); j++) {
+            if (sv3[i][j] < 0)
+                sv3[i][j] = 0;
+        }
+    }
     idle = sv3;
+    
 
     // Dates de fin des jobs
     resultatDecode.C = vector<vector<double>>(inst.m, vector<double>(inst.n, -1));    //TODO [I][J] = [machine][Job] ou [Job][Machine]?
@@ -74,6 +81,17 @@ Result Solution::Decode()
         for (int k = 1; k < inst.n; k++) {
             resultatDecode.C[i][ordre[k]] = max(resultatDecode.C[i][ordre[k - 1]] + idle[i][ordre[k]] + inst.p[i][ordre[k]],
                 resultatDecode.C[i-1][ordre[k]] + idle[i][ordre[k]] + inst.p[i][ordre[k]]);
+            
+            // Vérification - Debug
+            if (idle[i][ordre[k]] < 0 || idle[i][ordre[k - 1]] < 0) {
+                break;
+            }            
+            if (resultatDecode.C[i][ordre[k]] <= resultatDecode.C[i][ordre[k-1]]) {
+                break;
+            }
+            if (resultatDecode.C[i][ordre[k]] <= resultatDecode.C[i-1][ordre[k]]) {
+                break;
+            }
         }
     }
 
