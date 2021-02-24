@@ -1,6 +1,5 @@
 #include "PSO.h"
-#include <random>
-#include <cassert>
+
 
 
 double generateDouble(double inf, double sup) {
@@ -11,6 +10,9 @@ double generateDouble(double inf, double sup) {
 PSO::PSO(Instance newInst, double nbSec, int newNbPart) : Solver(newInst, nbSec),
 bestParticule(inst)
 {
+	if (newNbPart < 3) {
+		assert(!"3 particules minimum !");
+	}
 	bestParticule = SolutionPSO(newInst);
 	nbPart = newNbPart;
 }
@@ -19,13 +21,13 @@ Result PSO::Solve()
 {
 	// Déclenchement du chrono
 	double tempsEcoule = 0;
-	time_t debut = time(0);
+	chrono::system_clock::time_point debut = chrono::system_clock::now();
 
 	// Init particules
 	Init();
 
 	// Boucle Principale
-	while (tempsEcoule < dureeMax) {
+	while (tempsEcoule < dureeMax && !StopCondition()) {
 
 		// Decoder les solutions de chaque particule et calculer la Crowding Distance (CD)
 		CalculCrowdingDistance();
@@ -84,10 +86,12 @@ Result PSO::Solve()
 		}
 
 		// Mise à jour du temps écoulé
-		tempsEcoule = difftime(time(0), debut);
+		std::chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - debut;
+		tempsEcoule = elapsed_seconds.count();
 	}
+	dureeResolution = tempsEcoule;
 
-	bestParticule.resultatDecode.dureeSec = dureeMax;
+	bestParticule.resultatDecode.dureeSec = tempsEcoule;
 	return bestParticule.resultatDecode;
 }
 
@@ -96,7 +100,6 @@ void PSO::Init()
 	// Inititalisation des particules
 	for (int i = 0; i < nbPart; i++) {
 		SolutionPSO part = SolutionPSO(inst);
-
 		// Sv1 ini aléatoire entre -1 et 1
 		part.sv1 = vector<double>(inst.n, 0.0);		
 		for (int j = 0; j < part.sv1.size(); j++) {
@@ -180,7 +183,7 @@ void PSO::CalculCrowdingDistance()
 		particules[i].CDcoef = particules[i].CDcoef + 
 			(particules[i + 1].resultatDecode.cout_total - particules[i - 1].resultatDecode.cout_total) / (fmax - fmin);
 		if (isnan(particules[i].CDcoef)) {
-			particules[i].CDcoef = 0.000000000000000000000001;
+			particules[i].CDcoef = 0.000000000001;
 		}
 	}
 }
@@ -203,6 +206,38 @@ SolutionPSO PSO::GetRandomParticuleWithCD()
 		rnd -= particules[i].CDcoef;
 	}
 	assert(!"Ne dois pas arriver ici");
+}
+
+Result PSO::GetReference()
+{
+	SolutionPSO sol = SolutionPSO(inst);
+
+	for (int dj : inst.d) {
+		sol.sv1.push_back((double) dj);
+	}
+
+	for (int i = 0; i < inst.m; i++) {
+		sol.sv2.push_back((double)((int)((i+1) / 4)));
+	}
+
+	sol.sv3 = vector<vector<double>>(inst.m, vector<double>(inst.n,0));
+	
+	return sol.Decode();
+}
+
+bool PSO::StopCondition()
+{
+	int nbPareilMax = nbPart / 2;
+	int nbPareil = 0;
+	double costRef = particules[0].resultatDecode.cout_total;
+	for (int i = 1; i < nbPart; i++) {
+		if (particules[i].resultatDecode.cout_total == costRef) {
+			nbPareil++;
+			if (nbPareil > nbPareilMax)
+				return true;
+		}
+	}
+	return false;
 }
 
 

@@ -1,8 +1,10 @@
 #pragma once
 #include "Solver.h"
 #include "SolutionPSO.h"
-#include <time.h>
+#include <chrono>
 #include <algorithm>
+#include <random>
+#include <cassert>
 
 class PSO :
     public Solver
@@ -18,12 +20,15 @@ private:
     /// </summary>
     int nbPart; 
 
+    
+
+public:
+
     /// <summary>
     /// Particules du système [0;nbPart-1]
     /// </summary>
     vector<SolutionPSO> particules;
 
-public:
     /// <summary>
     /// Constructeur de la classe PSO
     /// </summary>
@@ -42,5 +47,9 @@ public:
     SolutionPSO ChercherMeilleurVoisin(SolutionPSO sol);
 
     SolutionPSO GetRandomParticuleWithCD();
+
+    Result GetReference();
+    
+    bool StopCondition();
 };
 

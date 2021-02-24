@@ -24,6 +24,8 @@ protected:
 	/// </summary>
 	double dureeMax;
 
+	double dureeResolution;
+
 public:
 
 
@@ -52,5 +54,7 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	virtual Result Solve() = 0;
+
+	double getDureeResolution() { return dureeResolution; }
 };
 
