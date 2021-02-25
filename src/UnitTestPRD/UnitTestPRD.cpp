@@ -551,16 +551,16 @@ namespace UnitTestPRD
 	public:
 		TEST_METHOD(TestPSO) {
 			Instance inst = Instance("../UnitTestPRD/I_n5_id0.txt");
-			PSO solver = PSO(inst, 200,25);
+			PSO solver = PSO(inst, 200,20);
 			Result res = solver.Solve();
 
-//			Assert::AreEqual(true, res.cout_total < solver.GetReference().cout_total);
-
-			string log = "Durée résolution : " + std::to_string(solver.getDureeResolution());
+			string log = "Durée résolution : " + std::to_string(res.dureeSec);
 			log += "\nDernieres particules : " + std::to_string(solver.particules[0].resultatDecode.cout_total);
+			log += "\nBest particule : " + std::to_string(res.cout_total);
 			Logger::WriteMessage(log.c_str());
 
-			Assert::AreEqual(7.0, res.cout_total);
+			Assert::AreEqual(true, res.VerificationContraintes());
+			Assert::AreEqual(true, res.cout_total < solver.GetReference().cout_total);
 		}
 
 		TEST_METHOD(TestReference) {
@@ -571,7 +571,7 @@ namespace UnitTestPRD
 			string log = "Cout total ref : " + std::to_string(ref.cout_total);
 			Logger::WriteMessage(log.c_str());
 
-			Assert::AreEqual(7.0, ref.cout_total);
+			Assert::AreEqual(true, ref.VerificationContraintes());
 		}
 	};
 }

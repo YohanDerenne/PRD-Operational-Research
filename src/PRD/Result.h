@@ -107,5 +107,11 @@ public :
 	/// <param name="instance"></param>
 	Result(Instance instance);
 	~Result();
+
+	/// <summary>
+	/// Vérifie si les contraintes sont respectées
+	/// </summary>
+	/// <returns>Vrai si les contraintes sont respectées, false sinon</returns>
+	bool VerificationContraintes();
 };
 

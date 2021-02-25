@@ -35,7 +35,11 @@ public :
 	vector<int> d;
 
 	/// <summary>
-	/// Distance entre un site i et un site j
+	/// <para>Distance entre un site i et un site j</para>
+	/// <para>ATTENTION : </para>
+	/// <para>indice 0 -> dépot production</para>
+	/// <para>indice 1 -> dépot distribution</para>
+	/// <para>les autres indices -> lieu de livraison des jobs (2 -> job 0, 3 -> job 1 ,...)</para>
 	/// </summary>
 	vector<vector<int>> t;
 
