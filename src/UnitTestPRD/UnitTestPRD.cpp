@@ -551,11 +551,11 @@ namespace UnitTestPRD
 	public:
 		TEST_METHOD(TestPSO) {
 			Instance inst = Instance("../UnitTestPRD/I_n5_id0.txt");
-			PSO solver = PSO(inst, 200,20);
+			PSO solver = PSO(inst, 200, 25);
 			Result res = solver.Solve();
 
 			string log = "Durée résolution : " + std::to_string(res.dureeSec);
-			log += "\nDernieres particules : " + std::to_string(solver.particules[0].resultatDecode.cout_total);
+			log += "\nDernieres particules : " + std::to_string(solver.particules[2].resultatDecode.cout_total);
 			log += "\nBest particule : " + std::to_string(res.cout_total);
 			Logger::WriteMessage(log.c_str());
 

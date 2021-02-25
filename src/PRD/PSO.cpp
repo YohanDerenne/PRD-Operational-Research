@@ -28,9 +28,13 @@ Result PSO::Solve()
 
 	// Boucle Principale
 	while (tempsEcoule < dureeMax && !StopCondition()) {
+		// Prendre le mini 
 
 		// Decoder les solutions de chaque particule et calculer la Crowding Distance (CD)
 		CalculCrowdingDistance();
+		
+		//particules[0] = bestParticule;
+		//particules[0].CDcoef = 1;
 
 		// Pour chaque particule
 		for (int p = 0; p < nbPart; p++) {
@@ -42,6 +46,14 @@ Result PSO::Solve()
 			double lambda1 = generateDouble(0, 1);
 			double lambda2 = generateDouble(0, 1);
 			double lambda3 = generateDouble(0, 1);
+
+			//modif JCB
+			/*
+			lambda1 = 0.5;
+			lambda2 = 0.5;
+			lambda3 = 0.5;
+			*/
+
 			for (int d = 0; d < particules[p].velSv1.size(); d++) {
 				particules[p].velSv1[d] = lambda1 * particules[p].velSv1[d] +
 					lambda2 * (randParticuleA.sv1[d] - particules[p].sv1[d]) +
@@ -83,14 +95,14 @@ Result PSO::Solve()
 			if (particules[p].resultatDecode.cout_total < bestParticule.resultatDecode.cout_total) {
 				bestParticule = particules[p];
 			}
-		}
+		}		
 
 		// Mise à jour du temps écoulé
 		std::chrono::duration<double> elapsed_seconds = chrono::system_clock::now() - debut;
 		tempsEcoule = elapsed_seconds.count();
 	}
 	dureeResolution = tempsEcoule;
-
+	bestParticule.DecodeXY();
 	bestParticule.resultatDecode.dureeSec = tempsEcoule;
 	return bestParticule.resultatDecode;
 }
@@ -177,11 +189,13 @@ void PSO::CalculCrowdingDistance()
 	//particules[nbPart - 1].CDcoef += 1;
 
 	for (int i = 1; i < nbPart - 2; i++) {
+		// Debug
 		if (isnan(particules[i].CDcoef)) {
 			break;
 		}
 		particules[i].CDcoef = particules[i].CDcoef + 
 			(particules[i + 1].resultatDecode.cout_total - particules[i - 1].resultatDecode.cout_total) / (fmax - fmin);
+		// Debug
 		if (isnan(particules[i].CDcoef)) {
 			particules[i].CDcoef = 0.000000000001;
 		}
@@ -221,8 +235,9 @@ Result PSO::GetReference()
 	}
 
 	sol.sv3 = vector<vector<double>>(inst.m, vector<double>(inst.n,0));
-	
-	return sol.Decode();
+	sol.Decode();
+	sol.DecodeXY();
+	return sol.resultatDecode;
 }
 
 bool PSO::StopCondition()

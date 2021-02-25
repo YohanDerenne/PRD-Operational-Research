@@ -43,5 +43,7 @@ public :
 	Instance inst;
 
 	Solution(Instance instance);
+
+	void DecodeXY();
 };
 

@@ -7,6 +7,31 @@ Solution::Solution(Instance instance) : resultatDecode(instance)
     inst = instance;
 }
 
+void Solution::DecodeXY()
+{
+    resultatDecode.y = vector<vector<bool>>(inst.n, vector<bool>(inst.n, false));
+    resultatDecode.x = vector<vector<vector<bool>>>(inst.n, vector<vector<bool>>(inst.n, vector<bool>(inst.n, false)));
+    for (int i = 0; i < inst.n; i++) {
+        for (int j = 0; j < inst.n; j++) {
+            int id1;
+            int id2;
+            for (int k = 0; k < inst.n; k++) {
+                if (ordre[k] == i)
+                    id1 = k;
+                if (ordre[k] == j)
+                    id2 = k;
+            }
+            if (id1 < id2)
+                resultatDecode.y[i][j] = true;
+            else
+                resultatDecode.y[i][j] = false;
+
+            if (affectV[i] == affectV[j] && resultatDecode.D_M[i] < resultatDecode.D_M[j]) // TODO D_M ou D_3PL
+                resultatDecode.x[i][j][affectV[i]] = true;
+        }
+    }
+}
+
 
 Result Solution::Decode()
 {
@@ -95,7 +120,8 @@ Result Solution::Decode()
         }
     }
 
-    // Dates de départ des véhicules    
+    // Dates de départ des véhicules  
+    // TODO modif
     resultatDecode.F = vector<double>(inst.n, -1);
     resultatDecode.Z = vector<bool>(inst.n, false);
     for (int k = 0; k < resultatDecode.inst.n ; k++) {
@@ -168,7 +194,7 @@ Result Solution::Decode()
         }            
     }
 
-    // y et x pour l'ordonnancement 
+    /* y et x pour l'ordonnancement 
     resultatDecode.y = vector<vector<bool>>(inst.n, vector<bool>(inst.n, false));
     resultatDecode.x = vector<vector<vector<bool>>>(inst.n,vector<vector<bool>>(inst.n, vector<bool>(inst.n, false)));
     for (int i = 0; i < inst.n; i++) {
@@ -190,6 +216,7 @@ Result Solution::Decode()
                 resultatDecode.x[i][j][affectV[i]] = true;            
         }
     }
+    */
 
     // retard
     resultatDecode.PT_M = vector<double>(inst.n, 0);
@@ -198,7 +225,6 @@ Result Solution::Decode()
         resultatDecode.PT_M[j] = max(0.0, resultatDecode.D_M[j] - inst.d[j]); // TODO D_M D_3PL
         resultatDecode.PPC_M += inst.p_M[j] * resultatDecode.PT_M[j];
     }
-
 
     // Cout total
     resultatDecode.cout_total = resultatDecode.PPC_M + resultatDecode.IC + resultatDecode.VC;
