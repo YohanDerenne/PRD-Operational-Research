@@ -204,7 +204,35 @@ void PSO::CalculCrowdingDistance()
 
 SolutionPSO PSO::ChercherMeilleurVoisin(SolutionPSO sol)
 {
-	return sol;
+	SolutionPSO bestVoisin = sol;
+	int delta = 2;
+	
+	
+	for (int i = 0; i < inst.n - 1; i++) {
+		for (int j = i + 1; j < inst.n && abs(j-i) < delta; j++) {
+			// Switch sv1 
+			SolutionPSO voisin = sol;
+			voisin.sv1[i] = sol.sv1[j];
+			voisin.sv1[j] = sol.sv1[i];
+			voisin.Decode();
+			if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
+				bestVoisin = voisin;
+
+			// Switch sv2
+			voisin = sol;
+			voisin.sv2[i] = sol.sv2[j];
+			voisin.sv2[j] = sol.sv2[i];
+			voisin.Decode();
+			if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
+				bestVoisin = voisin;
+		}
+	}
+	
+	
+	
+
+
+	return bestVoisin;
 }
 
 SolutionPSO PSO::GetRandomParticuleWithCD()

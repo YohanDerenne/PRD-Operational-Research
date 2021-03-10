@@ -44,6 +44,10 @@ public :
 
 	Solution(Instance instance);
 
+	/// <summary>
+	/// Decode les vecteurs x et y, mais celui ci n'est pas necessaire pour l'algoithme, seulement pour la vérification. 
+	/// Complexite n^3, à utiliser avec parsimonie.
+	/// </summary>
 	void DecodeXY();
 };
 
