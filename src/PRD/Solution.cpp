@@ -26,7 +26,7 @@ void Solution::DecodeXY()
             else
                 resultatDecode.y[i][j] = false;
 
-            if (affectV[i] == affectV[j] && resultatDecode.D_M[i] < resultatDecode.D_M[j]) // TODO D_M ou D_3PL
+            if (affectV[i] == affectV[j] && resultatDecode.D_M[i] < resultatDecode.D_M[j]) 
                 resultatDecode.x[i][j][affectV[i]] = true;
         }
     }
@@ -80,8 +80,7 @@ Result Solution::Decode()
                 resultatDecode.z[j][k] = false;
             }
         }
-    }
-    
+    }    
   
     // sv3 no predecode
     for (int i = 0; i < sv3.size(); i++) {
@@ -122,21 +121,17 @@ Result Solution::Decode()
 
     // Dates de départ des véhicules  
     // TODO modif
+    resultatDecode.V = 0;
     resultatDecode.F = vector<double>(inst.n, -1);
     resultatDecode.Z = vector<bool>(inst.n, false);
-    for (int k = 0; k < resultatDecode.inst.n ; k++) {
-        vector<double> jobAffected;
-        for (int j = 0; j < inst.n; j++) {
-            if (affectV[j] == k) {
-                jobAffected.push_back(resultatDecode.C[inst.m - 1][j]);
-            }
+    for (int j = 0; j < inst.n; j++) {
+        int vh = affectV[j];
+        resultatDecode.F[vh] = max(resultatDecode.F[vh], resultatDecode.C[inst.m-1][j]);
+        if (resultatDecode.Z[vh] == 0) {
+            resultatDecode.Z[vh] = 1;
+            resultatDecode.V++;
         }
-        if (jobAffected.size() > 0) {
-            resultatDecode.F[k] = *max_element(jobAffected.begin(), jobAffected.end());
-            resultatDecode.Z[k] = true; // vehicule utilisé
-        }        
     }
-    resultatDecode.V = std::count(resultatDecode.Z.begin(), resultatDecode.Z.end(), true); // nb V
 
     // Dates de départ des taches
     resultatDecode.f = vector<double>(inst.n, -1);
