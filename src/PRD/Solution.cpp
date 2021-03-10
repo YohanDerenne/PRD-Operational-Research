@@ -119,13 +119,14 @@ Result Solution::Decode()
         }
     }
 
-    // Dates de départ des véhicules  
-    // TODO modif
+    // Dates de départ des véhicules
     resultatDecode.V = 0;
     resultatDecode.F = vector<double>(inst.n, -1);
     resultatDecode.Z = vector<bool>(inst.n, false);
+    vector<vector<int>> jobsDansVh = vector<vector<int>>(inst.n, vector<int>());
     for (int j = 0; j < inst.n; j++) {
         int vh = affectV[j];
+        jobsDansVh[vh].push_back(j);
         resultatDecode.F[vh] = max(resultatDecode.F[vh], resultatDecode.C[inst.m-1][j]);
         if (resultatDecode.Z[vh] == 0) {
             resultatDecode.Z[vh] = 1;
@@ -153,7 +154,8 @@ Result Solution::Decode()
     resultatDecode.IC = resultatDecode.IC_WIP + resultatDecode.IC_FIN;
     resultatDecode.VC = inst.c_V * resultatDecode.V;
 
-    //Dates de livraison    
+    /*
+    // Old retard et dates de livraison
     vector<int> lieuDesservi;
     resultatDecode.D_M = vector<double>(inst.n, -1);
     for (int k = 0; k < resultatDecode.inst.n; k++) {
@@ -170,10 +172,10 @@ Result Solution::Decode()
             int distMini = INT_MAX;
 
             for (int l = 2; l < inst.n + 2; l++) { // à partir de 2 car avant on a les depot prod et distri
-                if (resultatDecode.z[l-2][k] == false) { // pas transporté par k
+                if (resultatDecode.z[l - 2][k] == false) { // pas transporté par k
                     continue;
                 }
-                
+
                 if (distMini > inst.t[lieu][l] && count(lieuDesservi.begin(), lieuDesservi.end(), l) == 0) { // Dist mini && non desservie
                     lieuPlusProche = l;
                     distMini = inst.t[lieu][l];
@@ -183,10 +185,53 @@ Result Solution::Decode()
                 continue;
 
             lieuDesservi.push_back(lieuPlusProche);
-            resultatDecode.D_M[lieuPlusProche-2] = dateCourante + inst.t[lieu][lieuPlusProche]; //TODO D manu ou 3pl?
+            resultatDecode.D_M[lieuPlusProche - 2] = dateCourante + inst.t[lieu][lieuPlusProche]; //TODO D manu ou 3pl?
             dateCourante += inst.t[lieu][lieuPlusProche];
             lieu = lieuPlusProche; // maj lieu   
-        }            
+        }
+    }
+
+    // retard
+    resultatDecode.PT_M = vector<double>(inst.n, 0);
+    resultatDecode.PPC_M = 0;
+    for (int j = 0; j < inst.n; j++) {
+        resultatDecode.PT_M[j] = max(0.0, resultatDecode.D_M[j] - inst.d[j]);
+        resultatDecode.PPC_M += inst.p_M[j] * resultatDecode.PT_M[j];
+    }
+    */
+
+    // Dates de livraison & retards
+    // TODO Modif
+    resultatDecode.D_M = vector<double>(inst.n, -1);
+    resultatDecode.PT_M = vector<double>(inst.n, 0);
+    resultatDecode.PPC_M = 0;
+    for (int k = 0; k < inst.n; k++) {
+        int point_courant = 0;
+        double date_dep = resultatDecode.F[k];
+        while (!jobsDansVh[k].empty()){
+            // trouver j dans jobsdansvh le plus proche de point courant
+            int distMini = inst.t[jobsDansVh[k][0]+2][point_courant];
+            int jmini = jobsDansVh[k][0];
+            int index = 0;
+            for (int j = 1; j < jobsDansVh[k].size(); j++) {
+                int dist = inst.t[jobsDansVh[k][j] + 2][point_courant];
+                if (dist < distMini) {
+                    jmini = jobsDansVh[k][j];
+                    index = j;
+                }                    
+            }           
+
+            // retard
+            resultatDecode.D_M[jmini] = date_dep + inst.t[point_courant][jmini + 2];
+            
+            resultatDecode.PT_M[jmini] = max(0.0, resultatDecode.D_M[jmini] - inst.d[jmini]);
+            resultatDecode.PPC_M += inst.p_M[jmini] * resultatDecode.PT_M[jmini];
+
+            // retard
+            jobsDansVh[k].erase(jobsDansVh[k].begin() + index);
+            point_courant = jmini + 2;   
+            date_dep = resultatDecode.D_M[jmini];
+        } 
     }
 
     /* y et x pour l'ordonnancement 
@@ -207,19 +252,13 @@ Result Solution::Decode()
             else
                 resultatDecode.y[i][j] = false;
 
-            if (affectV[i] == affectV[j] && resultatDecode.D_M[i] < resultatDecode.D_M[j]) // TODO D_M ou D_3PL
+            if (affectV[i] == affectV[j] && resultatDecode.D_M[i] < resultatDecode.D_M[j])
                 resultatDecode.x[i][j][affectV[i]] = true;            
         }
     }
     */
 
-    // retard
-    resultatDecode.PT_M = vector<double>(inst.n, 0);
-    resultatDecode.PPC_M = 0;
-    for (int j = 0; j < inst.n; j++) {
-        resultatDecode.PT_M[j] = max(0.0, resultatDecode.D_M[j] - inst.d[j]); // TODO D_M D_3PL
-        resultatDecode.PPC_M += inst.p_M[j] * resultatDecode.PT_M[j];
-    }
+    
 
     // Cout total
     resultatDecode.cout_total = resultatDecode.PPC_M + resultatDecode.IC + resultatDecode.VC;

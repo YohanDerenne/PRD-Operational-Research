@@ -436,8 +436,9 @@ namespace UnitTestPRD
 			sol.sv3 = vector<vector<double>>(inst.m, vector<double>(inst.n, 1));
 
 			// === RESULT
-
-			Result res = sol.Decode();
+			sol.Decode();
+			sol.DecodeXY();
+			Result res = sol.resultatDecode;
 
 			Assert::AreEqual(2, sol.ordre[0]);
 			Assert::AreEqual(0, sol.ordre[1]);
@@ -465,6 +466,8 @@ namespace UnitTestPRD
 			Assert::AreEqual(9.0, res.PPC_M);
 			Assert::AreEqual(20, res.VC);
 			Assert::AreEqual(43.0, res.cout_total); 
+
+			Assert::AreEqual(true,res.VerificationContraintes());
 
 		}
 
@@ -543,6 +546,9 @@ namespace UnitTestPRD
 			
 			Assert::AreEqual(20, res.VC);
 			Assert::AreEqual(29.0+12.0+20.0, res.cout_total);
+
+			sol.DecodeXY();
+			Assert::AreEqual(true, sol.resultatDecode.VerificationContraintes());
 		}
 
 	};
@@ -551,7 +557,7 @@ namespace UnitTestPRD
 	public:
 		TEST_METHOD(TestPSO) {
 			Instance inst = Instance("../UnitTestPRD/I_n5_id0.txt");
-			PSO solver = PSO(inst, 50, 17);
+			PSO solver = PSO(inst, 200, 15);
 			Result res = solver.Solve();
 
 			string log = "Durée résolution : " + std::to_string(res.dureeSec);
