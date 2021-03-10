@@ -20,6 +20,9 @@ private:
     /// </summary>
     int nbPart; 
 
+    void Init();
+
+    void CalculCrowdingDistance();
     
 
 public:
@@ -40,11 +43,11 @@ public:
     /// <returns></returns>
     Result Solve();
 
-    void Init();
 
-    void CalculCrowdingDistance();
 
     SolutionPSO ChercherMeilleurVoisin(SolutionPSO sol);
+    SolutionPSO VoisinSwitchsv1sv2(SolutionPSO sol);
+    SolutionPSO VoisinSv1Bloc(SolutionPSO sol);
 
     SolutionPSO GetRandomParticuleWithCD();
 

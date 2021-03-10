@@ -205,11 +205,25 @@ void PSO::CalculCrowdingDistance()
 SolutionPSO PSO::ChercherMeilleurVoisin(SolutionPSO sol)
 {
 	SolutionPSO bestVoisin = sol;
+
+	SolutionPSO voisin = VoisinSwitchsv1sv2(sol);
+	if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
+		bestVoisin = voisin;
+
+	voisin = VoisinSv1Bloc(sol);
+	if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
+		bestVoisin = voisin;
+
+	return bestVoisin;
+}
+
+SolutionPSO PSO::VoisinSwitchsv1sv2(SolutionPSO sol)
+{
+	SolutionPSO bestVoisin = sol;
 	int delta = 2;
-	
-	
+
 	for (int i = 0; i < inst.n - 1; i++) {
-		for (int j = i + 1; j < inst.n && abs(j-i) < delta; j++) {
+		for (int j = i + 1; j < inst.n && abs(j - i) < delta; j++) {
 			// Switch sv1 
 			SolutionPSO voisin = sol;
 			voisin.sv1[i] = sol.sv1[j];
@@ -219,18 +233,44 @@ SolutionPSO PSO::ChercherMeilleurVoisin(SolutionPSO sol)
 				bestVoisin = voisin;
 
 			// Switch sv2
-			voisin = sol;
-			voisin.sv2[i] = sol.sv2[j];
-			voisin.sv2[j] = sol.sv2[i];
-			voisin.Decode();
-			if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
-				bestVoisin = voisin;
+			if (sol.affectV[i] != sol.affectV[j]) {
+				voisin = sol;
+				voisin.sv2[i] = sol.sv2[j];
+				voisin.sv2[j] = sol.sv2[i];
+				voisin.Decode();
+				if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
+					bestVoisin = voisin;
+			}			
 		}
 	}
-	
-	
-	
 
+	return bestVoisin;
+}
+
+SolutionPSO PSO::VoisinSv1Bloc(SolutionPSO sol)
+{
+	SolutionPSO bestVoisin = sol;
+	int delta = 2;
+
+	for (int i = 0; i < inst.n - delta; i++) {		
+		SolutionPSO voisin = sol;
+		for (int j = i + delta; j < inst.n && abs(j - i) < delta; j++) {			
+			voisin.sv1[i] = sol.sv1[j];
+			voisin.sv1[j] = sol.sv1[i];
+		}
+		voisin.Decode();
+		if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
+			bestVoisin = voisin;
+
+		voisin = sol;
+		for (int j = i + delta; j > (i + delta) / 2; j--) {
+			voisin.sv1[i] = sol.sv1[j];
+			voisin.sv1[j] = sol.sv1[i];
+		}
+		voisin.Decode();
+		if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
+			bestVoisin = voisin;		
+	}
 
 	return bestVoisin;
 }

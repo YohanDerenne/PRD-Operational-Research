@@ -557,7 +557,7 @@ namespace UnitTestPRD
 	public:
 		TEST_METHOD(TestPSO) {
 			Instance inst = Instance("../UnitTestPRD/I_n5_id0.txt");
-			PSO solver = PSO(inst, 200, 15);
+			PSO solver = PSO(inst, 200, 20);
 			Result res = solver.Solve();
 
 			string log = "Durée résolution : " + std::to_string(res.dureeSec);
