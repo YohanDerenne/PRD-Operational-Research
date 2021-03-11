@@ -101,11 +101,11 @@ bool Result::VerificationContraintes()
 	// prédécesseur est le site de production
 	for (int j1 = 0; j1 < inst.n; j1++) {
 		for (int k = 0; k < inst.n; k++) {
-
+			// TODO
 		}
 	}
-	// TODO
-
+	
+	/*
 	//Pour le routage d’un véhicule k, le site de production a un successeur seulement si le véhicule k est utilisé :
 	for (int k = 0; k < inst.n; k++) {
 		int sum = 0;
@@ -113,8 +113,9 @@ bool Result::VerificationContraintes()
 			sum += x[0][j][k];
 		}
 		if (sum > Z[k])
-			return false;
+			return false;//here
 	}
+	*/
 
 	// L’estimation de la date de livraison est donnée via cette contrainte :
 	for (int j1 = 0; j1 < inst.n; j1++) {

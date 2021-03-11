@@ -13,20 +13,22 @@ void Solution::DecodeXY()
     resultatDecode.x = vector<vector<vector<bool>>>(inst.n, vector<vector<bool>>(inst.n, vector<bool>(inst.n, false)));
     for (int i = 0; i < inst.n; i++) {
         for (int j = 0; j < inst.n; j++) {
-            int id1;
-            int id2;
+            int id1 = -1;
+            int id2 = -1;
             for (int k = 0; k < inst.n; k++) {
                 if (ordre[k] == i)
                     id1 = k;
                 if (ordre[k] == j)
                     id2 = k;
             }
+            if (id1 == -1 || id2 == -1)
+                assert(!"Impossible");
             if (id1 < id2)
                 resultatDecode.y[i][j] = true;
             else
                 resultatDecode.y[i][j] = false;
 
-            if (affectV[i] == affectV[j] && resultatDecode.D_M[i] < resultatDecode.D_M[j]) 
+            if (affectV[i] == affectV[j] && resultatDecode.D_M[i] < resultatDecode.D_M[j])
                 resultatDecode.x[i][j][affectV[i]] = true;
         }
     }
@@ -62,12 +64,12 @@ Result Solution::Decode()
     // NDVR - affectation vehicule
     affectV.clear();
     for (int i = 0; i < sv2.size(); i++) {
-        double rand = round(sv2[i]);
-        if (rand < 0)
-            rand = 0;
-        if (rand > (inst.n - 1.0))
-            rand = inst.n - 1.0;
-        affectV.push_back(rand); //TODO - arrondi ok?
+        double rounded = round(sv2[i]);
+        if (rounded < 0)
+            rounded = 0;
+        if (rounded > (inst.n - 1.0))
+            rounded = inst.n - 1.0;
+        affectV.push_back(rounded); //TODO - arrondi ok?
     }
    
     resultatDecode.z = vector<vector<bool>>(inst.n, vector<bool>(inst.n, false));

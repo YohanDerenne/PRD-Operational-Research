@@ -48,6 +48,9 @@ public:
     SolutionPSO ChercherMeilleurVoisin(SolutionPSO sol);
     SolutionPSO VoisinSwitchsv1sv2(SolutionPSO sol);
     SolutionPSO VoisinSv1Bloc(SolutionPSO sol);
+    SolutionPSO VoisinAleaIdle(SolutionPSO sol);
+    SolutionPSO VoisinIdleNext(SolutionPSO sol);
+    SolutionPSO VoisinMelangeSv2(SolutionPSO sol);
 
     SolutionPSO GetRandomParticuleWithCD();
 

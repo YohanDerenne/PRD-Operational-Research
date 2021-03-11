@@ -147,6 +147,11 @@ void PSO::Init()
 		particules[i].Decode();
 	}
 
+	// Améliorer la qualité des particules en se basant sur des propriétés dérivés voisines
+	for (int i = 0; i < nbPart; i++) {
+		particules[i] = ChercherMeilleurVoisin(particules[i]);
+	}
+
 	// Garder la meilleure solution
 	double bestCost = 9999999999999;
 	for (int i = 0; i < nbPart; i++) {
@@ -154,19 +159,7 @@ void PSO::Init()
 			bestCost = particules[i].resultatDecode.cout_total;
 			bestParticule = particules[i];
 		}
-	}
-
-	// Améliorer la qualité des particules en se basant sur des propriétés dérivés voisines
-	for (int i = 0; i < nbPart; i++) {
-		SolutionPSO voisin = ChercherMeilleurVoisin(particules[i]);
-		if (voisin.resultatDecode.cout_total < particules[i].resultatDecode.cout_total)
-			particules[i] = voisin;
-		if (voisin.resultatDecode.cout_total < bestCost) {
-			bestCost = voisin.resultatDecode.cout_total;
-			bestParticule = voisin;
-		}
-		i++;
-	}
+	}	
 }
 
 bool comparator(SolutionPSO i, SolutionPSO j) { return (i.resultatDecode.cout_total < j.resultatDecode.cout_total); }
@@ -212,7 +205,23 @@ SolutionPSO PSO::ChercherMeilleurVoisin(SolutionPSO sol)
 
 	voisin = VoisinSv1Bloc(sol);
 	if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
+		bestVoisin = voisin;	
+
+	voisin = VoisinIdleNext(sol);
+	if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
 		bestVoisin = voisin;
+
+	/*
+voisin = VoisinAleaIdle(sol);
+if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
+	bestVoisin = voisin;
+
+
+	voisin = VoisinMelangeSv2(sol);
+	if (voisin.resultatDecode.cout_total < bestVoisin.resultatDecode.cout_total)
+		bestVoisin = voisin;
+	*/
+
 
 	return bestVoisin;
 }
@@ -275,6 +284,62 @@ SolutionPSO PSO::VoisinSv1Bloc(SolutionPSO sol)
 	return bestVoisin;
 }
 
+SolutionPSO PSO::VoisinAleaIdle(SolutionPSO sol)
+{
+	int i = (int) generateDouble(0, inst.m);
+	int j = (int) generateDouble(0, inst.n);
+	SolutionPSO voisin = sol;
+
+	voisin.sv3[i][j] = max(voisin.sv3[i][j] + generateDouble(-2,2),0.0);
+
+	voisin.Decode();
+	if (voisin.resultatDecode.cout_total < sol.resultatDecode.cout_total)
+		return voisin;
+	else
+		return sol;
+}
+
+SolutionPSO PSO::VoisinIdleNext(SolutionPSO sol)
+{
+	SolutionPSO voisin = sol;
+	for (int i = 0; i < inst.m; i++) {
+		for (int j = 0; j < inst.n;j++) {
+			if (i == inst.m - 1) {
+				if (inst.h_WIP[i][j] < inst.h_FIN[j]) {
+					voisin.sv3[i][j] = 0.0;
+				}
+			}
+			else {
+				if (inst.h_WIP[i][j] < inst.h_WIP[i+1][j]) {
+					voisin.sv3[i][j] = 0.0;
+				}
+				else {
+					voisin.sv3[i][j] = (voisin.resultatDecode.C[i+1][j] - inst.p[i+1][j] - voisin.sv3[i+1][j] - voisin.resultatDecode.C[i][j]) +
+						voisin.sv3[i + 1][j] + voisin.sv3[i][j];
+					voisin.sv3[i + 1][j] = 0;
+				}
+				
+			}			
+		}
+	}
+	voisin.Decode();
+	if (voisin.resultatDecode.cout_total < sol.resultatDecode.cout_total)
+		return voisin;
+	else
+		return sol;
+}
+
+SolutionPSO PSO::VoisinMelangeSv2(SolutionPSO sol)
+{
+	SolutionPSO voisin = sol;
+	random_shuffle(voisin.sv2.begin(), voisin.sv2.end());
+	voisin.Decode();
+	if (voisin.resultatDecode.cout_total < sol.resultatDecode.cout_total)
+		return voisin;
+	else
+		return sol;
+}
+
 SolutionPSO PSO::GetRandomParticuleWithCD()
 {
 	double poidsTotal = 0;
@@ -298,7 +363,7 @@ Result PSO::GetReference()
 		sol.sv1.push_back((double) dj);
 	}
 
-	for (int i = 0; i < inst.m; i++) {
+	for (int i = 0; i < inst.n; i++) {
 		sol.sv2.push_back((double)((int)((i+1) / 4)));
 	}
 
