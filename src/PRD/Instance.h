@@ -46,7 +46,7 @@ public :
 	/// <summary>
 	/// Très grande valeur arbitraire
 	/// </summary>
-	int HV = 999999999;
+	int HV = INT_MAX;
 
 	/// <summary>
 	/// Cout d'inventaire d'une tâche j sur une machine i
@@ -84,7 +84,7 @@ public :
 	/// <summary>
 	/// Constructeur de copie de la classe Instance
 	/// </summary>
-	/// <param name="inst2"></param>
+	/// <param name="inst2">instance de copie</param>
 	Instance(const Instance& inst2);
 
 	/// <summary>

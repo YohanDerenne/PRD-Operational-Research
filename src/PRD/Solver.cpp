@@ -14,9 +14,6 @@ Solver::Solver(Instance instance, double nbSec) : best(instance)
 	dureeResolution = 0;
 }
 
-Solver::~Solver()
-{
-}
 
 void Solver::setNewInstance(Instance instance)
 {

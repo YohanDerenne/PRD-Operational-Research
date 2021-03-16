@@ -31,17 +31,27 @@ public :
 	/// </summary>
 	vector<vector<double>> idle;
 
+	/// <summary>
+	/// Resultat de la solution après avoir décoder les vecteurs
+	/// </summary>
 	Result resultatDecode;
 
 	/// <summary>
-	/// Decode les vecteurs de la solutions et renvoie les résultats
+	/// Decode les vecteurs de la solutions et renvoie les résultats. 
+	/// ATTENTION : ne décode pas x et y
 	/// </summary>
-	/// <param name="inst"></param>
-	/// <returns></returns>
+	/// <returns>Le résultats décodé</returns>
 	Result Decode();
 
+	/// <summary>
+	/// Instance de la solution
+	/// </summary>
 	Instance inst;
 
+	/// <summary>
+	/// Constructeur avec instance pour parametre
+	/// </summary>
+	/// <param name="instance">Instance sur laquelle la solution se base</param>
 	Solution(Instance instance);
 
 	/// <summary>

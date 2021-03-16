@@ -24,6 +24,9 @@ protected:
 	/// </summary>
 	double dureeMax;
 
+	/// <summary>
+	/// Durée utilisée pour trouver la solution
+	/// </summary>
 	double dureeResolution;
 
 public:
@@ -41,20 +44,23 @@ public:
 	/// </summary>
 	Solver(Instance instance, double nbSec);
 
-	~Solver();
 
 	/// <summary>
 	/// Reset les attributs en insérant une nouvelle instance
 	/// </summary>
-	/// <param name="instance"></param>
+	/// <param name="instance">Nouvelle instance sur laquelle le solver doit travailler</param>
 	void setNewInstance(Instance instance);
 
 	/// <summary>
 	/// Abstract method to solve the problem
 	/// </summary>
-	/// <returns></returns>
+	/// <returns>Le résultat trouvé par l'algorithme</returns>
 	virtual Result Solve() = 0;
 
+	/// <summary>
+	/// Recupere le temps utilisée pour trouver la solution
+	/// </summary>
+	/// <returns>La durée pour trouver la solution</returns>
 	double getDureeResolution() { return dureeResolution; }
 };
 

@@ -95,8 +95,14 @@ public :
 	/// </summary>
 	int VC;
 
+	/// <summary>
+	/// Cout total de la solution trouvée
+	/// </summary>
 	double cout_total;
 
+	/// <summary>
+	/// Durée utilisée pour trouver la solution
+	/// </summary>
 	double dureeSec;
 
 	// ============================== METHODES ===================================
@@ -104,9 +110,8 @@ public :
 	/// <summary>
 	/// Constructeur de la classe Resultat
 	/// </summary>
-	/// <param name="instance"></param>
+	/// <param name="instance">Instance sur laquelle le resultat se base</param>
 	Result(Instance instance);
-	~Result();
 
 	/// <summary>
 	/// Vérifie si les contraintes sont respectées

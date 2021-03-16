@@ -24,6 +24,10 @@ public :
     /// </summary>
     double CDcoef;
 
+    /// <summary>
+    /// Constructeur avec pour parametre une instance
+    /// </summary>
+    /// <param name="inst">Instance sur laquelle la solution se base</param>
     SolutionPSO(Instance inst);
 };
 

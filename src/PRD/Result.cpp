@@ -25,9 +25,6 @@ Result::Result(Instance instance)
 	dureeSec = 0.0;
 }
 
-Result::~Result()
-{
-}
 
 bool Result::VerificationContraintes()
 {

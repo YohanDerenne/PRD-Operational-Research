@@ -5,10 +5,10 @@
 #include <tchar.h>
 
 /// <summary>
-/// Check if a file end with a specific suffix
+/// Vérifie si la chaine se termine avec un suffixe
 /// </summary>
-/// <param name="str">String to check</param>
-/// <param name="suffix">Suffix to found at the end</param>
+/// <param name="str">La chaine à comparer</param>
+/// <param name="suffix">Suffixe recherché à la fin de la chaine</param>
 /// <returns>True for yes</returns>
 bool has_suffix(const std::string& str, const std::string& suffix)
 {
@@ -16,6 +16,11 @@ bool has_suffix(const std::string& str, const std::string& suffix)
         str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
 
+/// <summary>
+/// Convertie un char* en whar_t*
+/// </summary>
+/// <param name="charArray"></param>
+/// <returns></returns>
 wchar_t* charArrayToLPCWSTR(const char* charArray)
 {
     wchar_t* wString = new wchar_t[4096];
@@ -23,6 +28,11 @@ wchar_t* charArrayToLPCWSTR(const char* charArray)
     return wString;
 }
 
+/// <summary>
+/// Convertie un wchar_t* en string
+/// </summary>
+/// <param name="txt"></param>
+/// <returns></returns>
 string LPCWSTRtoString(wchar_t* txt) {
     wstring ws(txt);
     return string(ws.begin(), ws.end());

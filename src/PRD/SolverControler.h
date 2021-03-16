@@ -55,8 +55,22 @@ public:
 
 	// ================================== Get / Set =================================
 
+	/// <summary>
+	/// Recupere la liste des instances
+	/// </summary>
+	/// <returns>Liste des instances</returns>
 	const list<Instance> getInstances() { return instances; }
+
+	/// <summary>
+	/// Recupere la liste des resultats
+	/// </summary>
+	/// <returns>Liste des résultats</returns>
 	const list<Result> getResults() { return results; }
+
+	/// <summary>
+	/// Permet d'ajouter un resultat
+	/// </summary>
+	/// <param name="res">Resultat à ajouter</param>
 	void AddResult(Result res) { results.push_back(Result(res)); }
 };
 
