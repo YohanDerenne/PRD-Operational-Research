@@ -12,7 +12,7 @@ Instance::Instance()
 	m = 0;
 	p = vector<vector<double>>();
 	d = vector<int>();
-	t = vector<vector<int>>();
+	t = vector<vector<double>>();
 	h_WIP = vector<vector<int>>();
 	h_FIN = vector<int>();
 	p_M = vector<int>();
@@ -128,7 +128,7 @@ bool Instance::Parse(string path)
 
 	// Calcul Distances 
 	for (unsigned int i = 0; i < coord.size(); i++) {
-		vector<int> row;
+		vector<double> row;
 		for (unsigned int j = 0; j < coord.size(); j++) {
 			row.push_back(sqrt(pow(coord[i].first - coord[j].first, 2) + pow(coord[i].second - coord[j].second, 2)));
 		}

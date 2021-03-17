@@ -154,9 +154,9 @@ namespace UnitTestPRD
 				coord.push_back({ 215,228 });
 
 				// Distances
-				vector<vector<int>> t;
+				vector<vector<double>> t;
 				for (size_t i = 0; i < coord.size() ; i++) {
-					vector<int> row;
+					vector<double> row;
 					for (size_t j = 0; j < coord.size(); j++) {
 						row.push_back(sqrt(pow(coord[i].first - coord[j].first, 2) + pow(coord[i].second - coord[j].second, 2)));
 					}
@@ -424,7 +424,7 @@ namespace UnitTestPRD
 			inst.p = vector<vector<double>>(inst.m, vector<double>(inst.n, 1));
 			inst.d = vector<int>(inst.n, 13);
 			inst.h_WIP = vector<vector<int>>(inst.m, vector<int>(inst.n, 1));
-			inst.t = vector<vector<int>>(inst.n+2, vector<int>(inst.n+2, 1));
+			inst.t = vector<vector<double>>(inst.n+2, vector<double>(inst.n+2, 1));
 			inst.p_M = vector<int>(inst.n, 3);
 			inst.h_FIN = vector<int>(inst.n, 2);
 			inst.c_V = 5;
@@ -493,7 +493,7 @@ namespace UnitTestPRD
 			inst.p = vector<vector<double>>(inst.m, vector<double>(inst.n, 1));
 			inst.d = vector<int>(inst.n, 13);
 			inst.h_WIP = vector<vector<int>>(inst.m, vector<int>(inst.n, 1));
-			inst.t = vector<vector<int>>(inst.n+2, vector<int>(inst.n+2, 1));
+			inst.t = vector<vector<double>>(inst.n+2, vector<double>(inst.n+2, 1));
 			inst.p_M = vector<int>(inst.n, 1);
 			inst.h_FIN = vector<int>(inst.n, 2);
 			inst.c_V = 5;
