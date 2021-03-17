@@ -95,7 +95,7 @@ Result Solution::Decode()
     
 
     // Dates de fin des jobs
-    resultatDecode.C = vector<vector<double>>(inst.m, vector<double>(inst.n, -1));    //TODO [I][J] = [machine][Job] ou [Job][Machine]?
+    resultatDecode.C = vector<vector<double>>(inst.m, vector<double>(inst.n, -1));
     resultatDecode.C[0][ordre[0]] = idle[0][ordre[0]] + inst.p[0][ordre[0]];
     for (int k = 1; k < inst.n; k++) {
         resultatDecode.C[0][ordre[k]] = resultatDecode.C[0][ordre[k - 1]] + idle[0][ordre[k]] + inst.p[0][ordre[k]];

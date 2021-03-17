@@ -6,6 +6,8 @@
 #include <random>
 #include <cassert>
 
+bool comparator(SolutionPSO i, SolutionPSO j);
+
 class PSO :
     public Solver
 {
@@ -24,6 +26,16 @@ private:
     /// Initialise la PSO
     /// </summary>
     void Init();
+
+    /// <summary>
+    /// Initialise les références et les insére en tant que première particules
+    /// </summary>
+    void InitReferences();
+
+    /// <summary>
+    /// Solution de référence afin de comparer les résultats trouvés
+    /// </summary>
+    Result reference;
 
     /// <summary>
     /// Calcul les crowding distances de chaque particules

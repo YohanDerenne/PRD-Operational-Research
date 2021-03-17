@@ -128,7 +128,7 @@ bool Result::VerificationContraintes()
 	for (int j = 0; j < inst.n; j++) {
 		for (int k = 0; k < inst.n; k++) {
 			if (D_M[j] < F[k] + inst.t[0][j+2] - HV * (1 - (double)z[j][k]))
-				return false;
+				return false; // here
 		}
 	}
 

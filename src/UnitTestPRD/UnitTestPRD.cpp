@@ -568,10 +568,11 @@ namespace UnitTestPRD
 	TEST_CLASS(UnitTestPSO) {
 	public:
 		TEST_METHOD(TestPSO) {
-			Instance inst = Instance("../../Instance/I_n20_id5.txt");
-			PSO solver = PSO(inst, 5, 15);
-			Result ref = solver.GetReference();
+			Instance inst = Instance("../../Instance/I_n10_id0.txt");
+			PSO solver = PSO(inst, 5, 19);
+			
 			Result res = solver.Solve();
+			Result ref = solver.GetReference();
 
 			string log = "Durée résolution : " + std::to_string(res.dureeSec);
 			log += "\nDernieres particules : " + std::to_string(solver.particules[2].resultatDecode.cout_total);

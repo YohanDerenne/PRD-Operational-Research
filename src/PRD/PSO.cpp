@@ -8,12 +8,11 @@ double generateDouble(double inf, double sup) {
 }
 
 PSO::PSO(Instance newInst, double nbSec, int newNbPart) : Solver(newInst, nbSec),
-bestParticule(inst)
+bestParticule(inst), reference(inst)
 {
 	if (newNbPart < 3) {
 		assert(!"3 particules minimum !");
 	}
-	bestParticule = SolutionPSO(newInst);
 	nbPart = newNbPart;
 }
 
@@ -112,7 +111,9 @@ Result PSO::Solve()
 void PSO::Init()
 {
 	// Inititalisation des particules
-	for (int i = 0; i < nbPart; i++) {
+	InitReferences();
+	int i = 0;
+	for (i = particules.size() - 1; i < nbPart; i++) {
 		SolutionPSO part = SolutionPSO(inst);
 		// Sv1 ini aléatoire entre -1 et 1
 		part.sv1 = vector<double>(inst.n, 0.0);		
@@ -143,6 +144,7 @@ void PSO::Init()
 
 		particules.push_back(part);
 	}
+	nbPart = i;
 
 	// Décoder toutes les solutions de chaque particule initialisée
 	for (int i = 0; i < nbPart; i++) {
@@ -164,7 +166,62 @@ void PSO::Init()
 	}	
 }
 
+
 bool comparator(SolutionPSO i, SolutionPSO j) { return (i.resultatDecode.cout_total < j.resultatDecode.cout_total); }
+
+void PSO::InitReferences()
+{
+	SolutionPSO ref1 = SolutionPSO(inst);
+	SolutionPSO ref2 = SolutionPSO(inst);
+	SolutionPSO ref3 = SolutionPSO(inst);
+	SolutionPSO ref4 = SolutionPSO(inst);
+	SolutionPSO ref5 = SolutionPSO(inst);
+	SolutionPSO ref6 = SolutionPSO(inst);
+	for (int dj : inst.d) {
+		ref1.sv1.push_back((double)dj);
+		ref2.sv1.push_back((double)dj);
+		ref3.sv1.push_back((double)dj);
+	}
+	for (int j = 0; j < inst.n; j++){
+		double sum = 0;
+		for (int i = 0; i < inst.m; i++) {
+			sum += inst.p[i][j];
+		}
+		ref4.sv1.push_back(sum);
+		ref5.sv1.push_back(sum);
+		ref6.sv1.push_back(sum);
+	}
+	for (int i = 0; i < inst.n; i++) {
+		ref1.sv2.push_back((double)((int)((i + 1) / 4)));
+		ref2.sv2.push_back((double)((int)((i + 1) / 3)));
+		ref3.sv2.push_back((double)((int)((i + 1) / 5)));
+		ref4.sv2.push_back((double)((int)((i + 1) / 4)));
+		ref5.sv2.push_back((double)((int)((i + 1) / 3)));
+		ref6.sv2.push_back((double)((int)((i + 1) / 5)));
+	}
+	particules.push_back(ref1);
+	particules.push_back(ref2);
+	particules.push_back(ref3);
+	particules.push_back(ref4);
+	particules.push_back(ref5);
+	particules.push_back(ref6);
+	for (int i = 0; i < particules.size(); i++) {
+		particules[i].sv3 = vector<vector<double>>(inst.m, vector<double>(inst.n, 0));
+
+		// Velocité à 0
+		particules[i].velSv1 = vector<double>(inst.n, 0.0);
+		particules[i].velSv2 = vector<double>(inst.n, 0.0);
+		particules[i].velSv3 = vector<vector<double>>(inst.m, vector<double>(inst.n, 0.0));
+
+		particules[i].CDcoef = 0;
+
+		particules[i].Decode();
+	}
+	SolutionPSO bestRef = *std::min_element(particules.begin(), particules.end(), comparator);
+	bestRef.DecodeXY();
+	reference = bestRef.resultatDecode;
+}
+
 
 void PSO::CalculCrowdingDistance()
 {
@@ -359,20 +416,7 @@ SolutionPSO PSO::GetRandomParticuleWithCD()
 
 Result PSO::GetReference()
 {
-	SolutionPSO sol = SolutionPSO(inst);
-
-	for (int dj : inst.d) {
-		sol.sv1.push_back((double) dj);
-	}
-
-	for (int i = 0; i < inst.n; i++) {
-		sol.sv2.push_back((double)((int)((i+1) / 4)));
-	}
-
-	sol.sv3 = vector<vector<double>>(inst.m, vector<double>(inst.n,0));
-	sol.Decode();
-	sol.DecodeXY();
-	return sol.resultatDecode;
+	return reference;
 }
 
 bool PSO::StopCondition()
@@ -383,8 +427,10 @@ bool PSO::StopCondition()
 	for (int i = 1; i < nbPart; i++) {
 		if (particules[i].resultatDecode.cout_total == costRef) {
 			nbPareil++;
-			if (nbPareil > nbPareilMax)
+			if (nbPareil > nbPareilMax) {
+				sort(particules.begin(), particules.end(), comparator);
 				return true;
+			}
 		}
 	}
 	return false;
