@@ -568,7 +568,7 @@ namespace UnitTestPRD
 	TEST_CLASS(UnitTestPSO) {
 	public:
 		TEST_METHOD(TestPSO) {
-			Instance inst = Instance("../../Instance/I_n10_id0.txt");
+			Instance inst = Instance("../../Instance/I_n5_id0.txt");
 			PSO solver = PSO(inst, 5, 19);
 			
 			Result res = solver.Solve();

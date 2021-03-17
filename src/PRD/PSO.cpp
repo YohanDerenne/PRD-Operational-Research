@@ -416,6 +416,9 @@ SolutionPSO PSO::GetRandomParticuleWithCD()
 
 Result PSO::GetReference()
 {
+	if (reference.cout_total == 0) {
+		InitReferences();
+	}
 	return reference;
 }
 
