@@ -39,9 +39,6 @@
     <ClCompile Include="Solver.cpp">
       <Filter>Fichiers sources\Model</Filter>
     </ClCompile>
-    <ClCompile Include="SolverControler.cpp">
-      <Filter>Fichiers sources\Control</Filter>
-    </ClCompile>
     <ClCompile Include="Solution.cpp">
       <Filter>Fichiers sources\Model</Filter>
     </ClCompile>
@@ -50,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="SolutionPSO.cpp">
       <Filter>Fichiers sources\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="SolverControler.cpp">
+      <Filter>Fichiers sources\Control</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

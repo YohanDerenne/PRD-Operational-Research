@@ -323,11 +323,17 @@ namespace UnitTestPRD
 			res1.PPC_M = 456;
 			res1.cout_total = 626;
 			res1.IC_WIP = 47;
+			res1.nb_part = 15;
+			res1.cout_ref = 700;
+			res1.dureeSec = 20;
 
 			res2.IC_FIN = 78;
 			res2.PPC_M = 98;
 			res2.cout_total = 231;
 			res2.IC_WIP = 55;
+			res2.nb_part = 5;
+			res2.cout_ref = 800;
+			res2.dureeSec = 25;
 
 			control.AddResult(res1);
 			control.AddResult(res2);
@@ -339,41 +345,47 @@ namespace UnitTestPRD
 			ifstream file;
 			file.open("../UnitTestPRD/resultTest/resultat.txt");
 			if (!file) {
-				Assert::Fail(L"Ne retrouve le fichier résultat");
+				Assert::Fail(L"Ne retrouve pas le fichier résultat");
 			}
 
-			int id;
 			int n;
-			double ct;
-			double cwip;
-			double cfin;
+			int id;
+			int nb_p;
 			double cr;
+			double cs;
+			double t;			
 
-			file >> id;
+			// Skip header
+			string header;
+			for (int i = 0; i < 6; i++) {
+				file >> header;
+			}			
+
 			file >> n;
-			file >> ct;
-			file >> cwip;
-			file >> cfin;
+			file >> id;
+			file >> nb_p;
 			file >> cr;
+			file >> cs;
+			file >> t;
 			Assert::AreEqual(2,id);
 			Assert::AreEqual(6, n);
-			Assert::AreEqual(626.0, ct);
-			Assert::AreEqual(47.0, cwip);
-			Assert::AreEqual(123.0, cfin);
-			Assert::AreEqual(456.0, cr);
+			Assert::AreEqual(15, nb_p);
+			Assert::AreEqual(700.0, cr);
+			Assert::AreEqual(626.0, cs);
+			Assert::AreEqual(20.0, t);
 
-			file >> id;
 			file >> n;
-			file >> ct;
-			file >> cwip;
-			file >> cfin;
+			file >> id;
+			file >> nb_p;
 			file >> cr;
-			Assert::AreEqual(4, id);
+			file >> cs;
+			file >> t;
 			Assert::AreEqual(8, n);
-			Assert::AreEqual(231.0, ct);
-			Assert::AreEqual(55.0, cwip);
-			Assert::AreEqual(78.0, cfin);
-			Assert::AreEqual(98.0, cr);
+			Assert::AreEqual(4, id);
+			Assert::AreEqual(5, nb_p);
+			Assert::AreEqual(800.0, cr);
+			Assert::AreEqual(231.0, cs);
+			Assert::AreEqual(25.0, t);
 
 			file.close();
 		}

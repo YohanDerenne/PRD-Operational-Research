@@ -9,7 +9,7 @@
 /// </summary>
 /// <param name="str">La chaine à comparer</param>
 /// <param name="suffix">Suffixe recherché à la fin de la chaine</param>
-/// <returns>True for yes</returns>
+/// <returns>True pour oui</returns>
 bool has_suffix(const std::string& str, const std::string& suffix)
 {
     return str.size() >= suffix.size() &&
@@ -19,8 +19,8 @@ bool has_suffix(const std::string& str, const std::string& suffix)
 /// <summary>
 /// Convertie un char* en whar_t*
 /// </summary>
-/// <param name="charArray"></param>
-/// <returns></returns>
+/// <param name="charArray">Chaine à convertir</param>
+/// <returns>Chaine convertie</returns>
 wchar_t* charArrayToLPCWSTR(const char* charArray)
 {
     wchar_t* wString = new wchar_t[4096];
@@ -31,8 +31,8 @@ wchar_t* charArrayToLPCWSTR(const char* charArray)
 /// <summary>
 /// Convertie un wchar_t* en string
 /// </summary>
-/// <param name="txt"></param>
-/// <returns></returns>
+/// <param name="txt">Chaine à convertir</param>
+/// <returns>Chaine convertie</returns>
 string LPCWSTRtoString(wchar_t* txt) {
     wstring ws(txt);
     return string(ws.begin(), ws.end());
@@ -110,8 +110,9 @@ bool SolverControler::ExportResults(string path)
     try {
         string sep = " ";
         ofstream output(path);
+        output << "Nb_Jobs" << sep << "ID" << sep << "NB_Particules" << sep << "Cout_Ref" << sep << "Cout_Solution" << sep << "Temps" << endl;
         for (Result res : results) {
-            output << res.inst.id << sep << res.inst.n << sep << res.cout_total << sep << res.IC_WIP << sep << res.IC_FIN << sep << res.PPC_M << endl;
+            output << res.inst.n << sep << res.inst.id << sep << res.nb_part << sep << res.cout_ref << sep << res.cout_total << sep << res.dureeSec << endl;
         }
         output.close();
         return true;

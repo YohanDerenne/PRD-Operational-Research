@@ -105,6 +105,16 @@ public :
 	/// </summary>
 	double dureeSec;
 
+	/// <summary>
+	/// Nombre de particule dans le cas d'une PSO
+	/// </summary>
+	int nb_part;
+
+	/// <summary>
+	/// Cout de reference pour comparer les solutions
+	/// </summary>
+	double cout_ref;
+
 	// ============================== METHODES ===================================
 
 	/// <summary>

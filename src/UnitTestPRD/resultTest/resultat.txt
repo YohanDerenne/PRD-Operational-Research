@@ -1,2 +1,3 @@
-2 6 626 47 123 456
-4 8 231 55 78 98
+Nb_Jobs ID NB_Particules Cout_Ref Cout_Solution Temps
+6 2 15 700 626 20
+8 4 5 800 231 25

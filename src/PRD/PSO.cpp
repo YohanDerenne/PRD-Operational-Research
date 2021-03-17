@@ -104,6 +104,8 @@ Result PSO::Solve()
 	dureeResolution = tempsEcoule;
 	bestParticule.DecodeXY();
 	bestParticule.resultatDecode.dureeSec = tempsEcoule;
+	bestParticule.resultatDecode.nb_part = nbPart;
+	bestParticule.resultatDecode.cout_ref = GetReference().cout_total;
 	return bestParticule.resultatDecode;
 }
 
