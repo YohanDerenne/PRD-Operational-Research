@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['main_143',['main',['../_p_r_d_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4',1,'PRD.cpp']]]
+  ['launchcomputation_143',['LaunchComputation',['../class_solver_controler.html#aa365aec0320991668fbac4ade04d5f75',1,'SolverControler']]],
+  ['lpcwstrtostring_144',['LPCWSTRtoString',['../_solver_controler_8cpp.html#a1429432ba48be734008c640217c89e80',1,'LPCWSTRtoString(wchar_t *txt):&#160;SolverControler.cpp'],['../_solver_controler_8h.html#a1429432ba48be734008c640217c89e80',1,'LPCWSTRtoString(wchar_t *txt):&#160;SolverControler.cpp']]]
 ];

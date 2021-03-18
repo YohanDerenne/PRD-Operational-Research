@@ -95,16 +95,20 @@ $(function() {
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <a class="code" href="class_solver.html">Solver</a>();</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="class_solver.html">Solver</a>(<a class="code" href="class_instance.html">Instance</a> instance, <span class="keywordtype">double</span> nbSec);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">void</span> setNewInstance(<a class="code" href="class_instance.html">Instance</a> instance);</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="class_solver.html#a4b2bd81bb64f48484fe623afcdf226e2">   58</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_result.html">Result</a> <a class="code" href="class_solver.html#a4b2bd81bb64f48484fe623afcdf226e2">Solve</a>() = 0;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="class_solver.html#aa39457eb2b2743dbc0fab4f326d8b692">   64</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="class_solver.html#aa39457eb2b2743dbc0fab4f326d8b692">getDureeResolution</a>() { <span class="keywordflow">return</span> dureeResolution; }</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;};</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <a class="code" href="class_solver.html">Solver</a>(<a class="code" href="class_instance.html">Instance</a> instance, <span class="keywordtype">double</span> nbSec);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <a class="code" href="class_solver.html">Solver</a>(<span class="keywordtype">double</span> nbSec);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> setNewInstance(<a class="code" href="class_instance.html">Instance</a> instance);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="class_solver.html#a4b2bd81bb64f48484fe623afcdf226e2">   66</a></span>&#160;    <span class="keyword">virtual</span> <a class="code" href="class_result.html">Result</a> <a class="code" href="class_solver.html#a4b2bd81bb64f48484fe623afcdf226e2">Solve</a>() = 0;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="class_solver.html#a88d41d5a0ea96d0af0fce59159de6962">   71</a></span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_solver.html#a88d41d5a0ea96d0af0fce59159de6962">Reset</a>() = 0;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="class_solver.html#aa39457eb2b2743dbc0fab4f326d8b692">   77</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="class_solver.html#aa39457eb2b2743dbc0fab4f326d8b692">getDureeResolution</a>() { <span class="keywordflow">return</span> dureeResolution; }</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;};</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
 <div class="ttc" id="a_result_8h_html"><div class="ttname"><a href="_result_8h.html">Result.h</a></div></div>
 <div class="ttc" id="aclass_instance_html"><div class="ttname"><a href="class_instance.html">Instance</a></div><div class="ttdef"><b>Definition:</b> Instance.h:7</div></div>
 <div class="ttc" id="aclass_result_html"><div class="ttname"><a href="class_result.html">Result</a></div><div class="ttdef"><b>Definition:</b> Result.h:4</div></div>
@@ -113,7 +117,8 @@ $(function() {
 <div class="ttc" id="aclass_solver_html_a1076a7f928d7ce3149bdffce5ca57873"><div class="ttname"><a href="class_solver.html#a1076a7f928d7ce3149bdffce5ca57873">Solver::dureeMax</a></div><div class="ttdeci">double dureeMax</div><div class="ttdoc">Condiation d'arrêt de la PSO. Durée maximum de traitement en secondes</div><div class="ttdef"><b>Definition:</b> Solver.h:25</div></div>
 <div class="ttc" id="aclass_solver_html_a4b2bd81bb64f48484fe623afcdf226e2"><div class="ttname"><a href="class_solver.html#a4b2bd81bb64f48484fe623afcdf226e2">Solver::Solve</a></div><div class="ttdeci">virtual Result Solve()=0</div><div class="ttdoc">Abstract method to solve the problem</div></div>
 <div class="ttc" id="aclass_solver_html_a811d97c79f9a57977180a93fde782994"><div class="ttname"><a href="class_solver.html#a811d97c79f9a57977180a93fde782994">Solver::inst</a></div><div class="ttdeci">Instance inst</div><div class="ttdoc">Données contenant les paramètres du problème à résoudre</div><div class="ttdef"><b>Definition:</b> Solver.h:19</div></div>
-<div class="ttc" id="aclass_solver_html_aa39457eb2b2743dbc0fab4f326d8b692"><div class="ttname"><a href="class_solver.html#aa39457eb2b2743dbc0fab4f326d8b692">Solver::getDureeResolution</a></div><div class="ttdeci">double getDureeResolution()</div><div class="ttdoc">Recupere le temps utilisée pour trouver la solution</div><div class="ttdef"><b>Definition:</b> Solver.h:64</div></div>
+<div class="ttc" id="aclass_solver_html_a88d41d5a0ea96d0af0fce59159de6962"><div class="ttname"><a href="class_solver.html#a88d41d5a0ea96d0af0fce59159de6962">Solver::Reset</a></div><div class="ttdeci">virtual void Reset()=0</div><div class="ttdoc">Reset les attributs du solver</div></div>
+<div class="ttc" id="aclass_solver_html_aa39457eb2b2743dbc0fab4f326d8b692"><div class="ttname"><a href="class_solver.html#aa39457eb2b2743dbc0fab4f326d8b692">Solver::getDureeResolution</a></div><div class="ttdeci">double getDureeResolution()</div><div class="ttdoc">Recupere le temps utilisée pour trouver la solution</div><div class="ttdef"><b>Definition:</b> Solver.h:77</div></div>
 <div class="ttc" id="aclass_solver_html_ade2b18e76cb1f530ecfc7fc3fa57c6eb"><div class="ttname"><a href="class_solver.html#ade2b18e76cb1f530ecfc7fc3fa57c6eb">Solver::dureeResolution</a></div><div class="ttdeci">double dureeResolution</div><div class="ttdoc">Durée utilisée pour trouver la solution</div><div class="ttdef"><b>Definition:</b> Solver.h:30</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
