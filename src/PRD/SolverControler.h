@@ -3,6 +3,28 @@
 #include <list>
 
 
+/// <summary>
+/// Vérifie si la chaine se termine avec un suffixe
+/// </summary>
+/// <param name="str">La chaine à comparer</param>
+/// <param name="suffix">Suffixe recherché à la fin de la chaine</param>
+/// <returns>True pour oui</returns>
+bool has_suffix(const std::string& str, const std::string& suffix);
+
+/// <summary>
+/// Convertie un char* en whar_t*
+/// </summary>
+/// <param name="charArray">Chaine à convertir</param>
+/// <returns>Chaine convertie</returns>
+wchar_t* charArrayToLPCWSTR(const char* charArray);
+
+/// <summary>
+/// Convertie un wchar_t* en string
+/// </summary>
+/// <param name="txt">Chaine à convertir</param>
+/// <returns>Chaine convertie</returns>
+string LPCWSTRtoString(wchar_t* txt);
+
 class SolverControler
 {
 private:

@@ -4,23 +4,12 @@
 #include <windows.h>
 #include <tchar.h>
 
-/// <summary>
-/// Vérifie si la chaine se termine avec un suffixe
-/// </summary>
-/// <param name="str">La chaine à comparer</param>
-/// <param name="suffix">Suffixe recherché à la fin de la chaine</param>
-/// <returns>True pour oui</returns>
 bool has_suffix(const std::string& str, const std::string& suffix)
 {
     return str.size() >= suffix.size() &&
         str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
 
-/// <summary>
-/// Convertie un char* en whar_t*
-/// </summary>
-/// <param name="charArray">Chaine à convertir</param>
-/// <returns>Chaine convertie</returns>
 wchar_t* charArrayToLPCWSTR(const char* charArray)
 {
     wchar_t* wString = new wchar_t[4096];
@@ -28,11 +17,6 @@ wchar_t* charArrayToLPCWSTR(const char* charArray)
     return wString;
 }
 
-/// <summary>
-/// Convertie un wchar_t* en string
-/// </summary>
-/// <param name="txt">Chaine à convertir</param>
-/// <returns>Chaine convertie</returns>
 string LPCWSTRtoString(wchar_t* txt) {
     wstring ws(txt);
     return string(ws.begin(), ws.end());
