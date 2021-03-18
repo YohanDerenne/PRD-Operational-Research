@@ -56,10 +56,20 @@ public:
     PSO(Instance inst, double nbSec, int newNbPart);
 
     /// <summary>
+    /// Constructeur de la classe PSO
+    /// </summary>
+    PSO(double nbSec, int newNbPart);
+
+    /// <summary>
     /// Lance la résolution PSO
     /// </summary>
     /// <returns>Resultat de la solution trouvée</returns>
     Result Solve();
+
+    /// <summary>
+    /// Reset les attributs de la PSO
+    /// </summary>
+    void Reset();
 
     /****************************** VOISIN ******************************/
 

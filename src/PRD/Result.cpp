@@ -25,6 +25,29 @@ Result::Result(Instance instance)
 	dureeSec = 0.0;
 }
 
+Result::Result()
+{
+	y = vector<vector<bool>>();
+	Z = vector<bool>();
+	z = vector<vector<bool>>();
+	x = vector<vector<vector<bool>>>();
+	D_M = vector<double>();
+	C = vector<vector<double>>();
+	F = vector<double>();
+	f = vector<double>();
+	PT_M = vector<double>();
+	IC_WIP = 0;
+	IC_FIN = 0;
+	IC = 0;
+	PPC_M = 0;
+
+	D_3PL = vector<double>();
+	T_M = vector<double>();
+	VC = 0;
+
+	dureeSec = 0.0;
+}
+
 
 bool Result::VerificationContraintes()
 {

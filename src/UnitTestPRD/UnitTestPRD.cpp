@@ -396,18 +396,51 @@ namespace UnitTestPRD
 			Instance inst =  Instance();
 			Result res1 =  Result(inst);
 			control.AddResult(res1);
-			Assert::AreEqual(false, control.ExportResults("../UnitTestPRD/resultTest/resultat.data"));
-			Assert::AreEqual(false, control.ExportResults("../UnitTestPRD/resultTest/resultat"));
-			Assert::AreEqual(false, control.ExportResults("../UnitTestPRD/resultTest/"));
+			try {
+				Assert::AreEqual(false, control.ExportResults("../UnitTestPRD/resultTest/resultat.data"));
+				Assert::Fail(L"Une exception est attendue");
+			}
+			catch (exception exc) {
+
+			}
+			try {
+				Assert::AreEqual(false, control.ExportResults("../UnitTestPRD/resultTest/resultat"));
+				Assert::Fail(L"Une exception est attendue");
+			}
+			catch (exception exc) {
+
+			}
+			try {
+				Assert::AreEqual(false, control.ExportResults("../UnitTestPRD/resultTest/"));
+				Assert::Fail(L"Une exception est attendue");
+			}
+			catch (exception exc) {
+
+			}			
+			
 			Assert::AreEqual(true, control.ExportResults("../UnitTestPRD/resultTest/resTmp.txt"));
-			Assert::AreEqual(false, control.ExportResults("../UnitTestPRD/resultTest/resTmp.txt"));
+
+			try {
+				Assert::AreEqual(false, control.ExportResults("../UnitTestPRD/resultTest/resTmp.txt"));
+				Assert::Fail(L"Une exception est attendue");
+			}
+			catch (exception exc) {
+
+			}
+			
 			remove("../UnitTestPRD/resultTest/resTmp.txt");
 		}
 
 		TEST_METHOD(TestImportDirWithBadFormat)
 		{
 			SolverControler control = SolverControler();
-			Assert::AreEqual(false, control.ImportInstances("../UnitTestPRD/BadInstanceTest"));
+			try {
+				control.ImportInstances("../UnitTestPRD/BadInstanceTest");
+				Assert::Fail(L"Une exception est attendue");
+			}
+			catch (exception exc) {
+
+			}
 		}
 	};
 
@@ -568,8 +601,8 @@ namespace UnitTestPRD
 	TEST_CLASS(UnitTestPSO) {
 	public:
 		TEST_METHOD(TestPSO) {
-			Instance inst = Instance("../../Instance/I_n5_id0.txt");
-			PSO solver = PSO(inst, 5, 19);
+			Instance inst = Instance("../../Instance/I_n6_id0.txt");
+			PSO solver = PSO(inst, 4, 10);
 			
 			Result res = solver.Solve();
 			Result ref = solver.GetReference();

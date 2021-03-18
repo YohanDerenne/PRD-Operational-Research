@@ -1,7 +1,5 @@
 #include "PSO.h"
 
-
-
 double generateDouble(double inf, double sup) {
 	double f = (double)rand() / RAND_MAX;
 	return inf + f * (sup - inf);
@@ -10,9 +8,12 @@ double generateDouble(double inf, double sup) {
 PSO::PSO(Instance newInst, double nbSec, int newNbPart) : Solver(newInst, nbSec),
 bestParticule(inst), reference(inst)
 {
-	if (newNbPart < 3) {
-		assert(!"3 particules minimum !");
-	}
+	nbPart = newNbPart;
+}
+
+PSO::PSO(double nbSec, int newNbPart) : Solver(nbSec),
+bestParticule(inst), reference(inst)
+{
 	nbPart = newNbPart;
 }
 
@@ -106,6 +107,11 @@ Result PSO::Solve()
 	bestParticule.resultatDecode.nb_part = nbPart;
 	bestParticule.resultatDecode.cout_ref = GetReference().cout_total;
 	return bestParticule.resultatDecode;
+}
+
+void PSO::Reset()
+{
+	particules.clear();
 }
 
 void PSO::Init()

@@ -124,6 +124,11 @@ public :
 	Result(Instance instance);
 
 	/// <summary>
+	/// Constructeur par defaut de la classe Result
+	/// </summary>
+	Result();
+
+	/// <summary>
 	/// Vérifie si les contraintes sont respectées
 	/// </summary>
 	/// <returns>Vrai si les contraintes sont respectées, false sinon</returns>

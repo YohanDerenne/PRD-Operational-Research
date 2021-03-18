@@ -1,6 +1,6 @@
 #include "Solver.h"
 
-Solver::Solver() : best(Instance())
+Solver::Solver() : best()
 {
 	inst = Instance();
 	dureeMax = 0;
@@ -14,10 +14,17 @@ Solver::Solver(Instance instance, double nbSec) : best(instance)
 	dureeResolution = 0;
 }
 
+Solver::Solver(double nbSec) : best()
+{
+	dureeMax = nbSec;
+	dureeResolution = 0;
+}
+
 
 void Solver::setNewInstance(Instance instance)
 {
 	best = Result(instance);
 	inst = instance;
 	dureeResolution = 0;
+	Reset();
 }

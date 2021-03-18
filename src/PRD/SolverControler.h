@@ -2,6 +2,12 @@
 #include "Solver.h"
 #include <list>
 
+/// <summary>
+/// Determine si un fichier du meme nom existe
+/// </summary>
+/// <param name="name">Nom du fichier à vérifier</param>
+/// <returns>1 pour oui, 0 sinon</returns>
+bool fileExist(const std::string& name);
 
 /// <summary>
 /// Vérifie si la chaine se termine avec un suffixe
@@ -48,6 +54,11 @@ public:
 	/// Construteur du controleur
 	/// </summary>
 	SolverControler();
+
+	/// <summary>
+	/// Contructeur avec parametre
+	/// </summary>
+	SolverControler(Solver* sol);
 
 	~SolverControler();
 

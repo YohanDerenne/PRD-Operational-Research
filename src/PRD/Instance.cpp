@@ -21,7 +21,12 @@ Instance::Instance()
 
 Instance::Instance(string path)
 {
-    Parse(path);
+	try {
+		Parse(path);
+	}
+	catch (exception &ex) {
+		throw ex;
+	}
 }
 
 Instance::Instance(const Instance& inst2)

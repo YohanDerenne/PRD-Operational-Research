@@ -42,7 +42,15 @@ public:
 	/// <summary>
 	/// Constructeur de la classe Solver
 	/// </summary>
+	/// <param name="instance">Instance de la résoltion</param>
+	/// <param name="nbSec">Duree max de la résolution</param>
 	Solver(Instance instance, double nbSec);
+
+	/// <summary>
+	/// Constructeur de la classe Solver
+	/// </summary>
+	/// <param name="nbSec">Duree max de la résolution</param>
+	Solver(double nbSec);
 
 
 	/// <summary>
@@ -56,6 +64,11 @@ public:
 	/// </summary>
 	/// <returns>Le résultat trouvé par l'algorithme</returns>
 	virtual Result Solve() = 0;
+
+	/// <summary>
+	/// Reset les attributs du solver
+	/// </summary>
+	virtual void Reset() = 0;
 
 	/// <summary>
 	/// Recupere le temps utilisée pour trouver la solution

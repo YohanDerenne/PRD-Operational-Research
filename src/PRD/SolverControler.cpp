@@ -4,6 +4,11 @@
 #include <windows.h>
 #include <tchar.h>
 
+bool fileExist(const std::string& name) {
+    ifstream fee(name.c_str());
+    return fee.good();
+}
+
 bool has_suffix(const std::string& str, const std::string& suffix)
 {
     return str.size() >= suffix.size() &&
@@ -29,21 +34,33 @@ SolverControler::SolverControler()
     instances = list<Instance>();
 }
 
+SolverControler::SolverControler(Solver * sol)
+{
+    results = list<Result>();
+    instances = list<Instance>();
+    Reset(sol);
+}
+
 SolverControler::~SolverControler()
 {
-    if (solver != nullptr)
-        delete solver;
 }
 
 void SolverControler::LaunchComputation()
 {
-    if (solver != nullptr && instances.size() != 0) {
-        for (Instance inst : instances) {
-            solver->setNewInstance(inst);
-            Result res = solver->Solve();
-            results.push_back(res);
+    try {
+        if (solver != nullptr && instances.size() != 0) {
+            for (Instance inst : instances) {
+                solver->setNewInstance(inst);
+                cout << "Instance : n=" << inst.n << " id=" << inst.id << endl;
+                Result res = solver->Solve();
+                results.push_back(res);
+            }
         }
-    }   
+    }
+    catch (exception& exc) {
+        throw exc;
+    }
+    
 }
 
 bool SolverControler::ImportInstances(string dir)
@@ -59,13 +76,17 @@ bool SolverControler::ImportInstances(string dir)
                     Instance inst = Instance(dir + "\\" + LPCWSTRtoString(data.cFileName));
                     instances.push_back(inst);
                 }
-                catch (exception exc) {
-                    // cout << "Error : " << exc.what();
+                catch (exception &exc) {
+                    throw exc;
                     return false;
                 }
             }
         } while (FindNextFile(hFind, &data) != 0);
         FindClose(hFind);
+    }
+    else {
+        throw invalid_argument("Impossible d'ouvrir le dossier contenant les instances");
+        return false;
     }
     return true;
 }
@@ -77,16 +98,14 @@ bool SolverControler::ExportResults(string path)
         return false;
 
     // Check if file already exist
-    ifstream file;
-    file.open(path);
-    if (file) {
-        cout << "Error when saving results : File already exist";
+    if (fileExist(path)) {
+        throw exception("Le fichier existe déja");
         return false;
     }
 
     // Check extension
     if (!has_suffix(path, ".txt")) {
-        cout << "Error when saving results : need .txt extension";
+        throw exception("Extension .txt manquant");
         return false;
     }
 
