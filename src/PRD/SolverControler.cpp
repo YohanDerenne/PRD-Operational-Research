@@ -3,6 +3,7 @@
 #include <iostream>
 #include <windows.h>
 #include <tchar.h>
+#include <algorithm>
 
 bool fileExist(const std::string& name) {
     ifstream fee(name.c_str());
@@ -53,6 +54,9 @@ void SolverControler::LaunchComputation()
                 solver->setNewInstance(inst);
                 cout << "Instance : n=" << inst.n << " id=" << inst.id << endl;
                 Result res = solver->Solve();
+                if (!res.VerificationContraintes()) {
+                    cout << "WARNING : Contraintes." << endl;
+                }
                 results.push_back(res);
             }
         }
@@ -62,6 +66,8 @@ void SolverControler::LaunchComputation()
     }
     
 }
+
+bool compareInstance(Instance &a, Instance &b) { return a.n < b.n ? true : a.n == b.n ? a.id < b.id : false; }
 
 bool SolverControler::ImportInstances(string dir)
 {
@@ -83,6 +89,7 @@ bool SolverControler::ImportInstances(string dir)
             }
         } while (FindNextFile(hFind, &data) != 0);
         FindClose(hFind);
+        instances.sort(compareInstance);
     }
     else {
         throw invalid_argument("Impossible d'ouvrir le dossier contenant les instances");

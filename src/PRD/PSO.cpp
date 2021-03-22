@@ -417,7 +417,8 @@ SolutionPSO PSO::GetRandomParticuleWithCD()
 			return  particules[i];
 		rnd -= particules[i].CDcoef;
 	}
-	assert(!"Ne dois pas arriver ici");
+	return particules[0];
+	//assert(!"Ne dois pas arriver ici");
 }
 
 Result PSO::GetReference()
