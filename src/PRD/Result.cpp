@@ -1,51 +1,69 @@
 #include "Result.h"
 
-Result::Result(Instance instance)
+Result::Result(Instance instance):y(),Z(),z(),x(),D_M(),C(),F(),f(),PT_M(),D_3PL(),T_M()
 {
-	inst = instance;
+	
+	V = 0;
+	cout_total = 0;
+	nb_part = 0;
 
-	y = vector<vector<bool>>();
-	Z = vector<bool>();
-	z = vector<vector<bool>>();
-	x = vector<vector<vector<bool>>>();
-	D_M = vector<double>();
-	C = vector<vector<double>>();
-	F = vector<double>();
-	f = vector<double>();
-	PT_M = vector<double>();
+	inst = Instance(instance);
+
+
+	IC_WIP = 0;
+	IC_FIN = 0;
+	IC = 0;
+	PPC_M = 0;
+	VC = 0;
+	cout_ref = 0;
+	dureeSec = 0.0;
+}
+
+Result::Result():y(), Z(), z(), x(), D_M(), C(), F(), f(), PT_M(), D_3PL(), T_M()
+{
+	V = 0;
+	cout_total = 0;
+	nb_part = 0;
+
 	IC_WIP = 0;
 	IC_FIN = 0;
 	IC = 0;
 	PPC_M = 0;
 
-	D_3PL = vector<double>();
-	T_M = vector<double>();
+	cout_ref = 0;
 	VC = 0;
 
 	dureeSec = 0.0;
 }
 
-Result::Result()
+Result::Result(const Result& result) :y(), Z(), z(), x(), D_M(), C(), F(), f(), PT_M(), D_3PL(), T_M()
 {
-	y = vector<vector<bool>>();
-	Z = vector<bool>();
-	z = vector<vector<bool>>();
-	x = vector<vector<vector<bool>>>();
-	D_M = vector<double>();
-	C = vector<vector<double>>();
-	F = vector<double>();
-	f = vector<double>();
-	PT_M = vector<double>();
-	IC_WIP = 0;
-	IC_FIN = 0;
-	IC = 0;
-	PPC_M = 0;
+	inst = Instance(result.inst),
+	V = result.V;
+	cout_total = result.cout_total;
+	nb_part = result.nb_part;
 
-	D_3PL = vector<double>();
-	T_M = vector<double>();
-	VC = 0;
+	IC_WIP = result.IC_WIP;
+	IC_FIN = result.IC_FIN;
+	IC = result.IC;
+	PPC_M = result.PPC_M;
 
-	dureeSec = 0.0;
+	cout_ref = result.cout_ref;
+	VC = result.VC;
+
+	dureeSec = result.dureeSec;
+
+	y = vector<vector<bool>>(result.y);
+	Z = vector<bool>(result.Z);
+	z = vector<vector<bool>>(result.z);
+	x = vector<vector<vector<bool>>>(result.x);
+	D_M = vector<double>(result.D_M);
+	C = vector<vector<double>>(result.C);
+	F = vector<double>(result.F);
+	f = vector<double>(result.f);
+	PT_M = vector<double>(result.PT_M);
+	D_3PL = vector<double>(result.D_3PL);
+	T_M = vector<double>(result.T_M);
 }
 
 

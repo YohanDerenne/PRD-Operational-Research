@@ -34,12 +34,12 @@ Instance::Instance(const Instance& inst2)
 	id = inst2.id;
 	n = inst2.n;
 	m = inst2.m;
-	p = inst2.p;
-	d = inst2.d;
-	t = inst2.t;
-	h_WIP = inst2.h_WIP;
-	h_FIN = inst2.h_FIN;
-	p_M = inst2.p_M;
+	p = vector<vector<double>>(inst2.p);
+	d = vector<int>(inst2.d);
+	t = vector<vector<double>>(inst2.t);
+	h_WIP = vector<vector<int>>(inst2.h_WIP);
+	h_FIN = vector<int>(inst2.h_FIN);
+	p_M = vector<int>(inst2.p_M);
 	c_V = inst2.c_V;
 }
 

@@ -295,7 +295,7 @@ namespace UnitTestPRD
 			auto it = list.begin();
 			std::advance(it, 0);
 			Instance inst = *it;
-			size_t expected_size = 2;
+			size_t expected_size = 3;
 			Assert::AreEqual(expected_size, control.getInstances().size());
 			Assert::AreEqual(51.0, inst.p[0][0]);
 			std::advance(it, 1);
@@ -601,8 +601,8 @@ namespace UnitTestPRD
 	TEST_CLASS(UnitTestPSO) {
 	public:
 		TEST_METHOD(TestPSO) {
-			Instance inst = Instance("../UnitTestPRD/I_n5_id0.txt");
-			PSO solver = PSO(inst, 4, 10);
+			Instance inst = Instance("../UnitTestPRD/I_n20_id0.txt");
+			PSO solver = PSO(inst, 5, 20);
 			
 			Result res = solver.Solve();
 			Result ref = solver.GetReference();

@@ -128,6 +128,8 @@ public :
 	/// </summary>
 	Result();
 
+	Result(const Result &result);
+
 	/// <summary>
 	/// Vérifie si les contraintes sont respectées
 	/// </summary>
