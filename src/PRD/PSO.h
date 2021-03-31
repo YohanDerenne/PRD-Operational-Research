@@ -6,7 +6,21 @@
 #include <random>
 #include <cassert>
 
+/// <summary>
+/// Compare deux solutions en fonction de leur résultats (cout_total)
+/// </summary>
+/// <param name="i"></param>
+/// <param name="j"></param>
+/// <returns></returns>
 bool comparator(SolutionPSO i, SolutionPSO j);
+
+/// <summary>
+/// Géere un double entre deux bornes
+/// </summary>
+/// <param name="inf">Borne inférieur</param>
+/// <param name="sup">Borne Supérieur</param>
+/// <returns></returns>
+double generateDouble(double inf, double sup);
 
 class PSO :
     public Solver

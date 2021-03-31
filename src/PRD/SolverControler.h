@@ -31,6 +31,14 @@ wchar_t* charArrayToLPCWSTR(const char* charArray);
 /// <returns>Chaine convertie</returns>
 string LPCWSTRtoString(wchar_t* txt);
 
+/// <summary>
+/// Compare deux instances en fonction de leur id et de leur nombre de job
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <returns></returns>
+bool compareInstance(Instance& a, Instance& b);
+
 class SolverControler
 {
 private:

@@ -7,7 +7,7 @@
 
 
 /// <summary>
-/// Point d'entrée du programme
+/// Point d'entree du programme
 /// </summary>
 /// <returns></returns>
 int main(int argc, char* argv[])

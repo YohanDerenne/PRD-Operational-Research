@@ -6,7 +6,7 @@ var searchData=
   ['chararraytolpcwstr_6',['charArrayToLPCWSTR',['../_solver_controler_8cpp.html#a261073497ee75aefff4c50bccfc2579d',1,'charArrayToLPCWSTR(const char *charArray):&#160;SolverControler.cpp'],['../_solver_controler_8h.html#a261073497ee75aefff4c50bccfc2579d',1,'charArrayToLPCWSTR(const char *charArray):&#160;SolverControler.cpp']]],
   ['cherchermeilleurvoisin_7',['ChercherMeilleurVoisin',['../class_p_s_o.html#a5f363e0318abbf5bab566a8c23785313',1,'PSO']]],
   ['comparator_8',['comparator',['../_p_s_o_8cpp.html#ab69e6d3da5813f17bdd2c948f5fb40c9',1,'comparator(SolutionPSO i, SolutionPSO j):&#160;PSO.cpp'],['../_p_s_o_8h.html#ab69e6d3da5813f17bdd2c948f5fb40c9',1,'comparator(SolutionPSO i, SolutionPSO j):&#160;PSO.cpp']]],
-  ['compareinstance_9',['compareInstance',['../_solver_controler_8cpp.html#a7cd781b009106bc9740152311e979c2c',1,'SolverControler.cpp']]],
+  ['compareinstance_9',['compareInstance',['../_solver_controler_8cpp.html#a7cd781b009106bc9740152311e979c2c',1,'compareInstance(Instance &amp;a, Instance &amp;b):&#160;SolverControler.cpp'],['../_solver_controler_8h.html#a7cd781b009106bc9740152311e979c2c',1,'compareInstance(Instance &amp;a, Instance &amp;b):&#160;SolverControler.cpp']]],
   ['cout_5fref_10',['cout_ref',['../class_result.html#a22ca910b1d119fcde4832092a7e7c331',1,'Result']]],
   ['cout_5ftotal_11',['cout_total',['../class_result.html#a26e9dd0748a4bc1976933922bf55aac6',1,'Result']]]
 ];
